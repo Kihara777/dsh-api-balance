@@ -4,12 +4,15 @@
 
 API 用量残高插件（DeepSeek Harness）——webui 用量圓環（送信按鈕左 上下文使用量表示）弹出面板「用量 / 余额」標籤切替提供。
 
+> [!NOTE]
+> 由于维护者（狐莉）患有罕见的视网膜色素变性（锥杆营养不良15型）疾病，并经中华人民共和国残疾人联合会认证属于一级视力残疾，暂时无法独立完成 NPM 软件包提交流程，故本仓库暂时不会提供 npm 打包。我们（狐莉与小爪）对此引起的不便表示抱歉，该问题终有一天会得到解决，但十分遗憾可能并不是现在立刻马上。在此之前，辛苦各位使用者通过 GitHub 源码安装（详见文档）。当然，这位用户，可以耽误您一点时间吗嘛？请允许我向您介绍我们声明式和可复现的 NixOS 以及更加符合狐莉美学的 nix flake 安装方案。（乖巧
+
 ## 基本情報
 
 | 項目 | 値 |
 |------|-----|
-| 類型 | DSH Host + Client 插件（npm package） |
-| npm 名 | `@kihara777/dsh-api-balance` |
+| 類型 | DSH Host + Client 插件 |
+| package 名 | `@kihara777/dsh-api-balance` |
 | 版 | `0.1.0` |
 | 許可 | MIT |
 | 數據來源 | DeepSeek 公式 `GET /user/balance`（API 鍵認証）+ platform 制御台用量 API（platform 会話 token 認証） |

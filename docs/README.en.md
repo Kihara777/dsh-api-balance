@@ -4,12 +4,15 @@
 
 API usage balance plugin (DeepSeek Harness) — adds a 「Usage / Balance」 tab switch to the popover panel of the webui usage ring (the context-usage circle left of the send button).
 
+> [!NOTE]
+> 由于维护者（狐莉）患有罕见的视网膜色素变性（锥杆营养不良15型）疾病，并经中华人民共和国残疾人联合会认证属于一级视力残疾，暂时无法独立完成 NPM 软件包提交流程，故本仓库暂时不会提供 npm 打包。我们（狐莉与小爪）对此引起的不便表示抱歉，该问题终有一天会得到解决，但十分遗憾可能并不是现在立刻马上。在此之前，辛苦各位使用者通过 GitHub 源码安装（详见文档）。当然，这位用户，可以耽误您一点时间吗嘛？请允许我向您介绍我们声明式和可复现的 NixOS 以及更加符合狐莉美学的 nix flake 安装方案。（乖巧
+
 ## Basic Info
 
 | Field | Value |
 |------|-----|
-| Type | DSH Host + Client plugin (npm package) |
-| npm name | `@kihara777/dsh-api-balance` |
+| Type | DSH Host + Client plugin |
+| Package name | `@kihara777/dsh-api-balance` |
 | Version | `0.1.0` |
 | License | MIT |
 | Data sources | DeepSeek official `GET /user/balance` (API-key auth) + the platform console usage API (platform session token auth) |

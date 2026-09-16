@@ -23,9 +23,6 @@
     "lib/client.js",
     "cordis.patch.yml"
   ],
-  "publishConfig": {
-    "access": "public"
-  },
   "dependencies": {
     "@deepseek-ai/dsh-credentials": "0.1.1-rc.2"
   },
