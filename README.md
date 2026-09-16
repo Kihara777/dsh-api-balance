@@ -44,15 +44,6 @@ NixOS 用户可经 [NixKits](https://github.com/Kihara777/NixKits) 的 `nixkits.
 - **语音播报**：语音包 + TTS（浏览器内置 / 自定义 API），峰谷计费自动提示
 - **界面增强**：峰时红色标识、疑问窗口滚动优化、回车换行开关等
 
-## 文档
-
-| 语言 | 链接 |
-|------|------|
-| 中文 | [docs/README.md](docs/README.md) |
-| English | [docs/README.en.md](docs/README.en.md) |
-| 日本語 | [docs/README.ja.md](docs/README.ja.md) |
-| 偽中国語 | [docs/README.pcn.md](docs/README.pcn.md) |
-
 ## 开发
 
 纯 JS 插件，无构建步骤（`lib/index.js` + `lib/client.js` 直接提交）：
