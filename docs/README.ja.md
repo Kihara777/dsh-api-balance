@@ -162,3 +162,7 @@ dsh plugin --profile web add 'github:Kihara777/NixKits#path:packages/dsh-api-bal
 - 本プラグインによる host の `StatsLine` セッション統計バーの**横スクロール**最適化（モバイル / 縦向きタッチおよび大フォント環境向けに、省略記号による切り詰めの代わりに行内スクロールで全体を表示）は DeepSeek Harness 上流へ提案済み：GitHub Discussion [deepseek-ai/deepseek-harness #5458](https://github.com/deepseek-ai/deepseek-harness/discussions/5458)。公式 `CONTRIBUTING.md` は現時点で外部 PR を受け付けないため、「Discussion + 準備済みブランチ」の形で公開している。
 - PR 準備済みの変更は当リポジトリのフォーク `Kihara777/deepseek-harness` のブランチ `draft/statline-overflow-scroll` に置いてある（local commit `e5ece63`、`packages/client/ui-chat` 配下 3 ファイル — CSS・TSX・コンポーネントテスト 2 件を変更）。アップストリームが外部 PR の受け入れを開始したら正式 PR へ昇格できる。插件側は上流の挙動へ追従後、host の `.root` へのランタイムスタイル注入を撤去できる。
 - 本リポジトリには公式の `dsh-plugin` エコシステムトピックを付与してあり、プラグインエコシステム内で発見しやすくしてある。
+
+## セキュリティ
+
+セキュリティポリシー（**評価済みの外部報告リスト**を含む——誤検知は再受理しません）は [`SECURITY.ja.md`](SECURITY.ja.md) をご覧ください。

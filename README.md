@@ -62,4 +62,6 @@ npm install --legacy-peer-deps    # 安装依赖（peer 由宿主 dsh 在运行�
 
 ## 许可
 
-MIT
+[MIT](LICENSE)
+
+安全政策（含**已评估的外部报告清单**——误报不再重复受理）见 [`SECURITY.md`](SECURITY.md)。

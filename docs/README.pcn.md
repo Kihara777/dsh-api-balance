@@ -162,3 +162,7 @@ package 的 `dsh.bundle` `cordis.patch.yml` 指、導入後 profile layer 有効
 - 本插件 host `StatsLine` 会話統計条之**横 scroll** 最適化（mobile / 縦向 touch 及大字体環境向、省略記号切詰代行内 scroll 全可視）DeepSeek Harness 上流提案済：GitHub Discussion [deepseek-ai/deepseek-harness #5458](https://github.com/deepseek-ai/deepseek-harness/discussions/5458)。公式 `CONTRIBUTING.md` 現時外部 PR 不承、故「Discussion + 準備済 branch」形公開。
 - PR 準備済変更本 repo fork `Kihara777/deepseek-harness` branch `draft/statline-overflow-scroll` 所在（local commit `e5ece63`、`packages/client/ui-chat` 下 3 書類 — CSS・TSX・component test 2 件変更）。上流外部 PR 受入開始次第正式 PR 昇格可。插件側上流挙動追従後、host `.root` runtime style 注入撤去可。
 - 本 repo 公式 `dsh-plugin` 生態 topic 付與済、plugin 生態内発見容易。
+
+## 安全
+
+安全政策（**評価済 外部 報告一覧** 含——誤検知 再受理 不）[`SECURITY.pcn.md`](SECURITY.pcn.md) 参照。
