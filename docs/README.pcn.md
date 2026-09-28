@@ -13,7 +13,7 @@ API 用量残高插件（DeepSeek Harness）——webui 用量圓環（送信按
 |------|-----|
 | 類型 | DSH Host + Client 插件 |
 | package 名 | `@kihara777/dsh-api-balance` |
-| 版 | `0.1.0` |
+| 版 | `0.1.1` |
 | 許可 | MIT |
 | 數據來源 | DeepSeek 公式 `GET /user/balance`（API 鍵認証）+ platform 制御台用量 API（platform 会話 token 認証） |
 
@@ -46,6 +46,7 @@ DeepSeek 現行峰谷課金規則（官方価格頁脚注）：**峰 = 週一〜
 
 - 自動放送 switch（残高閾値下通知、30 分 rate 制限）
 - TTS backend 選択（瀏覽器内蔵 / 自訂 TTS API——host 経由 proxy CORS 回避、URL template placeholder `{text}` `{lang}` `{rate}`）
+- **音色選択**（既定「自動」：界面言語**與実際 話 変体** 以 選——普通話 要求 普通話 音色 之内 的 選、広東語 音色 不 選。panel 実際 使用 音色 表示。特定 音色 指名 指定 亦 可能、engine 勝手 別 言語 読 場合 無条件 効 唯一 出口）
 - 音声 pack library 管理（複数 zip import、行 click 使用 pack 切替、複数選択一括削除；各 pack 展開「音声試聴」——該 pack 対応全音声一条毎試聴可；`$DSH_HOME/api-balance-voicepack/` 保存全 device 共有）
 - 「音声 pack 管理」次級 menu 内作成器（瀏覽器録音或音声 file import、録音中可視化浮窗與 sample text 表示、言語跨録音可能、打包 download / compile 適用）
 

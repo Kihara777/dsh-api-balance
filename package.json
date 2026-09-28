@@ -1,6 +1,6 @@
 {
   "name": "@kihara777/dsh-api-balance",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "API 用量余额插件 for the DeepSeek Harness — 在 webui 原有用量显示旁添加「用量 / 开销」标签切换，切换为「开销」后展示当前 API KEY 的用量信息、账户花费与余额（DeepSeek /user/balance）",
   "license": "MIT",
   "repository": {

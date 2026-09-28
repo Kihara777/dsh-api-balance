@@ -13,7 +13,7 @@ API usage balance plugin (DeepSeek Harness) — adds a 「Usage / Balance」 tab
 |------|-----|
 | Type | DSH Host + Client plugin |
 | Package name | `@kihara777/dsh-api-balance` |
-| Version | `0.1.0` |
+| Version | `0.1.1` |
 | License | MIT |
 | Data sources | DeepSeek official `GET /user/balance` (API-key auth) + the platform console usage API (platform session token auth) |
 
@@ -46,6 +46,7 @@ Clicking the usage chart's 「Daily / Monthly」 toggle broadcasts the matching 
 
 - an auto-broadcast toggle (balance alerts when below the threshold, with a 30-minute rate limit)
 - TTS backend selection (browser built-in / custom TTS API proxied through the host to avoid CORS, URL template placeholders `{text}` `{lang}` `{rate}`)
+- **voice selection** (defaults to "Auto": picked by UI language *and* by the variety actually spoken — a Mandarin request only ever picks a Mandarin voice, never a Cantonese one; the panel shows which voice it will really use. You can also name a voice explicitly, the one escape hatch that always wins when the engine picks the wrong language by itself)
 - voice-pack library management (import multiple zips, switch the active pack by clicking rows, multi-select removal; each pack expands into an 「audition」 view to play all of its supported audio one by one; stored under `$DSH_HOME/api-balance-voicepack/`, shared by all devices)
 - a creator inside the 「Voice pack management」 sub-menu (browser recording or audio-file import, with a visual recording float window and sample texts; cross-language recording; package & download / compile & apply)
 
