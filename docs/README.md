@@ -30,10 +30,10 @@ API 用量余额插件（DeepSeek Harness）——在 webui 用量圆圈（发�
 
 ### 界面设置（⚙ 设置 → 界面）
 
-- **底部统计条**：越界内容横向滚动并隐藏滚动条（默认开启）；关闭后恢复省略号截断（悬停气泡显示完整内容）。
+- **底部统计条**：**已停用** —— 官方界面改成了更好的方案：统计条上每个指标都是**可点击的信息块**，点开即显示完整指标（模型用时、首 token 平均、输出速度、token、缓存命中）。设置里那一行保留并置灰，便于知道它去哪了；旧版本注入的样式会自动清理。
 - **回车键行为**：回车换行、Shift+回车发送（默认开启；DSH 原生为回车发送）；关闭后恢复原生行为。仅作用于会话输入框，不干扰其他输入。
 - **移动端会话切换不弹键盘**：触屏设备上，输入框在你点按它之前保持不可编辑——DSH 在切换会话时会程序性聚焦输入框，而只有落在**可编辑**元素上的聚焦才会唤出软键盘（真实 `focusin` 不可取消，等 `focus` 之后再 blur 已经来不及）。点按输入框即刻恢复正常输入。默认开启，可在此关闭。
-- **疑问窗口整页滚动**：交互式提问窗口题干过长时，标题与选项一起滚动（而非仅选项区滚动），操作按钮与底部按钮保持吸附可见，题干不再挤压选项。默认开启。
+- **疑问窗口：长题干不遮挡选项**：题干过长时**限制自身高度并自己滚动**（不再吸顶），选项始终留在屏幕内；操作按钮与底部按钮保持吸附可见。默认开启。
 四项设置均默认开启，并持久化于浏览器 localStorage。
 
 ### 峰谷计费标记
@@ -163,10 +163,10 @@ NixOS 用户可经 NixKits 的 `nixkits.dsh` 模块声明式安装（版本由 N
 
 ### 设置存储层
 
-界面与语音设置（语音提醒、底部统计条横向滚动、回车换行 + Shift+回车发送、移动端会话切换不弹键盘、TTS 后端）为**浏览器 localStorage 状态**：每浏览器独立、默认开启、在插件 `⚙ 设置` 面板内即时切换即持久化。它们**不经过** DSH 宿主设置系统（`settings.register` / `settings.yaml`），故 `nixkits.dsh.settings` **不提供**对这些项的声明式覆盖——这类"每浏览器偏好"请按设备在面板内配置。宿主侧插件参数（`apiKeyEnv` / `baseURL` / `browserScan` / `browserScanIntervalMs`）仍经 `nixkits.dsh.plugins.packages[].config` 声明式设置。
+界面与语音设置（语音提醒、回车换行 + Shift+回车发送、疑问窗口滚动、移动端会话切换不弹键盘、TTS 后端）为**浏览器 localStorage 状态**：每浏览器独立、默认开启、在插件 `⚙ 设置` 面板内即时切换即持久化。它们**不经过** DSH 宿主设置系统（`settings.register` / `settings.yaml`），故 `nixkits.dsh.settings` **不提供**对这些项的声明式覆盖——这类"每浏览器偏好"请按设备在面板内配置。宿主侧插件参数（`apiKeyEnv` / `baseURL` / `browserScan` / `browserScanIntervalMs`）仍经 `nixkits.dsh.plugins.packages[].config` 声明式设置。
 
 ### 上游提案与生态
 
-- 本插件对宿主 `StatsLine` 会话统计条的**横向可滚动**优化（移动/竖屏触摸与大字体场景下以行内滚动取代省略截断）已向 DeepSeek Harness 上游提出：GitHub Discussion [deepseek-ai/deepseek-harness #5458](https://github.com/deepseek-ai/deepseek-harness/discussions/5458)。官方 `CONTRIBUTING.md` 暂不接受外部 PR，故当前以「讨论 + 就绪分支」形式落地。
+- 本插件曾对宿主 `StatsLine` 会话统计条做**横向可滚动**优化（移动/竖屏触摸与大字体场景下以行内滚动取代省略截断），并向上游提过提案：GitHub Discussion [deepseek-ai/deepseek-harness #5458](https://github.com/deepseek-ai/deepseek-harness/discussions/5458)。**该优化已停用**——官方把统计条改成了可点击的信息块（见上文「底部统计条」），行内滚动不再适用；这条提案保留为历史记录。
 - PR-ready 改动位于本仓库 fork `Kihara777/deepseek-harness` 的 `draft/statline-overflow-scroll` 分支（local commit `e5ece63`，改动 `packages/client/ui-chat` 三个文件，CSS+TSX+2 组件测试）；待上游开放外部 PR 即转正。插件侧以上游一致做法后可移除对宿主 `.root` 的运行时样式注入。
 - 仓库已关联官方 `dsh-plugin` 生态话题，便于按插件生态检索发现本插件。

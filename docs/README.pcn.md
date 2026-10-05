@@ -30,10 +30,10 @@ API 用量残高插件（DeepSeek Harness）——webui 用量圓環（送信按
 
 ### 界面設定（⚙ 設定 → 界面）
 
-- **底部統計条**：越界内容横向 scroll 表示、scrollbar 隠蔽（預設有効）。無効時省略号截断（hover 全文表示）復帰。
+- **底部統計条**：**已停用** —— 官方界面 更良方案 採用：統計条 各指標 **click 可能 情報塊**、開即 完全指標 表示（模型用時、平均 TTFT、輸出速度、token、cache hit）。設定 該行 置灰 残置、何処行 了 知便；旧版 注入 style 自動 清掃。
 - **Enter key 動作**：Enter = 改行、Shift+Enter = 送信（預設有効；DSH 原生動作 Enter = 送信）。無効時原生動作復帰。会話入力欄限定作用、他入力欄不影響。
 - **移動端 session 切替 keyboard 不弹出**：觸屏 device 上、入力欄 tap 以前編集不可維持、故 session 切替時 DSH 程序性聚焦 軟 keyboard 喚出不能（実際 `focusin` cancel 不可、`focus` 後 blur 既遅）；入力欄 tap 即通常入力復帰。預設有効、此処無効化可。
-- **疑問 window 頁面全体 scroll**：対話式質問 window 題干過長時、標題選択肢與一括 scroll（選択肢区限定 scroll 非）、操作按鈕與底部按鈕追従表示維持、長題干選択肢圧迫不。預設有効。
+- **疑問 window：長題干 選択肢 遮蔽不**：題干過長時 **自身高度 制限 + 自身内 scroll**（吸頂 廃止）、選択肢 常時 画面内 残留；操作按鈕與底部按鈕 追従表示 維持。預設有効。
 四設定預設有効、瀏覽器 localStorage 永続化。
 
 ### 峰谷課金標記
@@ -156,11 +156,11 @@ package 的 `dsh.bundle` `cordis.patch.yml` 指、導入後 profile layer 有効
 
 ### 設定存儲層
 
-界面與語音設定（語音提醒、底部統計条横 scroll、Enter 改行 + Shift+Enter 送信交換、mobile 会話切替時 keyboard 抑止、TTS backend）為**瀏覽器 localStorage 状態**：毎瀏覽器独立、既定有効、插件 `⚙ 設定` panel 内切替即時永続化。此等 DSH host 設定系統（`settings.register` / `settings.yaml`）**不経由**、故 `nixkits.dsh.settings` 此等文書化 override **提供無**——此類「毎瀏覽器偏好」device 別 panel 内設定。host 側插件参數（`apiKeyEnv` / `baseURL` / `browserScan` / `browserScanIntervalMs`）依然 `nixkits.dsh.plugins.packages[].config` 声明設定。
+界面與語音設定（語音提醒、Enter 改行 + Shift+Enter 送信交換、疑問 window scroll、mobile 会話切替時 keyboard 抑止、TTS backend）為**瀏覽器 localStorage 状態**：毎瀏覽器独立、既定有効、插件 `⚙ 設定` panel 内切替即時永続化。此等 DSH host 設定系統（`settings.register` / `settings.yaml`）**不経由**、故 `nixkits.dsh.settings` 此等文書化 override **提供無**——此類「毎瀏覽器偏好」device 別 panel 内設定。host 側插件参數（`apiKeyEnv` / `baseURL` / `browserScan` / `browserScanIntervalMs`）依然 `nixkits.dsh.plugins.packages[].config` 声明設定。
 
 ### 上流提案與生態
 
-- 本插件 host `StatsLine` 会話統計条之**横 scroll** 最適化（mobile / 縦向 touch 及大字体環境向、省略記号切詰代行内 scroll 全可視）DeepSeek Harness 上流提案済：GitHub Discussion [deepseek-ai/deepseek-harness #5458](https://github.com/deepseek-ai/deepseek-harness/discussions/5458)。公式 `CONTRIBUTING.md` 現時外部 PR 不承、故「Discussion + 準備済 branch」形公開。
+- 本插件 曾 対 host `StatsLine` 会話統計条 **横 scroll** 最適化 施（mobile / 縦向 touch 及 大字体環境向、省略記号切詰代 行内 scroll 全可視）、上流 提案 也 為：GitHub Discussion [deepseek-ai/deepseek-harness #5458](https://github.com/deepseek-ai/deepseek-harness/discussions/5458)。**該最適化 已停用**——官方 UI 統計条 を click 可能 pill 化（上文「底部統計条」参照）、行内 scroll 不要 成；提案 歴史記録 残置。
 - PR 準備済変更本 repo fork `Kihara777/deepseek-harness` branch `draft/statline-overflow-scroll` 所在（local commit `e5ece63`、`packages/client/ui-chat` 下 3 書類 — CSS・TSX・component test 2 件変更）。上流外部 PR 受入開始次第正式 PR 昇格可。插件側上流挙動追従後、host `.root` runtime style 注入撤去可。
 - 本 repo 公式 `dsh-plugin` 生態 topic 付與済、plugin 生態内発見容易。
 

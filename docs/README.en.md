@@ -30,10 +30,10 @@ API usage balance plugin (DeepSeek Harness) — adds a 「Usage / Balance」 tab
 
 ### Interface settings (⚙ Settings → Interface)
 
-- **Bottom stats bar**: overflowing content scrolls horizontally with the scrollbar hidden (on by default); turning it off restores the ellipsis truncation (hovering shows the full line in a tooltip).
+- **Bottom stats bar**: **retired** — the official UI now does this better: every metric in the stats bar is a **clickable pill** that opens the full breakdown (model time, average TTFT, output speed, tokens, cache hit). The row stays in settings, greyed out, so it is clear where it went; the style older versions injected is cleaned up automatically.
 - **Enter key behavior**: Enter = newline, Shift+Enter = send (on by default; DSH's native behavior is Enter = send); turning it off restores the native behavior. Composer only; other inputs unaffected.
 - **Mobile: no keyboard on session switch**: on touch devices the composer stays non-editable until you tap it, so the programmatic focus DSH performs on a session switch cannot summon the soft keyboard (real `focusin` is not cancelable, and blurring after `focus` is already too late). Tapping the composer restores normal input immediately. Enabled by default, can be turned off here.
-- **Question dialog: whole-page scroll**: with a long prompt, the title scrolls together with the options (instead of only the option list scrolling); the action and footer buttons stay pinned, so a long prompt no longer squeezes the options. On by default.
+- **Question dialog: a long prompt no longer hides the options**: an over-long prompt is **capped in height and scrolls inside its own box** (it is no longer pinned), so the options stay on screen; the action and footer buttons remain pinned. On by default.
 All four settings are on by default and persist in browser localStorage.
 
 ### Peak pricing marker
@@ -156,11 +156,11 @@ The package's `dsh.bundle` points at `cordis.patch.yml`, so it activates as a pr
 
 ### Settings storage layer
 
-The interface and voice settings (voice alerts, bottom stats-bar horizontal scroll, Enter-newline + Shift+Enter-send swap, mobile session-switch keyboard suppression, TTS backend) are **browser localStorage state**: independent per browser, enabled by default, persisted the moment you toggle them in the plugin's `⚙ Settings` panel. They do **not** go through the DSH host settings system (`settings.register` / `settings.yaml`), so `nixkits.dsh.settings` provides **no declarative override** for them — configure these per-browser preferences in the panel per device. Host-side plugin parameters (`apiKeyEnv` / `baseURL` / `browserScan` / `browserScanIntervalMs`) remain declaratively set via `nixkits.dsh.plugins.packages[].config`.
+The interface and voice settings (voice alerts, Enter-newline + Shift+Enter-send swap, question-dialog scrolling, mobile session-switch keyboard suppression, TTS backend) are **browser localStorage state**: independent per browser, enabled by default, persisted the moment you toggle them in the plugin's `⚙ Settings` panel. They do **not** go through the DSH host settings system (`settings.register` / `settings.yaml`), so `nixkits.dsh.settings` provides **no declarative override** for them — configure these per-browser preferences in the panel per device. Host-side plugin parameters (`apiKeyEnv` / `baseURL` / `browserScan` / `browserScanIntervalMs`) remain declaratively set via `nixkits.dsh.plugins.packages[].config`.
 
 ### Upstream proposal and ecosystem
 
-- This plugin's **horizontal-scroll** optimization for the host `StatsLine` session-stats strip (in-place scrolling instead of ellipsis truncation, for mobile / portrait touch and large-font readers) has been proposed to DeepSeek Harness upstream: GitHub Discussion [deepseek-ai/deepseek-harness #5458](https://github.com/deepseek-ai/deepseek-harness/discussions/5458). The official `CONTRIBUTING.md` does not yet accept external pull requests, so it currently lands as a discussion plus a ready branch.
+- This plugin once applied a **horizontal-scroll** optimization to the host `StatsLine` session-stats strip (in-place scrolling instead of ellipsis truncation, for mobile / portrait touch and large-font readers) and proposed it upstream: GitHub Discussion [deepseek-ai/deepseek-harness #5458](https://github.com/deepseek-ai/deepseek-harness/discussions/5458). **That optimization is retired** — the official UI turned the stats bar into clickable pills (see “Bottom stats bar” above), so in-place scrolling no longer applies; the proposal stays as a historical record.
 - The PR-ready change lives on branch `draft/statline-overflow-scroll` in the project's fork `Kihara777/deepseek-harness` (local commit `e5ece63`, touching three files under `packages/client/ui-chat` — CSS + TSX + two component tests); it can be promoted to a PR once upstream accepts external pulls. The plugin can then drop its runtime style injection over the host `.root` and follow the upstream behavior instead.
 - This repository is tagged with the official `dsh-plugin` ecosystem topic so the plugin stays discoverable within the plugin ecosystem.
 
