@@ -32,8 +32,8 @@ API 用量残高插件（DeepSeek Harness）——webui 用量圓環（送信按
 
 - **底部統計条**：**已停用** —— 官方界面 更良方案 採用：統計条 各指標 **click 可能 情報塊**、開即 完全指標 表示（模型用時、平均 TTFT、輸出速度、token、cache hit）。設定 該行 置灰 残置、何処行 了 知便；旧版 注入 style 自動 清掃。
 - **Enter key 動作**：Enter = 改行、Shift+Enter = 送信（預設有効；DSH 原生動作 Enter = 送信）。無効時原生動作復帰。会話入力欄限定作用、他入力欄不影響。
-- **移動端 session 切替 keyboard 不弹出**：觸屏 device 上、入力欄 tap 以前編集不可維持、故 session 切替時 DSH 程序性聚焦 軟 keyboard 喚出不能（実際 `focusin` cancel 不可、`focus` 後 blur 既遅）；入力欄 tap 即通常入力復帰。預設有効、此処無効化可。
-- **疑問 window：長題干 選択肢 遮蔽不**：題干過長時 **自身高度 制限 + 自身内 scroll**（吸頂 廃止）、選択肢 常時 画面内 残留；操作按鈕與底部按鈕 追従表示 維持。題干 **上下両端** 與 追従按鈕**上方** 漸隠 mask 敷、且 **scroll 連動**（該側 実際 内容 残時 之 見 漸隠：最上部 頂端 不 ぼけ）；按鈕下方 同色 埋 塞、内容 一刀切 不。漸変色 卡片実際底色 取得、light / dark 両主題 追従。預設有効。
+- **移動端 session 切替 keyboard 不弹出**：觸屏 device 上、入力欄**既定 編集不可**、故 session 切替 / 新規 session 時 DSH 程序性聚焦 軟 keyboard 喚出不能（実際 `focusin` cancel 不可、`focus` 後 blur 既遅）。guard 有効中、入力欄 対 程序性 `focus()` **直接 飲込**（keyboard 於 focus 瞬間 要求、其手前 停止 初 意味 有；「同一 frame 内 属性 書戻 後 聚焦」競合 閉）。tap / 按鍵 700ms 意図 window 開放、輸入中 更新継続、window 過 再 閉。tap 後 入力 従来通。預設有効、此処無効化可。
+- **疑問 window：長題干 選択肢 遮蔽不**：題干過長時 **自身高度 制限 + 自身内 scroll**（吸頂 廃止）、選択肢 常時 画面内 残留；操作按鈕與底部按鈕 追従表示 維持。題干 **上下両端** 與 追従按鈕**上方** 漸隠 mask 敷、且 **scroll 連動**（該側 実際 内容 残時 之 見 漸隠：最上部 頂端 模糊不）；按鈕下方 同色 埋 塞、内容 一刀切 不。漸変色 卡片実際底色 取得、light / dark 両主題 追従。預設有効。
 四設定預設有効、瀏覽器 localStorage 永続化。
 
 ### 峰谷課金標記
@@ -160,7 +160,7 @@ package 的 `dsh.bundle` `cordis.patch.yml` 指、導入後 profile layer 有効
 
 ### 上流提案與生態
 
-- 本插件 曾 対 host `StatsLine` 会話統計条 **横 scroll** 最適化 施（mobile / 縦向 touch 及 大字体環境向、省略記号切詰代 行内 scroll 全可視）、上流 提案 也 為：GitHub Discussion [deepseek-ai/deepseek-harness #5458](https://github.com/deepseek-ai/deepseek-harness/discussions/5458)。**該最適化 已停用**——官方 UI 統計条 を click 可能 pill 化（上文「底部統計条」参照）、行内 scroll 不要 成；提案 歴史記録 残置。
+- 本插件 曾 対 host `StatsLine` 会話統計条 **横 scroll** 最適化 施（mobile / 縦向 touch 及 大字体環境向、省略記号切詰代 行内 scroll 全可視）、上流 提案 也 為：GitHub Discussion [deepseek-ai/deepseek-harness #5458](https://github.com/deepseek-ai/deepseek-harness/discussions/5458)。**該最適化 已停用**——官方 UI 統計条 click 可能 pill 化（上文「底部統計条」参照）、行内 scroll 不要 成；提案 歴史記録 残置。
 - PR 準備済変更本 repo fork `Kihara777/deepseek-harness` branch `draft/statline-overflow-scroll` 所在（local commit `e5ece63`、`packages/client/ui-chat` 下 3 書類 — CSS・TSX・component test 2 件変更）。上流外部 PR 受入開始次第正式 PR 昇格可。插件側上流挙動追従後、host `.root` runtime style 注入撤去可。
 - 本 repo 公式 `dsh-plugin` 生態 topic 付與済、plugin 生態内発見容易。
 
