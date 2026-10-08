@@ -4,12 +4,26 @@
 
 dsh-api-balance 軟件更新維護記録。
 
+## 2026-10-08T16:38:01+09:00
+
+**摘要**：fix(mobile): keyboard guard 「**既定 編集不可** + 程序性 focus 飲込」方式 変更
+
+- 彼女 報告「又 失效」：前版 `focusout` 武装、聚焦漏後 押戻 —— **該競合 追 不及**。React 一 commit 即 `contenteditable` true 書戻 + `focus()` 呼出 可能、keyboard 於 focus 瞬間 要求（同一敵対入力 旧版 対：聚焦 **編集可能入力欄 着地**）
+- 程序性 `focus()` 直接 飲込：狭 patch、入力欄 及 其子要素 限定・guard 有効 且 戸用意図 無時 限定；想定外 経路 元 logic 素通（余分 keyboard 一 回 > 入力欄 固 死）
+- 700ms 戸用意図 window：tap / 按鍵 / 入力 開放、輸入中 更新継続；**編集中要素 絶対 押戻 不**（輸入 途中 断）
+- 判据：新反例 **C12 · 同一 frame 競合** —— ON 臂 聚焦 不入 且 属性 `false` 押戻、OFF 臂（開関 OFF）聚焦成功 且 可編集聚焦 event 2 件；全量 15/15 通過
+
+| 提交 | 説明 |
+|------|------|
+| `a463488` | fix(mobile): keyboard guard 「既定 編集不可 + 程序性 focus 飲込」方式 変更 |
+| `43f4d18` | docs: guard 機構 四語同期（pcn 游离仮名 2 処 除去） |
+
 ## 2026-10-05T14:20:10+09:00
 
 **摘要**：fix(client): 疑問 window 漸隠 **scroll 連動** 変更（題干上下両端）
 
 - 題干上下両端 漸隠、且 該側 実際 内容 残時 限定 淡化（`none` / `start` / `end` / `middle` 四状態）
-- 卡片 上端 限定 漸隠 —— 卡片全体 mask 追従按鈕 共 淡 成；按鈕下方 同色 埋 塞
+- 札 上端 限定 漸隠 —— 札全体 mask 追従按鈕 共 淡 成；按鈕下方 同色 埋 塞
 - 判据：build 産物 対 14 項目 UI 判据（scroll 三状態 assertion 含）全通過
 
 | 提交 | 説明 |
@@ -21,7 +35,7 @@ dsh-api-balance 軟件更新維護記録。
 **摘要**：fix(client): 疑問 window 下端 漸隠 mask 追加 —— 題干下端 與 追従按鈕上方 一刀切 不
 
 - 題干下端 `mask` 漸隠；追従按鈕上方 `::before` 漸変帯
-- 漸変色 卡片**実際底色** 取得（light `rgb(255,255,255)` / dark `rgb(44,44,46)`）—— 固定色 dark 露見
+- 漸変色 札**実際底色** 取得（light `rgb(255,255,255)` / dark `rgb(44,44,46)`）—— 固定色 dark 露見
 - 判据：題干下端 30px 平均輝度 59.93 → 45.92（約 23% 暗）、其上 帯 不変；部署版 同 assertion 実測 FAIL
 
 | 提交 | 説明 |
@@ -34,7 +48,7 @@ dsh-api-balance 軟件更新維護記録。
 
 - 統計条：dsh 0.2.0 各指標 **click 可能 pill** 化（開即「session 統計」dialog）、行内 scroll 不要 且 pill gesture 競合
 - style 注入不、設定行 置灰 官方方案 明記；旧注入 `retireStatsScrollCss()` 清掃
-- 疑問 window：長題干 header 実測 948px 対 卡片可視域 僅 398px、吸頂 不透明 header 遮蔽板 成
+- 疑問 window：長題干 header 実測 948px 対 札可視域 僅 398px、吸頂 不透明 header 遮蔽板 成
 - header 高 制限（≤40vh）自身 scroll 化 吸頂 廃止、選択肢 視口内 復帰
 
 | 提交 | 説明 |
@@ -47,7 +61,7 @@ dsh-api-balance 軟件更新維護記録。
 
 - 実測 実際 `focusin` **cancel 不可**（旧 `preventDefault` 死 code）
 - 軟 keyboard `focus` 瞬間 要求 —— session 切替 二度連続 focus、後 blur 事後処理 過
-- 入力欄 用户 tap 以前 編集不可；tap / 按鍵 即時復帰、焦点離脱 再武装
+- 入力欄 戸用 tap 以前 編集不可；tap / 按鍵 即時復帰、焦点離脱 再武装
 - 判据：session 切替中「編集可能入力欄 focus 落下」回数 0（旧版 2）、tap 後 入力可
 
 | 提交 | 説明 |

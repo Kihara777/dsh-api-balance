@@ -4,6 +4,20 @@
 
 dsh-api-balance package update changelog.
 
+## 2026-10-08T16:38:01+09:00
+
+**Summary**: fix(mobile): the keyboard guard now works as "**non-editable by default** + swallow programmatic focus"
+
+- She reported it was failing again: the previous version armed on `focusout` and pressed the block back after a focus slipped through — **it cannot win that race**, since a single React commit can write `contenteditable` back to true and call `focus()`, and the keyboard is requested the instant focus lands (the same adversarial input against the old build: focus **landed on the editable composer**)
+- Programmatic `focus()` is swallowed outright: a narrow patch that only swallows for the composer and its children, only while the guard is active and the user has no intent; anything unexpected falls through to the original logic (better one extra keyboard than a locked composer)
+- A 700 ms user-intent window: tapped, keyed or typed input opens it, and typing keeps renewing it; **the element being edited is never pressed back** (that would cut off input mid-stroke)
+- Criteria: a new counterexample **C12 · same-frame race** builds that exact sequence — the ON arm keeps focus out and the attribute pressed back to `false`, while the OFF arm (guard disabled) focuses successfully and logs 2 editable-focus events; the full suite passes 15/15
+
+| Commit | Description |
+|------|------|
+| `a463488` | fix(mobile): keyboard guard rewritten as "non-editable by default + swallow programmatic focus" |
+| `43f4d18` | docs: four-language sync of the guard mechanism (plus two stray kana removed from pcn) |
+
 ## 2026-10-05T14:20:10+09:00
 
 **Summary**: fix(client): the question dialog's fades become **scroll-aware** (both ends of the prompt)

@@ -2,10 +2,10 @@
 
 [中文](README.md) | [English](README.en.md) | [日本語](README.ja.md) | 偽中国語
 
-API 用量残高插件（DeepSeek Harness）——webui 用量圓環（送信按鈕左 上下文使用量表示）弹出面板「用量 / 余额」標籤切替提供。
+API 用量残高插件（DeepSeek Harness）——webui 用量圓環（送信按鈕左 上下文使用量表示）弾出面板「用量 / 余額」標籤切替提供。
 
 > [!NOTE]
-> 由于维护者（狐莉）患有罕见的视网膜色素变性（锥杆营养不良15型）疾病，并经中华人民共和国残疾人联合会认证属于一级视力残疾，暂时无法独立完成 NPM 软件包提交流程，故本仓库暂时不会提供 npm 打包。我们（狐莉与小爪）对此引起的不便表示抱歉，该问题终有一天会得到解决，但十分遗憾可能并不是现在立刻马上。在此之前，辛苦各位使用者通过 GitHub 源码安装（详见文档）。当然，这位用户，可以耽误您一点时间吗嘛？请允许我向您介绍我们声明式和可复现的 NixOS 以及更加符合狐莉美学的 nix flake 安装方案。（乖巧
+> 由于维护者（狐莉）患有罕见的视网膜色素变性（锥杆营养不良15型）疾病，并経中华人民共和国残疾人联合会认证属于一级视力残疾，暂时无法独立完成 NPM 软件包提交流程，故本仓库暂时不会提供 npm 打包。我们（狐莉与小爪）対此引起的不便表示抱歉，该问题终有一天会得到解决，但十分遗憾可能并不是现在立刻马上。在此之前，辛苦各位使用者通過 GitHub 源码安装（详见文档）。当然，这位用戸，可以耽误您一点时间吗嘛？请允许我向您介绍我们声明式和可复现的 NixOS 以及更加符合狐莉美学的 nix flake 安装方案。（乖巧
 
 ## 基本情報
 
@@ -20,7 +20,7 @@ API 用量残高插件（DeepSeek Harness）——webui 用量圓環（送信按
 ## 功能
 
 - **用量**：原内容（上下文占有率與内訳）
-- **余额**：當前 API KEY 帳戶情報（鍵末尾、残高可否、通貨別総残高 / 充值残高 / 付與残高）、消耗明細與用量図表——消耗明細同一区域水平翻頁（1 頁目：当日 / 当月 / 30 日、2 頁目：模型別内訳 + 日別 / 月別 chart）、上方類手機主屏幕頁面指示 dot（tap 可、横 drag / swipe 翻頁）、区域高度當前頁内容応自動増減（切頁即回収）自身不 scroll（全内容面板自身縦 scroll 依存）
+- **余額**：當前 API KEY 帳戸情報（鍵末尾、残高可否、通貨別総残高 / 充値残高 / 付與残高）、消耗明細與用量図表——消耗明細同一区域水平翻頁（1 頁目：当日 / 当月 / 30 日、2 頁目：模型別内訳 + 日別 / 月別 chart）、上方類手機主屏幕頁面指示 dot（tap 可、横 drag / swipe 翻頁）、区域高度當前頁内容応自動増減（切頁即回収）自身不 scroll（全内容面板自身縦 scroll 依存）
 - 宿主側 30 秒 TTL 緩存；API 鍵 `credentials` service `apiKeyEnv`（預設 `DEEPSEEK_API_KEY`）解決、進程環境変數回退
 
 ### platform token 取得（二段、全自動優先）
@@ -32,13 +32,13 @@ API 用量残高插件（DeepSeek Harness）——webui 用量圓環（送信按
 
 - **底部統計条**：**已停用** —— 官方界面 更良方案 採用：統計条 各指標 **click 可能 情報塊**、開即 完全指標 表示（模型用時、平均 TTFT、輸出速度、token、cache hit）。設定 該行 置灰 残置、何処行 了 知便；旧版 注入 style 自動 清掃。
 - **Enter key 動作**：Enter = 改行、Shift+Enter = 送信（預設有効；DSH 原生動作 Enter = 送信）。無効時原生動作復帰。会話入力欄限定作用、他入力欄不影響。
-- **移動端 session 切替 keyboard 不弹出**：觸屏 device 上、入力欄**既定 編集不可**、故 session 切替 / 新規 session 時 DSH 程序性聚焦 軟 keyboard 喚出不能（実際 `focusin` cancel 不可、`focus` 後 blur 既遅）。guard 有効中、入力欄 対 程序性 `focus()` **直接 飲込**（keyboard 於 focus 瞬間 要求、其手前 停止 初 意味 有；「同一 frame 内 属性 書戻 後 聚焦」競合 閉）。tap / 按鍵 700ms 意図 window 開放、輸入中 更新継続、window 過 再 閉。tap 後 入力 従来通。預設有効、此処無効化可。
-- **疑問 window：長題干 選択肢 遮蔽不**：題干過長時 **自身高度 制限 + 自身内 scroll**（吸頂 廃止）、選択肢 常時 画面内 残留；操作按鈕與底部按鈕 追従表示 維持。題干 **上下両端** 與 追従按鈕**上方** 漸隠 mask 敷、且 **scroll 連動**（該側 実際 内容 残時 之 見 漸隠：最上部 頂端 模糊不）；按鈕下方 同色 埋 塞、内容 一刀切 不。漸変色 卡片実際底色 取得、light / dark 両主題 追従。預設有効。
+- **移動端 session 切替 keyboard 不弾出**：觸屏 device 上、入力欄**既定 編集不可**、故 session 切替 / 新規 session 時 DSH 程序性聚焦 軟 keyboard 喚出不能（実際 `focusin` cancel 不可、`focus` 後 blur 既遅）。guard 有効中、入力欄 対 程序性 `focus()` **直接 飲込**（keyboard 於 focus 瞬間 要求、其手前 停止 初 意味 有；「同一 frame 内 属性 書戻 後 聚焦」競合 閉）。tap / 按鍵 700ms 意図 window 開放、輸入中 更新継続、window 過 再 閉。tap 後 入力 従来通。預設有効、此処無効化可。
+- **疑問 window：長題干 選択肢 遮蔽不**：題干過長時 **自身高度 制限 + 自身内 scroll**（吸頂 廃止）、選択肢 常時 画面内 残留；操作按鈕與底部按鈕 追従表示 維持。題干 **上下両端** 與 追従按鈕**上方** 漸隠 mask 敷、且 **scroll 連動**（該側 実際 内容 残時 之 見 漸隠：最上部 頂端 模糊不）；按鈕下方 同色 埋 塞、内容 一刀切 不。漸変色 札実際底色 取得、light / dark 両主題 追従。預設有効。
 四設定預設有効、瀏覽器 localStorage 永続化。
 
 ### 峰谷課金標記
 
-DeepSeek 現行峰谷課金規則（官方価格頁脚注）：**峰 = 週一〜週五 北京時間 09:00–12:00、14:00–18:00、其余（週末終日含）低谷価格**。峰時間帯：用量環（送信 key 左円形按鈕）、用量頁 context 進捗 bar 與各明細色塊、更新/load 動画、使用量 chart 一括紅色系表示——chart 内各 model 異紅 tone（紅但区分可、図例同同期）維持、chart 標題横赤「峰時課金」badge 表示（hover 時間帯説明）。紅表示官方峰時間帯合致自動入/解除（30 秒毎境界再検査）、手動更新不要。峰開始與終了両方通知自働再生（pack `peak` / `peakEnd` segment 優先、無時 TTS 回退）。「余额」標籤 click（手動更新）挨拶音声後峰提示追加（pack `peak` segment 優先、無時 TTS 回退）。
+DeepSeek 現行峰谷課金規則（官方価格頁脚注）：**峰 = 週一〜週五 北京時間 09:00–12:00、14:00–18:00、其余（週末終日含）低谷価格**。峰時間帯：用量環（送信 key 左円形按鈕）、用量頁 context 進捗 bar 與各明細色塊、更新/load 動画、使用量 chart 一括紅色系表示——chart 内各 model 異紅 tone（紅但区分可、図例同同期）維持、chart 標題横赤「峰時課金」badge 表示（hover 時間帯説明）。紅表示官方峰時間帯合致自動入/解除（30 秒毎境界再検査）、手動更新不要。峰開始與終了両方通知自働再生（pack `peak` / `peakEnd` segment 優先、無時 TTS 回退）。「余額」標籤 click（手動更新）挨拶音声後峰提示追加（pack `peak` segment 優先、無時 TTS 回退）。
 
 ### 音声放送
 
@@ -108,7 +108,7 @@ voice-pack.zip
 | `tokenUnit` | 数字後単位（例「個 token」、再利用可） |
 | `suffix` | 放送結尾 |
 
-全 segment 任意：欠落 segment 放送時 TTS 回退。面板呈現與官方使用量頁基準一致：「入」未命中輸入限定計上、缓存命中別列（token 與金額數據官方 API 日粒度 bucket 取得、二次合算不）。作成器 sample text 預設 TTS 兜底文案一字不差（録音 pack 預設 TTS 体験接近保証）；動的數字（token 数、金額與幣種）當前 TTS backend 合成、「pack segment + TTS 數字」順連結。任意 `greetings` file 路配列（0–32 個）：音声放送有効時、「余额」標籤 click（手動更新）毎 random 一個挨拶/着地音再生。挨拶音声無時 TTS 挨拶 pool random 再生。
+全 segment 任意：欠落 segment 放送時 TTS 回退。面板呈現與官方使用量頁基準一致：「入」未命中輸入限定計上、缓存命中別列（token 與金額數據官方 API 日粒度 bucket 取得、二次合算不）。作成器 sample text 預設 TTS 兜底文案一字不差（録音 pack 預設 TTS 体験接近保証）；動的數字（token 数、金額與幣種）當前 TTS backend 合成、「pack segment + TTS 數字」順連結。任意 `greetings` file 路配列（0–32 個）：音声放送有効時、「余額」標籤 click（手動更新）毎 random 一個挨拶/着地音再生。挨拶音声無時 TTS 挨拶 pool random 再生。
 
 **作成與共有**：「設定 → 音声 → 音声 pack 管理」→「音声 pack 作成」作成器開——先 pack 語言（zh-CN / en / ja）選択（sample text 與 manifest `lang` 決定、言語跨録音可能）；segment 逐段瀏覽器 mic 録音、挨拶 list 逐条録音（「添加挨拶」list 拡張、✕ slot 削除、sample text 預設 TTS 挨拶 pool 対応）；或 local 音声 file import。録音中右下可視化浮窗（level meter + 経過時間 + sample text + 停止/破棄）表示。完了後「打包 download」共有 zip 生成、「compile & 適用」本機 library import 即適用可。音声 pack import 済時、初回編集時上書警告表示確認必要（session 内一回）。
 
@@ -151,7 +151,7 @@ package 的 `dsh.bundle` `cordis.patch.yml` 指、導入後 profile layer 有効
 
 - 残高數據 DeepSeek 官方 API、用量數據 platform 制御台内部 API 由来——認証方式異（API 鍵 / platform 会話 token）、一方欠時該当視図 error 非表示未登録状態表示。
 - 自動掃描本機瀏覽器登録済 token 限定読取、瀏覽器外數據不採集。token file `0600` 権限落盤。
-- 面板頁面級 overlay（document 級 fixed portal、会話区域 clip 不、横屏/窄幅均画面外出不）；高度「锚点上方可用空間」自動 clamp（手機横屏 top bar 遮蔽回避）；横向可用幅不足時内容適応幅維持、面板横 scroll 表示、縦向同面板自身 scrollbar 表示。
+- 面板頁面級 overlay（document 級 fixed portal、会話区域 clip 不、横屏/窄幅均画面外出不）；高度「錨点上方可用空間」自動 clamp（手機横屏 top bar 遮蔽回避）；横向可用幅不足時内容適応幅維持、面板横 scroll 表示、縦向同面板自身 scrollbar 表示。
 
 
 ### 設定存儲層
