@@ -34,7 +34,10 @@ API usage balance plugin (DeepSeek Harness) — adds a 「Usage / Balance」 tab
 - **Enter key behavior**: Enter = newline, Shift+Enter = send (on by default; DSH's native behavior is Enter = send); turning it off restores the native behavior. Composer only; other inputs unaffected.
 - **Mobile: no keyboard on session switch**: on touch devices the composer stays **non-editable by default**, so the programmatic focus DSH performs on a session switch or a new session cannot summon the soft keyboard (real `focusin` is not cancelable, and blurring after `focus` is already too late). While the guard is active, a programmatic `focus()` on the composer is **swallowed outright** (the keyboard is requested at the instant of focus, so intercepting before it is what counts; this closes the "write the attribute back and focus within the same frame" race). Tapping or typing opens a 700 ms intent window that keeps renewing while you type, after which the composer closes again; input after a tap works exactly as before. Enabled by default, can be turned off here.
 - **Question dialog: a long prompt no longer hides the options**: an over-long prompt is **capped in height and scrolls inside its own box** (it is no longer pinned), so the options stay on screen; the action and footer buttons remain pinned. Both **edges of the prompt** and the area **above the pinned buttons** carry a fade mask, applied **scroll-aware** (a side only fades when content actually remains there: scrolled to the top, the top edge no longer goes soft); the strip below the buttons is closed off with a filler in the same colour, so content is no longer sliced off. The gradient colour is sampled from the card's actual background, adapting to light and dark themes. On by default.
+- **Header menu fullscreen toggle**: the 「Toggle fullscreen」 row in the Session header's 「…」 menu (see the next section) is shown by default; turning it off removes the row entirely instead of leaving a dead entry behind.
 The settings above (except the retired stats bar) are on by default and persist in browser localStorage.
+
+The switch grid picks its **column count by itself**: 3 columns on wide layouts, 2 at medium widths, 1 on phones — each cell is at least 150px, so the container fits as many as it can; rotating the screen or splitting it adapts too, no manual layout switch.
 
 ### Header menu: toggle fullscreen
 
@@ -43,6 +46,7 @@ The 「…」 (more actions) dropdown at the top right of the Session header gai
 - Keyboard reachable: ↑/↓ walks to the row, Tab selects it, Esc closes the menu as usual; selection returns focus to the 「…」 button (the menu never drops focus onto the body when it unmounts).
 - Capability check: the row is absent when `documentElement.requestFullscreen` does not exist (iOS Safari only offers `<video>` fullscreen).
 - The row is **injected** into the official 「…」 menu: that menu's rows and open state belong to `@deepseek-ai/dsh-session-log-export`, which exposes no menu-item contribution point; the injected row still joins the official Menu's DOM-based keyboard walk (see `findMoreActionsMenu` in `lib/client.js`).
+- Its switch lives in Interface settings (on by default): turning it off makes the row disappear.
 
 ### Peak pricing marker
 

@@ -34,7 +34,10 @@ API 用量残高插件（DeepSeek Harness）——webui 用量圓環（送信按
 - **Enter key 動作**：Enter = 改行、Shift+Enter = 送信（預設有効；DSH 原生動作 Enter = 送信）。無効時原生動作復帰。会話入力欄限定作用、他入力欄不影響。
 - **移動端 session 切替 keyboard 不弾出**：觸屏 device 上、入力欄**既定 編集不可**、故 session 切替 / 新規 session 時 DSH 程序性聚焦 軟 keyboard 喚出不能（実際 `focusin` cancel 不可、`focus` 後 blur 既遅）。guard 有効中、入力欄 対 程序性 `focus()` **直接 飲込**（keyboard 於 focus 瞬間 要求、其手前 停止 初 意味 有；「同一 frame 内 属性 書戻 後 聚焦」競合 閉）。tap / 按鍵 700ms 意図 window 開放、輸入中 更新継続、window 過 再 閉。tap 後 入力 従来通。預設有効、此処無効化可。
 - **疑問 window：長題干 選択肢 遮蔽不**：題干過長時 **自身高度 制限 + 自身内 scroll**（吸頂 廃止）、選択肢 常時 画面内 残留；操作按鈕與底部按鈕 追従表示 維持。題干 **上下両端** 與 追従按鈕**上方** 漸隠 mask 敷、且 **scroll 連動**（該側 実際 内容 残時 之 見 漸隠：最上部 頂端 模糊不）；按鈕下方 同色 埋 塞、内容 一刀切 不。漸変色 札実際底色 取得、light / dark 両主題 追従。預設有効。
+- **右上 menu 全屏切替**：会話 header 右上「…」menu 内「全屏切替」（次節）預設表示；off 時 行 全 消失、無反応項目 残 不。
 上記設定（已停用 底部統計条 除）預設有効、瀏覽器 localStorage 永続化。
+
+switch 区域 **列数 自動**：広画面 3 列、中間 2 列、手機 1 列——各 cell 最低 150px、容器 入 分 丈 並。画面回転・分割 追従、手動 layout 切替 不要。
 
 ### 右上 menu：全屏切替
 
@@ -43,6 +46,7 @@ API 用量残高插件（DeepSeek Harness）——webui 用量圓環（送信按
 - keyboard 到達可能：↑/↓ 該行 移動、Tab 選択、Esc 従来通 menu 閉。選択後 focus「…」按鈕 帰（menu unmount 時 focus body 落 不）。
 - 能力検出：`documentElement.requestFullscreen` 不存在 時 該行 出現 不（iOS Safari `<video>` 全屏 限定）。
 - 該行 官方「…」menu **注入**：該 menu 行 與 開閉状態 `@deepseek-ai/dsh-session-log-export` 所有、menu-item contribution point 不存在。注入行 亦 官方 Menu DOM 走査 keyboard 移動 参加（`lib/client.js` `findMoreActionsMenu` 参照）。
+- switch 界面設定 内（預設有効）：off 時 行 全 出現 不。
 
 ### 峰谷課金標記
 
