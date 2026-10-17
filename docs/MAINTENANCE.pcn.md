@@ -4,6 +4,21 @@
 
 dsh-api-balance 軟件更新維護記録。
 
+## 2026-10-18T08:22:45+09:00
+
+**摘要**：feat(client): 右上「更多操作」menu **全屏切替** 一行 追加
+
+- menu 行 與 開閉状態 `@deepseek-ai/dsh-session-log-export` 所有、slots 契約 内 menu-item contribution point 不存在——故**注入**：menu 開時 primitives `MenuItemButton` 一行 items container portal
+- 落点 `role="presentation"` viewport、最初子要素 **不**（其 `aria-hidden` 材質層）。menu 認識 anchor `aria-busy`（該 plugin 常時設定）或 `aria-label` /更多|more/ 一致 以 行、両者 不合時 注入不（open-in-app dropdown 行 紛込 不）
+- keyboard 一行 書 不：官方 Menu `querySelectorAll("button:not(:disabled)")` DOM 都度走査、注入行 自動 ArrowUp/Down・Home/End・Tab 選択・Escape 閉鎖 参加。閉仍 owner 責務——anchor 一度 click（onClick toggle 其）、focus anchor 帰（menu unmount 時 focus body 落 不）
+- 表示 `fullscreenchange` 以「全屏切替 / 全屏終了」切替；`documentElement.requestFullscreen` 不存在時（iOS Safari 等）click 無反応行 出 不、行自身 出現 不
+- 判据：`node test/fullscreen-menu.test.mjs` 6/6——上流 DOM 構造 以 判据 駆動、反例 2 件 含（`aria-busy` 無 且 label 不合 menu 拒否 事；viewport 無 場合 材質層 入 不 諦 事）
+- **検証限界**：browser 制御 無、見栄 與 実機 gesture **未実測**。上流 構造契約 実行時観測 非 而 源码読解 基、dsh 更新後 此項目 静 消 場合、先 上記 4 判据 確認
+
+| 提交 | 説明 |
+|------|------|
+| `8169254` | feat(client): 右上「…」menu「全屏切替」一行 追加 |
+
 ## 2026-10-08T16:38:01+09:00
 
 **摘要**：fix(mobile): keyboard guard 「**既定 編集不可** + 程序性 focus 飲込」方式 変更

@@ -4,6 +4,21 @@
 
 dsh-api-balance package update changelog.
 
+## 2026-10-18T08:22:45+09:00
+
+**Summary**: feat(client): the 「…」 (more actions) menu gains a 「**Toggle fullscreen**」 row
+
+- The menu's rows and open state belong to `@deepseek-ai/dsh-session-log-export`, and the slots contract has no menu-item contribution point — so it is **injected**: when the menu opens, one primitives `MenuItemButton` row is portaled into its items container
+- The landing spot is the `role="presentation"` viewport, **not** the first child (that is the `aria-hidden` material layer); the menu is recognized by the anchor's `aria-busy` (the plugin always sets it) or by `aria-label` matching /更多|more/, and when neither matches nothing is injected (no row smuggled into the open-in-app dropdown)
+- Not one line of keyboard code: the official Menu walks `querySelectorAll("button:not(:disabled)")` live over the DOM, so the injected row joins ArrowUp/Down, Home/End, Tab selection and Escape closing automatically; closing still belongs to the owner — click the anchor once (its onClick is the toggle) and hand focus back to it, so focus never falls to the body when the menu unmounts
+- The label follows `fullscreenchange` between 「Toggle fullscreen」 and 「Exit fullscreen」; when `documentElement.requestFullscreen` does not exist (e.g. iOS Safari) the row is absent instead of being dead on click
+- Criteria: `node test/fullscreen-menu.test.mjs` 6/6 — driven by the upstream DOM structure, with two counterexamples (a menu without `aria-busy` and with a non-matching label must be refused; a missing viewport must make it give up rather than dropping into the material layer)
+- **Verification limit**: no browser control, so the visuals and real-device gesture are **not measured**; the upstream structure contract comes from reading the source, not from runtime observation — if this silently disappears after a dsh upgrade, check those four criteria first
+
+| Commit | Description |
+|------|------|
+| `8169254` | feat(client): the 「…」 (more actions) menu gains a 「Toggle fullscreen」 row |
+
 ## 2026-10-08T16:38:01+09:00
 
 **Summary**: fix(mobile): the keyboard guard now works as "**non-editable by default** + swallow programmatic focus"

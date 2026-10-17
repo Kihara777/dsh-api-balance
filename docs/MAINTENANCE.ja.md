@@ -4,6 +4,21 @@
 
 dsh-api-balance パッケージ更新履歴。
 
+## 2026-10-18T08:22:45+09:00
+
+**概要**：feat(client): ヘッダー右上の「…」（その他の操作）メニューに「**フルスクリーン切替**」を追加
+
+- メニューの行と開閉状態は `@deepseek-ai/dsh-session-log-export` が所有し、slots 契約に menu-item のコントリビューション点は無い——よって**注入**する：メニューが開いた時点で primitives の `MenuItemButton` 1 行を items コンテナへ portal する
+- 落点は `role="presentation"` の viewport であり、最初の子要素では**ない**（それは `aria-hidden` の材質層）；メニューの認識は anchor の `aria-busy`（該当プラグインが常時設定）または `aria-label` の /更多|more/ 一致で行い、どちらも合わなければ何も注入しない（open-in-app のドロップダウンへ行を紛れ込ませない）
+- キーボード処理は一行も書いていない：公式 Menu は `querySelectorAll("button:not(:disabled)")` で DOM を都度走査するため、注入行は自動で ArrowUp/Down・Home/End・Tab 選択・Escape 閉鎖に参加する；閉じるのは引き続き owner の責務——anchor を一度クリックし（onClick が toggle そのもの）、フォーカスを anchor へ戻す（メニューのアンマウント時にフォーカスが body へ落ちないように）
+- ラベルは `fullscreenchange` で「フルスクリーン切替 / フルスクリーン終了」を切替；`documentElement.requestFullscreen` が存在しない場合（iOS Safari など）は、クリックしても無反応な行ではなく**行自体を出さない**
+- 判定：`node test/fullscreen-menu.test.mjs` 6/6——上流の DOM 構造で判定を駆動し、反例 2 件を含む（`aria-busy` が無く label も合わないメニューは拒否されること；viewport が無い場合は材質層へ入れずに諦めること）
+- **検証の限界**：ブラウザ制御が無いため、見た目と実機のジェスチャーは**未実測**；上流の構造契約は実行時観測ではなくソース読解に基づく——dsh 更新後にこの項目が静かに消えたら、まず上記 4 つの判定を確認する
+
+| コミット | 説明 |
+|------|------|
+| `8169254` | feat(client): ヘッダー右上の「…」メニューに「フルスクリーン切替」を追加 |
+
 ## 2026-10-08T16:38:01+09:00
 
 **概要**：fix(mobile): キーボードガードを「**既定で編集不可** + プログラム的 focus を飲み込む」方式に

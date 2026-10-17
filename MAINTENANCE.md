@@ -4,6 +4,21 @@
 
 dsh-api-balance 软件更新维护日志。
 
+## 2026-10-18T08:22:45+09:00
+
+**摘要**：feat(client): 右上「更多操作」菜单新增「**切换全屏**」
+
+- 菜单的行与开合状态归 `@deepseek-ai/dsh-session-log-export`，slots 契约里没有 menu-item 贡献点——只能**注入**：菜单打开时把一行 primitives `MenuItemButton` portal 进它的 items 容器
+- 落点是 `role="presentation"` 的 viewport，**不是**第一个子元素（那是 `aria-hidden` 的材质层）；认菜单靠 anchor 的 `aria-busy`（该插件恒设）或 `aria-label` 匹配 /更多|more/，两条都不中就不注入（不往 open-in-app 的下拉里塞一行）
+- 键盘一行没写：官方 Menu 用 `querySelectorAll("button:not(:disabled)")` 实时查 DOM，注入行自动进入 ArrowUp/Down、Home/End、Tab 选中与 Escape 关闭；关菜单仍归 owner——点一次 anchor（onClick 即 toggle）再把焦点还给它，避免菜单卸载后焦点掉到 body
+- 文案随 `fullscreenchange` 在「切换全屏 / 退出全屏」间切换；`documentElement.requestFullscreen` 不存在（如 iOS Safari）时该项不出现，而不是给一个点了没反应的行
+- 判据：`node test/fullscreen-menu.test.mjs` 6/6——用上游 DOM 结构驱动判据，含两条反证（无 `aria-busy` 且 label 不符的菜单必须被拒绝；缺 viewport 必须放弃而非塞进材质层）
+- **验证限制**：没有浏览器控制，视觉与真机手势**未实测**；上游结构契约来自源码核对而非运行时观测——升级 dsh 后若这项静默消失，先查那四条判据
+
+| 提交 | 说明 |
+|------|------|
+| `8169254` | feat(client): 右上「更多操作」菜单新增「切换全屏」 |
+
 ## 2026-10-08T16:38:01+09:00
 
 **摘要**：fix(mobile): 键盘守护改成「**默认不可编辑** + 吞掉程序性 focus」
