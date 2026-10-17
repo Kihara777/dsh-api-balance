@@ -4,6 +4,20 @@
 
 dsh-api-balance package update changelog.
 
+## 2026-10-18T08:53:18+09:00
+
+**Summary**: feat(client): a switch for the header-menu fullscreen row; the switch grid adapts 1/2/3 columns
+
+- on by default; turning it off removes the menu row entirely (no dead entry); same-page immediacy comes from a self-dispatched CustomEvent — `storage` only fires in other tabs
+- the switch area became a grid: at the 520px dialog, 3 columns need 470px and 4 need 630px, so wide 3 / medium 2 / phone 1, never more than 3
+- each switch is now a card (title and toggle on one line, hint below) with `aria-labelledby` — screen readers no longer hear a bare 「on/off」
+- criteria: `test/header-menu-toggle.test.mjs` 5/5 (two counterexamples), the older 6/6 still green; **visuals and real-device rotation not measured**
+
+| Commit | Description |
+|------|------|
+| `b30dd88` | feat(client): a switch for the header-menu fullscreen row; adaptive 1/2/3-column switch grid |
+| `6af1a53` | docs: four-language sync — the switch and the adaptive columns |
+
 ## 2026-10-18T08:22:45+09:00
 
 **Summary**: feat(client): the 「…」 (more actions) menu gains a 「**Toggle fullscreen**」 row

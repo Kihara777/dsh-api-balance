@@ -4,6 +4,20 @@
 
 dsh-api-balance 軟件更新維護記録。
 
+## 2026-10-18T08:53:18+09:00
+
+**摘要**：feat(client): 設定 内 右上 menu 全屏行 switch 追加；switch 区域 1/2/3 列 自動可変
+
+- 預設有効、off 時 menu 行 全 消失（無反応項目 残 不）；同 page 即時反映 自前 CustomEvent 発行——`storage` 他 tab 限定 発火
+- switch 区域 grid 化：dialog 520px 下 3 列 470px・4 列 630px 必要、故 広 3 / 中間 2 / 手機 1、最大 3 列
+- 各項目 card 化（title 與 switch 同行、説明 下）、`aria-labelledby` 追加——screen reader「開/関」丈 読 事 無
+- 判据：`test/header-menu-toggle.test.mjs` 5/5（反例 2 件 含）、既存 6/6 緑；**見栄 與 実機回転 未実測**
+
+| 提交 | 説明 |
+|------|------|
+| `b30dd88` | feat(client): 設定 内 右上 menu 全屏行 switch；switch 区域 1/2/3 列 自動可変 |
+| `6af1a53` | docs: 四語同期 —— switch 與 自動列数 |
+
 ## 2026-10-18T08:22:45+09:00
 
 **摘要**：feat(client): 右上「更多操作」menu **全屏切替** 一行 追加
