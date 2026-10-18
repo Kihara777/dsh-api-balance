@@ -4,6 +4,20 @@
 
 dsh-api-balance package update changelog.
 
+## 2026-10-18T11:11:11+09:00
+
+**Summary**: feat(client): the panel height also eases over 220 ms when switching 「Usage ↔ Balance」
+
+- the panel now uses an explicit height plus a transition; a ResizeObserver watches the content layer, so incoming balance data and re-wrapping follow too, not just the tab switch
+- height = measured content + computed padding, clamped by maxHeight; the first frame keeps the natural height (no animation), and closing resets it to null
+- `pagerHeightTransition` renamed to `heightTransition`, and the reduce-motion subscription extracted into `usePrefersReducedMotion` — one policy shared by both animation points
+- criteria: `pager-transition` 5/5, `fullscreen-menu` 6/6, `header-menu-toggle` 5/5, voice selection all pass; **real interpolation and on-device feel not measured**
+
+| Commit | Description |
+|------|------|
+| `041cae1` | feat(client): the panel height eases over 220 ms on 「Usage ↔ Balance」 switch |
+| `b462928` | docs: four-language sync — the panel height transition |
+
 ## 2026-10-18T10:50:13+09:00
 
 **Summary**: feat(client): the pager height change animates over 220 ms, respecting reduced motion

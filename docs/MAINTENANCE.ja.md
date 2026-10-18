@@ -4,6 +4,20 @@
 
 dsh-api-balance パッケージ更新履歴。
 
+## 2026-10-18T11:11:11+09:00
+
+**概要**：feat(client): 「用量 ↔ 残高」切替時のパネル高さにも 220ms のトランジション
+
+- パネルを明示 height + トランジションに；ResizeObserver が内容層を監視するため、残高データ到着や折り返しも追従（タブ切替だけではない）
+- 高さ = 実測内容 + computed padding、maxHeight でクランプ；初回は自然高さのまま（アニメーションなし）、閉じると null に戻す
+- `pagerHeightTransition` を `heightTransition` に改名、reduce 購読を `usePrefersReducedMotion` に抽出——2 つのアニメーション点が同じ方針を共有
+- 判定：`pager-transition` 5/5、`fullscreen-menu` 6/6、`header-menu-toggle` 5/5、音色選択も全通過；**実際の補間と実機の見え方は未実測**
+
+| コミット | 説明 |
+|------|------|
+| `041cae1` | feat(client): 「用量 ↔ 残高」切替時のパネル高さを 220ms で遷移 |
+| `b462928` | docs: 四語同期 —— パネル高さのトランジション |
+
 ## 2026-10-18T10:50:13+09:00
 
 **概要**：feat(client): ページめくり領域の高さ変化に 220ms のトランジション、「視差効果を減らす」を尊重

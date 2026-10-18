@@ -4,6 +4,20 @@
 
 dsh-api-balance 软件更新维护日志。
 
+## 2026-10-18T11:11:11+09:00
+
+**摘要**：feat(client): 「用量 ↔ 余额」切换的面板高度也加 220ms 过渡
+
+- 面板改显式 height + 过渡；ResizeObserver 观察内容层，余额数据到达/换行也跟随，不只标签切换
+- 高度 = 内容实测 + computed padding，按 maxHeight 钳制；首帧自然高度落位不产生动画，关闭清回 null
+- `pagerHeightTransition` 改名 `heightTransition`、reduce 订阅抽成 `usePrefersReducedMotion`——两处动画共用一份策略
+- 判据：`pager-transition` 5/5、`fullscreen-menu` 6/6、`header-menu-toggle` 5/5、音色全过；**真实插值与真机观感未实测**
+
+| 提交 | 说明 |
+|------|------|
+| `041cae1` | feat(client): 「用量 ↔ 余额」切换的面板高度也加 220ms 过渡 |
+| `b462928` | docs: 四语同步 —— 面板高度过渡 |
+
 ## 2026-10-18T10:50:13+09:00
 
 **摘要**：feat(client): 翻页区高度变化加 220ms 过渡，并尊重「减少动态效果」
