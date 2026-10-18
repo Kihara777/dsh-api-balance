@@ -4,6 +4,19 @@
 
 dsh-api-balance 軟件更新維護記録。
 
+## 2026-10-18T11:55:18+09:00
+
+**摘要**：検証：高度 transition「見 不」誤認——実際 有効、code 変更 無
+
+- 判据 1：dsh 再起動済（`ActiveEnterTimestamp` 02:15:38 UTC、前回 仕掛 再起動 其物）
+- 判据 2：`launch-token` 以 curl 配信中 bundle 取得——`panelContentRef` / `usePrefersReducedMotion` 存在（`rev=e34c17081b65`）。即 再読込 以 新 code
+- 維護者「既 有効、先程 誤認」確認；予定 二強化（280ms・tab 同期計測）根拠 無 故 未実施
+- 文書：「全 transition 視差軽減 意図的尊重」集約説明 追加、確認順 明記
+
+| 提交 | 説明 |
+|------|------|
+| `56b10aa` | docs: 「減少動態効果」集約説明（全 transition 意図的尊重） |
+
 ## 2026-10-18T11:11:11+09:00
 
 **摘要**：feat(client): 「用量 ↔ 余額」切替時 面板高度 220ms transition 追加

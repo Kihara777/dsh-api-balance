@@ -4,6 +4,19 @@
 
 dsh-api-balance package update changelog.
 
+## 2026-10-18T11:55:18+09:00
+
+**Summary**: verification: 「the height transition is missing」 was a misjudgement — it works, no code change
+
+- check 1: dsh did restart (`ActiveEnterTimestamp` 02:15:38 UTC, exactly the restart scheduled the round before)
+- check 2: fetched the served bundle with the launch token via curl — `panelContentRef` / `usePrefersReducedMotion` are both present (`rev=e34c17081b65`), so a refresh loads the new code
+- the maintainer confirmed 「already working, I misread it」; the two planned enhancements (280 ms and tab-synced measurement) lacked evidence and were not applied
+- docs: added one consolidated note that every transition deliberately respects reduced motion, including the order of checks
+
+| Commit | Description |
+|------|------|
+| `56b10aa` | docs: consolidated note on 「reduced motion」 (all transitions deliberately respect it) |
+
 ## 2026-10-18T11:11:11+09:00
 
 **Summary**: feat(client): the panel height also eases over 220 ms when switching 「Usage ↔ Balance」
