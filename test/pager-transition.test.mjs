@@ -1,4 +1,8 @@
-// 翻页区高度/位移过渡的判据测试：node test/pager-transition.test.mjs
+// 高度/位移过渡的判据测试：node test/pager-transition.test.mjs
+//
+// 覆盖两个动画点：翻页区（Pager）的高度与位移，以及弹出面板（「用量 ↔
+// 余额」切换）的高度——两处高度共用 `heightTransition`，所以这里测的是
+// 那份唯一来源，两处都跟着受约束。
 //
 // 为什么需要这个测试：高度过渡这条要求有一半是**无障碍**——系统开了
 // 「减少动态效果」时必须直接跳变。如果只测「过渡字符串里有 height」，
@@ -21,9 +25,9 @@ const source = readFileSync(CLIENT_PATH, "utf8");
 function load() {
 	const text = `
 		${extractFunction(source, "prefersReducedMotion")}
-		${extractFunction(source, "pagerHeightTransition")}
+		${extractFunction(source, "heightTransition")}
 		${extractFunction(source, "pagerSlideTransition")}
-		return { prefersReducedMotion, pagerHeightTransition, pagerSlideTransition };
+		return { prefersReducedMotion, heightTransition, pagerSlideTransition };
 	`;
 	return new Function(text)();
 }
@@ -71,13 +75,13 @@ test("反证：matchMedia 缺失或抛异常时按「不减少」处理（不能
 
 // ── 过渡字符串 ───────────────────────────────────────────────────────
 test("普通情况：高度与位移都带 220ms 过渡", () => {
-	const { pagerHeightTransition, pagerSlideTransition } = load();
-	assert.equal(pagerHeightTransition(false), "height 220ms ease");
+	const { heightTransition, pagerSlideTransition } = load();
+	assert.equal(heightTransition(false), "height 220ms ease");
 	assert.equal(pagerSlideTransition(false), "transform 220ms ease");
 });
 
 test("反证：减少动态效果时**两者都**是 none（不能只关掉一半）", () => {
-	const { pagerHeightTransition, pagerSlideTransition } = load();
-	assert.equal(pagerHeightTransition(true), "none");
+	const { heightTransition, pagerSlideTransition } = load();
+	assert.equal(heightTransition(true), "none");
 	assert.equal(pagerSlideTransition(true), "none");
 });
