@@ -165,6 +165,7 @@ The package's `dsh.bundle` points at `cordis.patch.yml`, so it activates as a pr
 - Auto-scan only reads tokens already signed in on this machine's browsers and collects nothing beyond them; the token file is written with `0600` permissions.
 - The panel is a page-level overlay (a document-level fixed portal, never clipped by the conversation area and never off-screen in landscape or narrow widths); its height clamps automatically to the space above the anchor (avoiding the top bar in phone landscape); when the horizontal space is too narrow, content keeps its adapted width and scrolls horizontally via the panel, and vertically via the panel's own scrollbar.
 - The panel height eases over 220 ms whenever its content changes (both the 「Usage ↔ Balance」 switch and incoming balance data): the height is measured and then interpolated by CSS instead of jumping; with 「reduced motion」 on it snaps. Content taller than the maximum still scrolls inside the panel — the transition affects the height only.
+- Every transition (pager height, panel height, page slide) **deliberately respects** the system's 「reduced motion」 setting: when it is on, they snap instead of animating — that is a trade-off for motion-sensitive users, **not a failure**. On Android, check 「Settings → Accessibility → Remove animations」 (or animation scale 0 in Developer options); when someone reports 「no animation」, look there first, then suspect the code.
 
 
 ### Settings storage layer
