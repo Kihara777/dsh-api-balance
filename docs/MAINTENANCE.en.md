@@ -4,6 +4,19 @@
 
 dsh-api-balance package update changelog.
 
+## 2026-10-19T08:39:44+09:00
+
+**Summary**: fix(client): the real self-lock for the stuck width is at close time (measurement reads the in-flight transition)
+
+- the previous fix only blocked writes while settings were open; the actual lock is on close: `scrollWidth` reads the intermediate width of the 520→old transition and stores it as `panelWidth`, so the target snaps back to 520
+- fix: `settingsOpen` removed from the measurement effect's dependencies; a record/restore effect remembers the normal-view width on open and writes it back on close
+- criteria: the four suites pass; **no unit test** (render × CSS transition interaction) — recorded as such
+- verification limit: no browser control; needs a real 「open settings → Back」 check
+
+| Commit | Description |
+|------|------|
+| `63462dd` | fix(client): the stuck-width self-lock — measurement reads the in-flight transition on close |
+
 ## 2026-10-19T08:29:50+09:00
 
 **Summary**: fix(client): the panel keeps its expanded width after closing settings (measurement wrote the settings width into `panelWidth`)
