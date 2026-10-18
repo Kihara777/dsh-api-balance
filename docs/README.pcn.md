@@ -20,7 +20,7 @@ API 用量残高插件（DeepSeek Harness）——webui 用量圓環（送信按
 ## 功能
 
 - **用量**：原内容（上下文占有率與内訳）
-- **余額**：當前 API KEY 帳戸情報（鍵末尾、残高可否、通貨別総残高 / 充値残高 / 付與残高）、消耗明細與用量図表——消耗明細同一区域水平翻頁（1 頁目：当日 / 当月 / 30 日、2 頁目：模型別内訳 + 日別 / 月別 chart）、上方類手機主屏幕頁面指示 dot（tap 可、横 drag / swipe 翻頁）、区域高度 當前頁内容 応 自動増減（切頁即回収、220ms transition 付；系統「減少動態効果」有効時 即時 jump）、自身 scroll 不（全内容 面板自身縦 scroll 依存）
+- **余額**：當前 API KEY 帳戸情報（鍵末尾、残高可否、通貨別総残高 / 充値残高 / 付與残高）、消耗明細與用量図表——消耗明細同一区域水平翻頁（1 頁目：当日 / 当月 / 30 日、2 頁目：模型別内訳 + 日別 / 月別 chart）、上方類手機主屏幕頁面指示 dot（tap 可、横 drag / swipe 翻頁）、区域高度 當前頁内容 応 自動増減（切頁即回収、220ms 非線形 transition 付、drag 或 連続切頁 中斷 可；系統「減少動態効果」有効時 即時 jump）、自身 scroll 不（全内容 面板自身縦 scroll 依存）
 - 宿主側 30 秒 TTL 緩存；API 鍵 `credentials` service `apiKeyEnv`（預設 `DEEPSEEK_API_KEY`）解決、進程環境変數回退
 
 ### platform token 取得（二段、全自動優先）
@@ -164,7 +164,7 @@ package 的 `dsh.bundle` `cordis.patch.yml` 指、導入後 profile layer 有効
 - 残高數據 DeepSeek 官方 API、用量數據 platform 制御台内部 API 由来——認証方式異（API 鍵 / platform 会話 token）、一方欠時該当視図 error 非表示未登録状態表示。
 - 自動掃描本機瀏覽器登録済 token 限定読取、瀏覽器外數據不採集。token file `0600` 権限落盤。
 - 面板頁面級 overlay（document 級 fixed portal、会話区域 clip 不、横屏/窄幅均画面外出不）；高度「錨点上方可用空間」自動 clamp（手機横屏 top bar 遮蔽回避）；横向可用幅不足時内容適応幅維持、面板横 scroll 表示、縦向同面板自身 scrollbar 表示。
-- 面板高度 内容変化時 220ms transition（「用量 ↔ 余額」切替、余額數據到着 追従）：高度 実測 後 CSS 補間、瞬間 jump 不；系統「減少動態効果」有効時 即時 jump。最大高度 超 内容 従来通 面板内部 scroll、transition 高度 限定 作用。
+- 面板高度 内容変化時 220ms 非線形 transition（「用量 ↔ 余額」切替、余額數據到着 追従；進行中 transition 次変化時 現在値 引継）：高度 実測 後 CSS 補間、瞬間 jump 不；系統「減少動態効果」有効時 即時 jump。最大高度 超 内容 従来通 面板内部 scroll、transition 高度 限定 作用。
 - 全 transition（翻頁区域高度、面板高度、頁移動）系統「減少動態効果」**意図的尊重**：有効時 animation 不 即時 jump——前庭敏感 利用者 為 取捨、**故障 非**。Android「設定 → 無障礙 → 動画削除」（或 開発者 option 動画倍率 0）確認可。「animation 見 不」報告時、先 此処 見、後 code 疑。
 
 
