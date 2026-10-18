@@ -35,17 +35,34 @@ function constValue(name) {
 	return match[1];
 }
 
+/** 数字常量（如 PANEL_MOTION_MS）——单独一个提取器，别和字符串混。 */
+function constNumber(name) {
+	const match = new RegExp(`const ${name} = (\\d+);`).exec(source);
+	if (match === null) throw new Error(`抽取失败：找不到 const ${name}`);
+	return Number(match[1]);
+}
+
 const EASE_OUT = constValue("EASE_OUT");
+const PANEL_MOTION_MS = constNumber("PANEL_MOTION_MS");
 
 function load() {
 	const text = `
 		const EASE_OUT = ${JSON.stringify(EASE_OUT)};
+		const PANEL_MOTION_MS = ${PANEL_MOTION_MS};
 		${extractFunction(source, "prefersReducedMotion")}
 		${extractFunction(source, "heightTransition")}
 		${extractFunction(source, "pagerSlideTransition")}
+		${extractFunction(source, "panelMotionTransition")}
 		${extractFunction(source, "translateXOf")}
 		${extractFunction(source, "pagerOffset")}
-		return { prefersReducedMotion, heightTransition, pagerSlideTransition, translateXOf, pagerOffset };
+		return {
+			prefersReducedMotion,
+			heightTransition,
+			pagerSlideTransition,
+			panelMotionTransition,
+			translateXOf,
+			pagerOffset,
+		};
 	`;
 	return new Function(text)();
 }
@@ -138,4 +155,22 @@ test("pagerOffset：打断切页动画时从当前位置接续，不跳回整数
 	assert.equal(pagerOffset(1, 300, { base: 0, dx: 40 }), -260);
 	// 打断：按下时动画停在 -180（相对基准 +120），再拖 -30 → -210
 	assert.equal(pagerOffset(1, 300, { base: 120, dx: -30 }), -210);
+});
+
+// ── 面板显隐 / 尺寸扩张 ──────────────────────────────────────────────
+test("面板显隐：高度/宽度/透明度/缩放共用同一时长与曲线", () => {
+	const { panelMotionTransition } = load();
+	const value = panelMotionTransition(false);
+	for (const prop of ["height", "width", "opacity", "transform"]) {
+		assert.match(
+			value,
+			new RegExp(`${prop} ${PANEL_MOTION_MS}ms cubic-bezier\\(0\\.22, 1, 0\\.36, 1\\)`),
+			`${prop} 应当与其它三条共用同一时间轴`,
+		);
+	}
+});
+
+test("反证：减少动态效果时面板显隐也直接跳变（不在淡出里播缩放）", () => {
+	const { panelMotionTransition } = load();
+	assert.equal(panelMotionTransition(true), "none");
 });
