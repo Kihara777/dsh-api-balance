@@ -4,6 +4,19 @@
 
 dsh-api-balance package update changelog.
 
+## 2026-10-19T08:16:41+09:00
+
+**Summary**: fix(client): the panel lands in the wrong place on its first open (missing `panelMounted` dependency)
+
+- root cause: after last round's delayed mount, the first `open` ran the positioning effect while the DOM did not exist yet — `panelRef` was null, the effect bailed out, and the position stayed at `0/0`
+- fix: the effect now depends on `panelMounted`; the position starts as null and the panel stays `visibility: hidden` until placed (one frame later beats a mispositioned panel)
+- criteria: the four existing suites pass; **this timing bug has no unit coverage** — recorded as such
+- verification limit: no browser control, so the first open after a refresh still needs the maintainer to confirm
+
+| Commit | Description |
+|------|------|
+| `4a0ac8a` | fix(client): wrong first-open position — positioning effect missing `panelMounted` |
+
 ## 2026-10-18T12:46:23+09:00
 
 **Summary**: feat(client): settings are inlined into the panel and expand it; panel show/hide is interruptible

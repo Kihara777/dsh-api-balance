@@ -4,6 +4,19 @@
 
 dsh-api-balance 軟件更新維護記録。
 
+## 2026-10-19T08:16:41+09:00
+
+**摘要**：fix(client): panel 初回開時 位置偏移（定位 effect `panelMounted` 依存 欠落）
+
+- 原因：前回 遅延 mount 後、最初 `open` 時 DOM 未存在 `panelRef` null、定位 effect 早期 return、位置 `0/0` 残留
+- 修正：effect 依存 `panelMounted` 追加；位置初期値 null、配置迄 `visibility: hidden`（一 frame 遅 方、偏移 panel 良）
+- 判据：既存 4 suite 全通過；**此種 timing 不具合 unit test 無**（其儘 記録）
+- 検証限界：browser 制御 無、再読込後 初回 open 実機確認 要
+
+| 提交 | 説明 |
+|------|------|
+| `4a0ac8a` | fix(client): 初回 open 位置偏移 —— 定位 effect `panelMounted` 欠落 |
+
 ## 2026-10-18T12:46:23+09:00
 
 **摘要**：feat(client): 設定 panel 内 内聯化 拡張；panel 表示/非表示 中斷可能 遷移 化
