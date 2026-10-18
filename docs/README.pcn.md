@@ -30,6 +30,8 @@ API 用量残高插件（DeepSeek Harness）——webui 用量圓環（送信按
 
 ### 界面設定（⚙ 設定 → 界面）
 
+設定 独立 dialog 非：panel 右上「⚙ 設定」押時、**同一 panel 其場 拡張** 設定視図 化（幅 `min(520px, 94vw)` 迄、高度 内容 追従）。「戻」 元視図 與 尺寸 縮。panel 自身 表示/非表示 亦 220ms 非線形 transition（不透明度 + 右下 微拡大）、急速 開閉 現在値 続（再播放 不）。
+
 - **底部統計条**：**已停用** —— 官方界面 更良方案 採用：統計条 各指標 **click 可能 情報塊**、開即 完全指標 表示（模型用時、平均 TTFT、輸出速度、token、cache hit）。設定 該行 置灰 残置、何処行 了 知便；旧版 注入 style 自動 清掃。
 - **Enter key 動作**：Enter = 改行、Shift+Enter = 送信（預設有効；DSH 原生動作 Enter = 送信）。無効時原生動作復帰。会話入力欄限定作用、他入力欄不影響。
 - **移動端 session 切替 keyboard 不弾出**：觸屏 device 上、入力欄**既定 編集不可**、故 session 切替 / 新規 session 時 DSH 程序性聚焦 軟 keyboard 喚出不能（実際 `focusin` cancel 不可、`focus` 後 blur 既遅）。guard 有効中、入力欄 対 程序性 `focus()` **直接 飲込**（keyboard 於 focus 瞬間 要求、其手前 停止 初 意味 有；「同一 frame 内 属性 書戻 後 聚焦」競合 閉）。tap / 按鍵 700ms 意図 window 開放、輸入中 更新継続、window 過 再 閉。tap 後 入力 従来通。預設有効、此処無効化可。
@@ -164,7 +166,7 @@ package 的 `dsh.bundle` `cordis.patch.yml` 指、導入後 profile layer 有効
 - 残高數據 DeepSeek 官方 API、用量數據 platform 制御台内部 API 由来——認証方式異（API 鍵 / platform 会話 token）、一方欠時該当視図 error 非表示未登録状態表示。
 - 自動掃描本機瀏覽器登録済 token 限定読取、瀏覽器外數據不採集。token file `0600` 権限落盤。
 - 面板頁面級 overlay（document 級 fixed portal、会話区域 clip 不、横屏/窄幅均画面外出不）；高度「錨点上方可用空間」自動 clamp（手機横屏 top bar 遮蔽回避）；横向可用幅不足時内容適応幅維持、面板横 scroll 表示、縦向同面板自身 scrollbar 表示。
-- 面板高度 内容変化時 220ms 非線形 transition（「用量 ↔ 余額」切替、余額數據到着 追従；進行中 transition 次変化時 現在値 引継）：高度 実測 後 CSS 補間、瞬間 jump 不；系統「減少動態効果」有効時 即時 jump。最大高度 超 内容 従来通 面板内部 scroll、transition 高度 限定 作用。
+- 面板高度 内容変化時 220ms 非線形 transition（「用量 ↔ 余額」切替、余額數據到着 追従；進行中 transition 次変化時 現在値 引継）：高度 実測 後 CSS 補間、瞬間 jump 不；系統「減少動態効果」有効時 即時 jump。最大高度 超 内容 従来通 面板内部 scroll、transition 高度 限定 作用。面板 **表示 / 非表示** 同一時間軸（不透明度 + 右下 微拡大）使用：開時 非表示状態 mount 後 表示 切替（否則 補間起点 無）、閉時 遷移終了迄 DOM 残置。急速 開閉 現在値 続。
 - 全 transition（翻頁区域高度、面板高度、頁移動）系統「減少動態効果」**意図的尊重**：有効時 animation 不 即時 jump——前庭敏感 利用者 為 取捨、**故障 非**。Android「設定 → 無障礙 → 動画削除」（或 開発者 option 動画倍率 0）確認可。「animation 見 不」報告時、先 此処 見、後 code 疑。
 
 
