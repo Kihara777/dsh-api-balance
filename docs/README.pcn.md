@@ -164,6 +164,7 @@ package 的 `dsh.bundle` `cordis.patch.yml` 指、導入後 profile layer 有効
 - 残高數據 DeepSeek 官方 API、用量數據 platform 制御台内部 API 由来——認証方式異（API 鍵 / platform 会話 token）、一方欠時該当視図 error 非表示未登録状態表示。
 - 自動掃描本機瀏覽器登録済 token 限定読取、瀏覽器外數據不採集。token file `0600` 権限落盤。
 - 面板頁面級 overlay（document 級 fixed portal、会話区域 clip 不、横屏/窄幅均画面外出不）；高度「錨点上方可用空間」自動 clamp（手機横屏 top bar 遮蔽回避）；横向可用幅不足時内容適応幅維持、面板横 scroll 表示、縦向同面板自身 scrollbar 表示。
+- 面板高度 内容変化時 220ms transition（「用量 ↔ 余額」切替、余額數據到着 追従）：高度 実測 後 CSS 補間、瞬間 jump 不；系統「減少動態効果」有効時 即時 jump。最大高度 超 内容 従来通 面板内部 scroll、transition 高度 限定 作用。
 
 
 ### 設定存儲層

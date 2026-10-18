@@ -164,6 +164,7 @@ The package's `dsh.bundle` points at `cordis.patch.yml`, so it activates as a pr
 - Balance data comes from the official DeepSeek API, usage data from the platform console's internal API — the two use different auth (API key / platform session token); when either is missing, the corresponding view shows a not-signed-in state instead of an error.
 - Auto-scan only reads tokens already signed in on this machine's browsers and collects nothing beyond them; the token file is written with `0600` permissions.
 - The panel is a page-level overlay (a document-level fixed portal, never clipped by the conversation area and never off-screen in landscape or narrow widths); its height clamps automatically to the space above the anchor (avoiding the top bar in phone landscape); when the horizontal space is too narrow, content keeps its adapted width and scrolls horizontally via the panel, and vertically via the panel's own scrollbar.
+- The panel height eases over 220 ms whenever its content changes (both the 「Usage ↔ Balance」 switch and incoming balance data): the height is measured and then interpolated by CSS instead of jumping; with 「reduced motion」 on it snaps. Content taller than the maximum still scrolls inside the panel — the transition affects the height only.
 
 
 ### Settings storage layer
