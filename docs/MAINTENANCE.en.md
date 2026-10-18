@@ -4,6 +4,19 @@
 
 dsh-api-balance package update changelog.
 
+## 2026-10-18T10:50:13+09:00
+
+**Summary**: feat(client): the pager height change animates over 220 ms, respecting reduced motion
+
+- the viewport container gets `transition: height 220ms ease`, the same length as the page slide; the first auto→number change is not interpolable, so no animation on mount
+- subscribes to `prefers-reduced-motion` (with a legacy Safari fallback); under reduce, **both** height and slide snap immediately
+- criteria: `test/pager-transition.test.mjs` 5/5 (including the 「only half disabled」 counterexample), the other suites 6/6 and 5/5; **real interpolation and on-device feel not measured**
+
+| Commit | Description |
+|------|------|
+| `2c6a833` | feat(client): animate the pager height over 220 ms, respecting reduced motion |
+| `1cd453d` | docs: four-language sync — the pager height transition |
+
 ## 2026-10-18T08:53:18+09:00
 
 **Summary**: feat(client): a switch for the header-menu fullscreen row; the switch grid adapts 1/2/3 columns

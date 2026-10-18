@@ -4,6 +4,19 @@
 
 dsh-api-balance 軟件更新維護記録。
 
+## 2026-10-18T10:50:13+09:00
+
+**摘要**：feat(client): 翻頁区域 高度変化 220ms transition 追加、「減少動態効果」尊重
+
+- viewport 容器 `transition: height 220ms ease`、頁移動 同長；初回 auto→数値 補間 不能 故 animation 不
+- `prefers-reduced-motion` 購読（旧 Safari fallback 付）；reduce 時 高度 與 移動 **両方** 即時 jump
+- 判据：`test/pager-transition.test.mjs` 5/5（「片側 丈 無効」反例 含）、他 suite 6/6・5/5；**実際 補間 與 実機 見栄 未実測**
+
+| 提交 | 説明 |
+|------|------|
+| `2c6a833` | feat(client): 翻頁区域 高度 220ms animation、「減少動態効果」尊重 |
+| `1cd453d` | docs: 四語同期 —— 翻頁 高度 transition |
+
 ## 2026-10-18T08:53:18+09:00
 
 **摘要**：feat(client): 設定 内 右上 menu 全屏行 switch 追加；switch 区域 1/2/3 列 自動可変
