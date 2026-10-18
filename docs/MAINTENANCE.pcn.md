@@ -4,6 +4,31 @@
 
 dsh-api-balance 軟件更新維護記録。
 
+## 2026-10-18T12:46:23+09:00
+
+**摘要**：feat(client): 設定 panel 内 内聯化 拡張；panel 表示/非表示 中斷可能 遷移 化
+
+- `SettingsModal` → `SettingsContent`：overlay 與 外殻 廃止；⚙ 同一 panel `min(520, 利用可能幅)` 迄 拡張、戻 縮
+- panel 閉時 即座 通常 view 戻 不——fade-out 中 内容 保持、unmount 後 reset
+- 表示/非表示：非表示状態 mount、二重 rAF 後 可視 切替（否則 補間起点 無）；閉時 遷移終了迄 DOM 残置、急速 開閉 現在値 続
+- focus：設定 view「戻」autoFocus、閉後 ⚙ 帰；⚙ `aria-expanded` 使用
+- 判据：`pager-transition` 10/10、他 6/6・5/5・6/6・音色 全通過；**見栄 未実測**
+
+| 提交 | 説明 |
+|------|------|
+| `02484c8` | feat(client): 設定 panel 内 内聯化 拡張；中斷可能 表示/非表示 |
+| `ae4ac31` | docs: 四語同期 —— 設定内聯化 與 panel 表示/非表示 |
+
+## 2026-10-18T12:42:14+09:00
+
+**摘要**：fix(usage): platform HTTP 200 + 空 body 返時 読可能 error 表示
+
+- 原因 token 失効 非：gateway 時折 200 + 空 body 返、旧 `response.json()` 「Unexpected end of JSON input」投
+- `readJsonSafely` 三態解析；用量 window 空応答 一度 retry（400ms）後 読可能 文案
+- 履歴月 與 余額 endpoint 同様 処理；`verifyPlatformToken` 三態 化、判定不能時 local token 保持
+- 併 `fetchWithTimeout` 修正：signal 渡時 timeout 無効化、`AbortSignal.any` 使用
+- 判据：`usage-body` 6/6、他 suite 通過；**実際 空応答 再現 無**
+
 ## 2026-10-18T12:25:46+09:00
 
 **摘要**：feat(client): 全 animation 非線形 easing 統一 + 頁切替 animation 中斷 可

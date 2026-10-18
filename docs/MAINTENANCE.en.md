@@ -4,6 +4,31 @@
 
 dsh-api-balance package update changelog.
 
+## 2026-10-18T12:46:23+09:00
+
+**Summary**: feat(client): settings are inlined into the panel and expand it; panel show/hide is interruptible
+
+- `SettingsModal` → `SettingsContent`: no overlay/shell; ⚙ expands the same panel to `min(520, available width)`, Back shrinks it
+- closing the panel does not swap content immediately — the settings view stays through the fade-out and resets after unmount
+- show/hide: mounts hidden, then flips visible on a double rAF (otherwise there is no start value); on close the DOM stays until the transition ends, and a quick toggle continues from the current state
+- focus: the settings view autoFocuses 「Back」 and hands focus back to ⚙ on close; ⚙ uses `aria-expanded`
+- criteria: `pager-transition` 10/10, the rest 6/6, 5/5, 6/6, voice all pass; **the look is not measured**
+
+| Commit | Description |
+|------|------|
+| `02484c8` | feat(client): inline settings into the panel with expansion; interruptible show/hide |
+| `ae4ac31` | docs: four-language sync — inline settings + panel show/hide |
+
+## 2026-10-18T12:42:14+09:00
+
+**Summary**: fix(usage): a readable error when the platform returns HTTP 200 with an empty body
+
+- the root cause is not an invalid token: the gateway sometimes answers 200 + empty body, and the old `response.json()` threw 「Unexpected end of JSON input」
+- `readJsonSafely` returns three states; an empty usage-window response is retried once (400 ms) before the readable message
+- history months and the balance endpoint are handled the same way; `verifyPlatformToken` is three-state and keeps the local token when it cannot decide
+- also fixed `fetchWithTimeout`: passing a signal swallowed the timeout, now `AbortSignal.any`
+- criteria: `usage-body` 6/6, other suites pass; **a real platform empty response was not reproduced**
+
 ## 2026-10-18T12:25:46+09:00
 
 **Summary**: feat(client): all animations use a non-linear curve, and the page slide is interruptible
