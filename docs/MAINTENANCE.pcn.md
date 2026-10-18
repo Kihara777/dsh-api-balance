@@ -4,6 +4,20 @@
 
 dsh-api-balance 軟件更新維護記録。
 
+## 2026-10-18T12:25:46+09:00
+
+**摘要**：feat(client): 全 animation 非線形 easing 統一 + 頁切替 animation 中斷 可
+
+- `EASE_OUT = cubic-bezier(0.22, 1, 0.36, 1)` 高度・移動・dot・録音 pulse 統一；回転 loader **意図的 linear 維持**（等速回転 正解）
+- 中斷：pointerdown computed transform 読取 drag 基準（`translateXOf` matrix/matrix3d 解析）、`pagerOffset` = 頁基準 + base + dx——押時 整数頁 跳戻 不
+- 高度 transition（頁切替・面板）元々 CSS transition、目標値 変時 現在補間値 続——文書 與 test 注記 明記
+- 判据：`pager-transition` 8/8（「cubic-bezier 必須・ease 不可」「2D/3D/none/不正値」「中斷 跳戻 不」含）、他 6/6・5/5、音色 全通過；**曲線 見栄 與 実機 中斷感 未実測**
+
+| 提交 | 説明 |
+|------|------|
+| `fb9ff2b` | feat(client): 全 animation 非線形、頁切替 中斷 可 |
+| `26f672f` | docs: 四語同期 —— 非線形 easing 與 中斷 |
+
 ## 2026-10-18T11:55:18+09:00
 
 **摘要**：検証：高度 transition「見 不」誤認——実際 有効、code 変更 無

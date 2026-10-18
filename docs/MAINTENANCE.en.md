@@ -4,6 +4,20 @@
 
 dsh-api-balance package update changelog.
 
+## 2026-10-18T12:25:46+09:00
+
+**Summary**: feat(client): all animations use a non-linear curve, and the page slide is interruptible
+
+- one `EASE_OUT = cubic-bezier(0.22, 1, 0.36, 1)` now drives heights, slide, dots and the recording pulse; the spinner **deliberately stays linear** (constant rotation is the correct look)
+- interruption: pointerdown reads the computed transform as the drag base (`translateXOf` parses matrix/matrix3d), and `pagerOffset` = page base + base + dx — pressing no longer snaps back to the integer page
+- height transitions (pager and panel) are CSS transitions already, so a new target resumes from the current interpolated value — now documented and pinned in tests
+- criteria: `pager-transition` 8/8 (including 「must be cubic-bezier, not ease」, 2D/3D/none/garbage parsing, and 「interruption does not snap back」), the others 6/6, 5/5, voice all pass; **curve feel and on-device interruption not measured**
+
+| Commit | Description |
+|------|------|
+| `fb9ff2b` | feat(client): non-linear easing everywhere, interruptible page slide |
+| `26f672f` | docs: four-language sync — non-linear easing and interruption |
+
 ## 2026-10-18T11:55:18+09:00
 
 **Summary**: verification: 「the height transition is missing」 was a misjudgement — it works, no code change
