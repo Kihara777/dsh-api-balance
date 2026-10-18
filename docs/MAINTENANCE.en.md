@@ -4,6 +4,19 @@
 
 dsh-api-balance package update changelog.
 
+## 2026-10-19T08:29:50+09:00
+
+**Summary**: fix(client): the panel keeps its expanded width after closing settings (measurement wrote the settings width into `panelWidth`)
+
+- root cause: width measurement shares the positioning effect; while the settings view was open, a re-run (balance data, resize) measured the settings content (~520) and stored it as `panelWidth`, so closing could not shrink back
+- fix: content width is measured only outside the settings view; `settingsOpen` added to the dependencies so closing re-measures the normal view and transitions back
+- criteria: the four suites pass; **no unit coverage for this either** (React measurement timing) — recorded as such
+- verification limit: no browser control; needs a real 「open settings → Back」 check after refresh
+
+| Commit | Description |
+|------|------|
+| `a2a0a0a` | fix(client): panel width not restored after closing settings — measurement leaked the settings width |
+
 ## 2026-10-19T08:16:41+09:00
 
 **Summary**: fix(client): the panel lands in the wrong place on its first open (missing `panelMounted` dependency)

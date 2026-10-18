@@ -4,6 +4,19 @@
 
 dsh-api-balance 軟件更新維護記録。
 
+## 2026-10-19T08:29:50+09:00
+
+**摘要**：fix(client): 設定閉後 幅 不回縮（計測 設定 view 幅 `panelWidth` 書込）
+
+- 原因：幅計測 定位 effect 同居、設定 view 中 `balance`／resize 再実行時 設定内容 幅（約 520）`panelWidth` 保存、閉後 縮 不
+- 修正：内容幅 計測 **設定 view 以外** 限定；依存 `settingsOpen` 追加、閉時 通常 view 再計測 元幅 戻
+- 判据：既存 4 suite 全通過；**此亦 unit test 無**（React 計測 timing）——其儘 記録
+- 検証限界：browser 制御 無、再読込後「設定開 → 戻」実測 要
+
+| 提交 | 説明 |
+|------|------|
+| `a2a0a0a` | fix(client): 設定閉後 幅 不回縮 —— 計測 設定幅 漏出 |
+
 ## 2026-10-19T08:16:41+09:00
 
 **摘要**：fix(client): panel 初回開時 位置偏移（定位 effect `panelMounted` 依存 欠落）
