@@ -4,6 +4,19 @@
 
 dsh-api-balance package update changelog.
 
+## 2026-10-20T02:10:12+09:00
+
+**Summary**: fix(client): width measurement now reads the **intrinsic content width** (temporary `width:auto`)
+
+- root cause: `el.scrollWidth` reports the current width filled by content, so transients (mid-transition values, the 520 settings view) were written back into `panelWidth` as fact
+- fix: temporarily set `el.style.width = "auto"` (shrink-to-fit) before measuring, restore right after; combined with the existing record/restore effect
+- criteria: the four suites pass; **still no unit test** (browser measurement behavior; no layout engine in Node) — recorded as such
+- verification limit: no browser control; needs a real 「open settings → Back」 check
+
+| Commit | Description |
+|------|------|
+| `1ae40d9` | fix(client): measure the intrinsic content width — no more treating transients as fact |
+
 ## 2026-10-19T08:39:44+09:00
 
 **Summary**: fix(client): the real self-lock for the stuck width is at close time (measurement reads the in-flight transition)

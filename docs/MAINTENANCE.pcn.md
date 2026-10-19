@@ -4,6 +4,19 @@
 
 dsh-api-balance 軟件更新維護記録。
 
+## 2026-10-20T02:10:12+09:00
+
+**摘要**：fix(client): 幅計測 **内容固有幅** 変更（一時 `width:auto`）
+
+- 根：`el.scrollWidth` 「現在幅 内容 埋 値」返、故 過渡値・設定 view 520 事実 扱 `panelWidth` 書戻
+- 修正：計測前 一時 `el.style.width = "auto"`（shrink-to-fit）内容自然幅 読、直後 戻；既存 記録/復元 effect 併用
+- 判据：既存 4 suite 全通過；**unit test 依然 無**（browser 計測挙動、Node layout engine 無）、其儘 記録
+- 検証限界：browser 制御 無、「設定開 → 戻」実機確認 要
+
+| 提交 | 説明 |
+|------|------|
+| `1ae40d9` | fix(client): 内容固有幅 計測 —— 過渡値 事実 扱 不 |
+
 ## 2026-10-19T08:39:44+09:00
 
 **摘要**：fix(client): 設定閉後 幅 卡住 **自鎖点**（閉瞬間 計測 遷移中値 読取）
