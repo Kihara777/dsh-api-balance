@@ -4,6 +4,19 @@
 
 dsh-api-balance 軟件更新維護記録。
 
+## 2026-10-20T02:56:04+09:00
+
+**摘要**：fix(client): 幅 卡 最終漏口 —— 計測 effect **陳旧 closure**
+
+- `settingsOpen` 依存 除外 後 亦 callback 変数 読：設定表示中 他依存（余額數據、resize）再実行時 旧値 `false` 読、計測 走 520 書戻
+- 修正：`settingsOpenRef` 毎 render 同期、effect ref 丈 読——依存 戻 不、旧値 読 不
+- 判据：既存 4 suite 全通過；**unit test 無**（React closure timing）、其儘 記録
+- 検証限界：設定表示中 再実行 起 状況 実機確認 要
+
+| 提交 | 説明 |
+|------|------|
+| `3dce8b7` | fix(client): 幅 最終漏口 —— 計測 effect 陳旧 closure |
+
 ## 2026-10-20T02:10:12+09:00
 
 **摘要**：fix(client): 幅計測 **内容固有幅** 変更（一時 `width:auto`）

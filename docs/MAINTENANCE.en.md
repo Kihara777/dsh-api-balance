@@ -4,6 +4,19 @@
 
 dsh-api-balance package update changelog.
 
+## 2026-10-20T02:56:04+09:00
+
+**Summary**: fix(client): the last leak for the stuck width — a **stale closure** in the measurement effect
+
+- after `settingsOpen` was removed from the dependencies, the callback still read the variable: while settings were open, any other dependency (balance data, resize) re-ran it with the old value `false`, so measurement ran and wrote 520 back
+- fix: a `settingsOpenRef` synced on every render; the effect reads only the ref — not in the dependency array, never stale
+- criteria: the four suites pass; **no unit test** (React closure timing) — recorded as such
+- verification limit: needs a run where a re-run happens while settings stay open
+
+| Commit | Description |
+|------|------|
+| `3dce8b7` | fix(client): the last width leak — stale closure in the measurement effect |
+
 ## 2026-10-20T02:10:12+09:00
 
 **Summary**: fix(client): width measurement now reads the **intrinsic content width** (temporary `width:auto`)
