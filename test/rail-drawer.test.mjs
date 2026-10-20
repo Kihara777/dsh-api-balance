@@ -71,3 +71,37 @@ test("退出全屏即还原：cleanup 逐项移除标记、变量与 transform",
 test("拖拽后浏览器补发的 click 不能再切换一次", () => {
 	assert.ok(source.includes("suppressClick"), "缺少 suppressClick 抑制逻辑");
 });
+
+// ── 几何判据（2026-10-21 的根因）────────────────────────────────────
+import { extractFunction } from "./voice-toolkit.mjs";
+
+function loadRailBox() {
+	const text = `
+		${extractFunction(source, "isRailBox")}
+		return isRailBox;
+	`;
+	return new Function(text)();
+}
+
+test("全屏留边（~44px 黑边）时仍能认出 rail —— 这正是 2026-10-21 把手没反应的原因", () => {
+	const isRailBox = loadRailBox();
+	const viewport = { width: 1241, height: 1344 };
+	// 截图实测：全屏后页面左右各有黑边，rail 从 x≈44 开始、宽 ≈96、高度满屏。
+	// 旧判据 `left <= 1` 在这里直接返回 null —— 把手渲染了，点了什么都不发生。
+	assert.equal(isRailBox({ left: 44, width: 96, height: 1290 }, viewport), true);
+});
+
+test("反证：内容区不能被当成 rail（宽 1140）", () => {
+	const isRailBox = loadRailBox();
+	const viewport = { width: 1241, height: 1344 };
+	assert.equal(isRailBox({ left: 44, width: 1140, height: 1290 }, viewport), false);
+});
+
+test("反证：矮元素、离左侧远的元素、null 都不是 rail", () => {
+	const isRailBox = loadRailBox();
+	const viewport = { width: 1241, height: 1344 };
+	assert.equal(isRailBox({ left: 44, width: 96, height: 300 }, viewport), false);
+	assert.equal(isRailBox({ left: 400, width: 96, height: 1290 }, viewport), false);
+	assert.equal(isRailBox(null, viewport), false);
+	assert.equal(isRailBox({ left: 0, width: 0, height: 1290 }, viewport), false);
+});
