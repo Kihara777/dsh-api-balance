@@ -4,6 +4,19 @@
 
 dsh-api-balance 軟件更新維護記録。
 
+## 2026-10-21T08:03:33+09:00
+
+**摘要**：revert(client): grid 列潰 撤回 —— session page layout 破壊
+
+- 症状：内容 viewport 左外 溢出 裁切、rail 内容 覆（screenshot 確認）。前版「親第 1 列 0px」原因
+- 原因：`grid-template-columns` 書換 後 内容列 旧列幅 計算 溢出。fixed rail 其上 重
+- 対応：該変更 撤回、既知 許容 劣化（畳後 rail 幅 空白 残）保持。開閉・把手・遅延非表示 不変
+- 判据：`rail-drawer` 11/11（反証 2 件：`collapseGridColumn` / `data-dsh-ab-rail-host` 再導入 不）、他 suite 通過；**page 復帰 実機確認 要**
+
+| 提交 | 説明 |
+|------|------|
+| `c797804` | revert(client): grid 列潰 撤回 |
+
 ## 2026-10-21T07:55:27+09:00
 
 **摘要**：fix(client): rail 流 外 丈 不足 —— grid 第 1 列 0 潰

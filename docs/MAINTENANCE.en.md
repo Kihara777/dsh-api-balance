@@ -4,6 +4,19 @@
 
 dsh-api-balance package update changelog.
 
+## 2026-10-21T08:03:33+09:00
+
+**Summary**: revert(client): withdraw the grid-column collapse — it broke the session page layout
+
+- symptom: content clipped past the left edge of the viewport and the rail covering the content (confirmed by screenshot); caused by the previous change to the parent's first column
+- root cause: after rewriting `grid-template-columns` the content column still laid out against the old width and overflowed; the fixed rail then covered it
+- action: revert that change and keep the known-acceptable degradation (a rail-wide gap stays after folding); folding/unfolding, the handle and delayed hiding are unchanged
+- criteria: `rail-drawer` 11/11 (two counter-assertions: `collapseGridColumn` / `data-dsh-ab-rail-host` must not reappear), other suites pass; **whether the page is restored needs a real check**
+
+| Commit | Description |
+|------|------|
+| `c797804` | revert(client): withdraw the grid-column collapse |
+
 ## 2026-10-21T07:55:27+09:00
 
 **Summary**: fix(client): taking the rail out of flow is not enough — collapse the grid's first column to 0
