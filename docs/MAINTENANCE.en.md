@@ -4,6 +4,21 @@
 
 dsh-api-balance package update changelog.
 
+## 2026-10-21T07:40:51+09:00
+
+**Summary**: feat(client): hide the sidebar in fullscreen, with an edge-handle drawer
+
+- in fullscreen the rail becomes a `position: fixed` overlay and slides out of view, so the content fills the width at once; leaving fullscreen restores every attribute
+- an edge handle: tap / keyboard / horizontal drag pulls the sidebar out and back; dragging tracks the pointer and the half-width threshold decides on release; the CSS transition stays interruptible
+- `visibility: hidden` only after the slide-out ends (otherwise an empty shell slides out); a test asserts `RAIL_MOTION_MS` equals the CSS value
+- new setting 「Hide the sidebar in fullscreen」, on by default, with its own storage key and event
+- criteria: `rail-drawer` 7/7, other suites pass; **real fullscreen behaviour not measured** (no browser control)
+
+| Commit | Description |
+|------|------|
+| `e9ddca2` | feat(client): hide the sidebar in fullscreen + edge-handle drawer |
+| `8b9cce8` | docs: four-language sync — fullscreen sidebar drawer |
+
 ## 2026-10-20T02:56:04+09:00
 
 **Summary**: fix(client): the last leak for the stuck width — a **stale closure** in the measurement effect

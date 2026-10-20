@@ -4,6 +4,21 @@
 
 dsh-api-balance 軟件更新維護記録。
 
+## 2026-10-21T07:40:51+09:00
+
+**摘要**：feat(client): 全屏時 側欄 隠 + 左縁把手 drawer
+
+- 全屏中 rail `position: fixed` 覆層 化、画面外 滑出。本文 即座 幅 一杯 占；終了時 全 属性 原 戻
+- 左縁 把手：tap / keyboard / 横 drag 引 出・収納。drag 指 追従、離時 半幅 阈值 決定；CSS transition 中断 可能
+- `visibility: hidden` 滑出 終後（否 空殻 滑）；`RAIL_MOTION_MS` 與 CSS 値 同 値 測試 断言
+- 新設定「全屏時 側欄 隠」、預設有効、専用 保存 key 與 event
+- 判据：`rail-drawer` 7/7、他 suite 通過；**実際 全屏動作 未実測**（browser 制御 無）
+
+| 提交 | 説明 |
+|------|------|
+| `e9ddca2` | feat(client): 全屏時 側欄 隠 + 把手 drawer |
+| `8b9cce8` | docs: 四語同期 —— 全屏時 drawer |
+
 ## 2026-10-20T02:56:04+09:00
 
 **摘要**：fix(client): 幅 卡 最終漏口 —— 計測 effect **陳旧 closure**
