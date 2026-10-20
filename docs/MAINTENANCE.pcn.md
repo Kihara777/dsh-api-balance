@@ -4,6 +4,20 @@
 
 dsh-api-balance 軟件更新維護記録。
 
+## 2026-10-21T08:35:11+09:00
+
+**摘要**：fix(client): 全屏側欄 drawer「只写不刪」化、官方折畳標記 追従
+
+- 症状（実測 screenshot）：把手 押 時 先 会話 list 展開、再押 也 収納 不能、把手 icon 側欄 実状態 相反
+- 錯誤一：`getComputedStyle().gridTemplateColumns` 基数 使用——折畳 animation 進行中 中間値 読取、内聯 `!important` 書戻 等 於 animation 固定
+- 錯誤二：`removeProperty("grid-template-columns")` 覆蓋 收回——該 declaration React 管理、削除後 React「値 不変」判断 再書 不、列幅 auto 退行
+- 改法：frame 定位「唯一 内聯 三列 `grid-template-columns` 持 div」変更（`[data-sidebar-collapsed]` 折畳時 限定 存在）；折畳状態 `MutationObserver` 該属性 追従；折畳時 第一列 只 `0px` 圧縮、展開時 記録 官方値 書戻
+- 判据：`rail-drawer` 10/10（三 反証 含：旧 selector 定位・computed 列幅 読取・`removeProperty`）、他 suite 6/6、5/5、10/10、6/6、1/1 全通過；**画面 観感 與 窄幅 branch 未実測（本機 browser 控制 無）**
+
+| 提交 | 説明 |
+|------|------|
+| `20d54cd` | fix(client): 全屏側欄 drawer 只写不刪 化、官方折畳標記 追従 |
+
 ## 2026-10-21T08:11:13+09:00
 
 **摘要**：feat(client): 全屏側欄 公式折畳 変更 + 第 1 列 丈 0 化

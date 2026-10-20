@@ -4,6 +4,20 @@
 
 dsh-api-balance package update changelog.
 
+## 2026-10-21T08:35:11+09:00
+
+**Summary**: fix(client): the fullscreen sidebar drawer now only writes, never deletes, and follows the official collapse marker
+
+- symptom (measured screenshot): the handle first expanded the session list, a second press could not put it back, and the handle icon was the opposite of the sidebar's real state
+- mistake 1: using `getComputedStyle().gridTemplateColumns` as the base — mid-animation the computed value is an intermediate one, so writing it back inline as `!important` pins the animation
+- mistake 2: using `removeProperty("grid-template-columns")` to lift the override — that declaration belongs to React, so deleting it makes React believe the value never changed and skip the next write, leaving the column at auto
+- fix: locate the frame as 「the only div carrying an inline three-column `grid-template-columns`」 (`[data-sidebar-collapsed]` exists only while collapsed); track the collapse state through `MutationObserver` on that attribute; while collapsed only the first column is squeezed to `0px`, and expanding writes the recorded official value back
+- criteria: `rail-drawer` 10/10 (three counter-assertions: the old selector, reading the computed column width, `removeProperty`), other suites 6/6, 5/5, 10/10, 6/6, 1/1 all pass; **the visual result and the narrow-viewport branch are still unmeasured (no browser control on this machine)**
+
+| Commit | Description |
+|------|------|
+| `20d54cd` | fix(client): drawer only writes, follows the official collapse marker |
+
 ## 2026-10-21T08:11:13+09:00
 
 **Summary**: feat(client): fullscreen sidebar now uses the official collapse, and only the first column is zeroed

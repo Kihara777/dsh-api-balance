@@ -4,6 +4,20 @@
 
 dsh-api-balance 软件更新维护日志。
 
+## 2026-10-21T08:35:11+09:00
+
+**摘要**：fix(client): 全屏侧栏抽屉改为「只写不删」并跟随官方折叠标记
+
+- 症状（实测截图）：点把手先展开了会话列表，再点也收不回，把手图标与侧栏真实状态相反
+- 错误一：把 `getComputedStyle().gridTemplateColumns` 当基数——折叠动画进行中读到的是中间值，写回内联 `!important` 等于把动画钉死
+- 错误二：用 `removeProperty("grid-template-columns")` 收回覆盖——那条声明归 React 管，删掉后 React 认为「值没变」不再重写，列宽退回 auto
+- 改法：frame 定位改为「唯一一个带内联三列 `grid-template-columns` 的 div」（`[data-sidebar-collapsed]` 只在折叠时存在）；折叠状态由 `MutationObserver` 跟随该属性；折叠只压第一列 `0px`，展开把记下的官方值写回
+- 判据：`rail-drawer` 10/10（含三条反证：旧选择器定位、读 computed 列宽、`removeProperty`），其余套件 6/6、5/5、10/10、6/6、1/1 全过；**页面观感与窄屏分支仍未实测（本机无浏览器控制）**
+
+| 提交 | 说明 |
+|------|------|
+| `20d54cd` | fix(client): 全屏侧栏抽屉改为只写不删，跟随官方折叠标记 |
+
 ## 2026-10-21T08:11:13+09:00
 
 **摘要**：feat(client): 全屏侧栏改用官方折叠 + 只压第一列
