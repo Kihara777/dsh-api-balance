@@ -4,6 +4,18 @@
 
 dsh-api-balance package update changelog.
 
+## 2026-10-21T07:49:21+09:00
+
+**Summary**: fix(client): the rail is not found when fullscreen letterboxes the page (looser geometry, multi-point sampling)
+
+- root cause: fullscreen leaves ~44px of black bars, so the rail's `left` is no longer 0 while the criterion still required `left <= 1`; `findLeftRail()` returned null, the rail was never tagged, and the handle did nothing
+- fix: a pure `isRailBox` (height ≥60%, left ≤ min(72,12%v), width ≤220), multi-point sampling in `findLeftRail`, and a retry window; **no handle is rendered when the rail is missing**
+- criteria: `rail-drawer` 10/10 (three new geometry cases); other suites pass; **the real bar width was not measured** — if it exceeds 72px the threshold needs adjusting
+
+| Commit | Description |
+|------|------|
+| `5cadad2` | fix(client): find the rail when fullscreen letterboxes the page |
+
 ## 2026-10-21T07:40:51+09:00
 
 **Summary**: feat(client): hide the sidebar in fullscreen, with an edge-handle drawer

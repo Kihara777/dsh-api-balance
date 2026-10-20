@@ -4,6 +4,18 @@
 
 dsh-api-balance 軟件更新維護記録。
 
+## 2026-10-21T07:49:21+09:00
+
+**摘要**：fix(client): 全屏 letterbox 時 rail 発見不能（幾何判据 緩和 + 多点 sampling）
+
+- 原因：全屏 左右 ~44px 黒帯、rail `left` 0 非、`left <= 1` 判据 null 返 → rail 標記 無、把手 無反応
+- 修正：純関数 `isRailBox`（高 ≥60%、left ≤ min(72,12%v)、幅 ≤220）、`findLeftRail` 多点 sampling + retry；**rail 無時 把手 描画 不**
+- 判据：`rail-drawer` 10/10（幾何 case 3 件 追加）；他 suite 通過；**実際 黒帯幅 未実測**、72px 超時 再調整 要
+
+| 提交 | 説明 |
+|------|------|
+| `5cadad2` | fix(client): 全屏黒帯時 rail 発見 |
+
 ## 2026-10-21T07:40:51+09:00
 
 **摘要**：feat(client): 全屏時 側欄 隠 + 左縁把手 drawer
