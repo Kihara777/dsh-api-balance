@@ -106,23 +106,10 @@ test("反证：矮元素、离左侧远的元素、null 都不是 rail", () => {
 	assert.equal(isRailBox({ left: 0, width: 0, height: 1290 }, viewport), false);
 });
 
-// ── 列宽塌缩（2026-10-21 第二次实测）─────────────────────────────────
-test("收起时把 grid 第一列塌缩为 0px —— 否则内容左侧仍留一条等于 rail 宽度的空白", () => {
-	// 实测现象：侧栏确实收起了，但主内容没往左移，左侧空出 ~110px。
-	// 原因是 rail 的列宽写在**父元素**的 grid-template-columns 上。
-	assert.match(source, /const collapseGridColumn = \(rail\) => \{/);
-	assert.ok(
-		source.includes("node.style.gridTemplateColumns = `0px ${widths"),
-		"应把第一列改为 0px、其余列改为 minmax(0, 1fr)",
-	);
-	assert.ok(source.includes('map(() => "minmax(0, 1fr)")'), "其余列必须用 minmax(0, 1fr) 填满");
-	assert.ok(source.includes('node.setAttribute("data-dsh-ab-rail-host", "1")'), "缺少 host 标记");
-});
-
-test("退出全屏时还原父容器的列定义（不能让会话页永久塌缩）", () => {
-	assert.ok(
-		source.includes("gridHost.element.style.gridTemplateColumns = gridHost.saved"),
-		"cleanup 必须写回原始 gridTemplateColumns",
-	);
-	assert.ok(source.includes('gridHost.element.removeAttribute("data-dsh-ab-rail-host")'));
+// ── 回滚记录（2026-10-21）────────────────────────────────────────────
+test("反证：不得改父容器的 grid-template-columns —— 实测会把会话页布局弄坏", () => {
+	// 试过把父容器第一列改成 0px 来释放那一条空白，结果内容被裁到视口左侧
+	// 之外（截图可见）。撤回：宁可保留空白，也不破坏页面。
+	assert.ok(!source.includes("collapseGridColumn"), "列塌缩已回滚，不能再出现");
+	assert.ok(!source.includes("data-dsh-ab-rail-host"), "不得再给父容器打标记");
 });
