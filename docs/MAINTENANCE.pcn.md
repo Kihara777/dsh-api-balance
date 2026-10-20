@@ -4,6 +4,21 @@
 
 dsh-api-balance 軟件更新維護記録。
 
+## 2026-10-21T08:52:38+09:00
+
+**摘要**：fix(client): 格子列 解析 與 全屏解除時 復元 修正（headless 実測 通過）
+
+- 実測手段：headless chromium 153 + CDP 本機 GUI 接続、Fetch 插件 bundle 工作区新版 差替、実際「他操作 → 全屏切替」経路 操作
+- 錯誤一：`split(/\s+/)` 格子列数 計上——`minmax(400px, 1fr)` 内部 空白 持、三列 五分割、`layoutFrame()` 常 null、drawer 存在 同等 無
+- 錯誤二：unmount 後始末 内聯列 snapshot 書戻、React 直後 書 展開状態 折畳値 上書
+- 改法：frame「内聯列 `minmax(` 含 且 先頭列 pixel 値」特定；先頭列 圧縮 該一値 正規表現 置換；復元 常駐 `fullscreenchange` 移行、「全屏入前 展開 有無」判断、viewport 1024 以上 復帰 待 後 toggle
+- 実測：全屏入 `centerLeft` 280→0、把手 `aria-expanded=false`；把手 0→280、`true`；再押 0；全屏解除 280 復帰
+- 判据：`rail-drawer` 11/11、他 6/6、5/5、10/10、6/6、1/1；**実機 広画面 全屏 未確認**（headless 全屏時 viewport 800、窄幅 branch 通過）
+
+| 提交 | 説明 |
+|------|------|
+| `5a3f3c3` | fix(client): 列解析 與 復元 修正 —— headless 実測済 |
+
 ## 2026-10-21T08:35:11+09:00
 
 **摘要**：fix(client): 全屏側欄 drawer「只写不刪」化、官方折畳標記 追従

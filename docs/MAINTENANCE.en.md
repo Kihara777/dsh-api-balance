@@ -4,6 +4,21 @@
 
 dsh-api-balance package update changelog.
 
+## 2026-10-21T08:52:38+09:00
+
+**Summary**: fix(client): grid-column parsing and fullscreen restore (verified in a headless browser)
+
+- how it was measured: headless chromium 153 + CDP against the local GUI, with a Fetch interception swapping the plugin bundle for the working-tree version, driving the real 「More actions → Toggle fullscreen」 path
+- bug 1: counting grid tracks with `split(/\s+/)` — `minmax(400px, 1fr)` contains spaces of its own, so three columns split into five, `layoutFrame()` was always null, and the whole drawer was inert
+- bug 2: the unmount cleanup wrote the inline column snapshot back, overwriting the expanded columns React had just written
+- fix: locate the frame by 「inline grid columns containing `minmax(` with a pixel first track」; squeeze the first track by regex-replacing that one value; move the restore into a resident `fullscreenchange` listener keyed on 「was the sidebar expanded before entering fullscreen」, waiting until the viewport is back above 1024 before toggling
+- measured: entering fullscreen moves `centerLeft` 280→0 with `aria-expanded=false`; the handle takes it 0→280 with `true`; a second click returns to 0; leaving fullscreen returns to 280
+- criteria: `rail-drawer` 11/11, others 6/6, 5/5, 10/10, 6/6, 1/1; **a real wide-screen fullscreen is not covered** (headless sets the viewport to 800, exercising the narrow branch)
+
+| Commit | Description |
+|------|------|
+| `5a3f3c3` | fix(client): drawer column parsing and restore — verified headless |
+
 ## 2026-10-21T08:35:11+09:00
 
 **Summary**: fix(client): the fullscreen sidebar drawer now only writes, never deletes, and follows the official collapse marker
