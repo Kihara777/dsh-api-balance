@@ -4,6 +4,19 @@
 
 dsh-api-balance 軟件更新維護記録。
 
+## 2026-10-21T07:55:27+09:00
+
+**摘要**：fix(client): rail 流 外 丈 不足 —— grid 第 1 列 0 潰
+
+- 実測：側欄 畳 成 功、本文 左 移動 不、左 側 rail 幅 空白 残留
+- 原因：列幅 親 `grid-template-columns` 在、`position: fixed` rail 流 外 丈、第 1 列 場所 確保 残
+- 修正：祖先 最初 grid 容器 求、`0px minmax(0, 1fr) …` 変更；全屏終了時 元値 書戻
+- 判据：`rail-drawer` 12/12（潰/復元 2 件 追加）；他 suite 通過；**grid 以外 layout 未対応**
+
+| 提交 | 説明 |
+|------|------|
+| `ecf3273` | fix(client): grid 第 1 列 潰 本文 幅 一杯 |
+
 ## 2026-10-21T07:49:21+09:00
 
 **摘要**：fix(client): 全屏 letterbox 時 rail 発見不能（幾何判据 緩和 + 多点 sampling）

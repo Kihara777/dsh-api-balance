@@ -4,6 +4,19 @@
 
 dsh-api-balance package update changelog.
 
+## 2026-10-21T07:55:27+09:00
+
+**Summary**: fix(client): taking the rail out of flow is not enough — collapse the grid's first column to 0
+
+- measured: the sidebar folded away but the content did not move left; a rail-wide gap stayed on the left
+- root cause: the column width lives on the parent's `grid-template-columns`; `position: fixed` only removes the rail from flow, the first column still reserves space
+- fix: walk up to the first grid ancestor and set `0px minmax(0, 1fr) …`; restore the original value when leaving fullscreen
+- criteria: `rail-drawer` 12/12 (two new cases: collapse + restore); other suites pass; **non-grid layouts not covered**
+
+| Commit | Description |
+|------|------|
+| `ecf3273` | fix(client): collapse the grid's first column so the content truly fills the width |
+
 ## 2026-10-21T07:49:21+09:00
 
 **Summary**: fix(client): the rail is not found when fullscreen letterboxes the page (looser geometry, multi-point sampling)
