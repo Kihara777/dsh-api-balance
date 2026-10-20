@@ -4,6 +4,20 @@
 
 dsh-api-balance 軟件更新維護記録。
 
+## 2026-10-21T08:11:13+09:00
+
+**摘要**：feat(client): 全屏側欄 公式折畳 変更 + 第 1 列 丈 0 化
+
+- 公式能力 発見：`dsh-client-ui-layout` `layout.toggleSidebar()` 提供、frame `data-sidebar-collapsed` 付、折畳幅 `collapsedWidth = data-windows-titlebar ? 0 : 56`（此 即「占位条」）
+- 折畳 公式 API 経由（inject `layout` 追加）；折畳後 第 1 列 `0px`、第 2 列 `minmax(0,1fr)`、**他列 原様**（全部 1fr 化 前回 layout 破壊 原因）
+- 上書 `!important` inline、終了時 `removeProperty`；自 折畳 場合 丈 戻
+- 前 2 版 残骸 削除：fixed overlay CSS、rail marker、`RAIL_MOTION_MS`、drag/遅延非表示
+- 判据：`rail-drawer` 8/8、他 suite 通過；**狭幅 branch 未実測**
+
+| 提交 | 説明 |
+|------|------|
+| `f925ce1` | feat(client): 公式折畳 + 第 1 列 0 化 |
+
 ## 2026-10-21T08:03:33+09:00
 
 **摘要**：revert(client): grid 列潰 撤回 —— session page layout 破壊

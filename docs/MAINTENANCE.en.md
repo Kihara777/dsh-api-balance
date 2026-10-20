@@ -4,6 +4,20 @@
 
 dsh-api-balance package update changelog.
 
+## 2026-10-21T08:11:13+09:00
+
+**Summary**: feat(client): fullscreen sidebar now uses the official collapse, and only the first column is zeroed
+
+- found the official capability: `dsh-client-ui-layout` exposes `layout.toggleSidebar()`, the frame carries `data-sidebar-collapsed`, and the collapsed width is `collapsedWidth = data-windows-titlebar ? 0 : 56` (that is the 「placeholder strip」)
+- collapsing goes through the official API (added `layout` to inject); after collapsing, the first column becomes `0px` and the second `minmax(0,1fr)`, **all other columns untouched** (rewriting them all to 1fr is what broke the layout before)
+- the override is written inline with `!important`; leaving fullscreen calls `removeProperty`; only a collapse this plugin caused is reverted
+- removed the leftovers of the two earlier attempts: the fixed-overlay CSS, the rail markers, `RAIL_MOTION_MS`, drag/delayed-hide
+- criteria: `rail-drawer` 8/8, other suites pass; **the narrow-viewport branch is not measured**
+
+| Commit | Description |
+|------|------|
+| `f925ce1` | feat(client): official collapse + only the first column zeroed |
+
 ## 2026-10-21T08:03:33+09:00
 
 **Summary**: revert(client): withdraw the grid-column collapse — it broke the session page layout

@@ -4,6 +4,20 @@
 
 dsh-api-balance 软件更新维护日志。
 
+## 2026-10-21T08:11:13+09:00
+
+**摘要**：feat(client): 全屏侧栏改用官方折叠 + 只压第一列
+
+- 发现官方能力：`dsh-client-ui-layout` 提供 `layout.toggleSidebar()`，frame 写 `data-sidebar-collapsed`，折叠宽度 `collapsedWidth = data-windows-titlebar ? 0 : 56`（就是「占位条」）
+- 折叠走官方接口（inject 加 `layout`）；折叠后把第一列压 `0px`、第二列改 `minmax(0,1fr)`，**其余列原样**（上一版全改 1fr 才弄坏布局）
+- 覆盖用 `!important` 内联；退出全屏 `removeProperty` 清理；只还原「自己折的」
+- 删除前两版遗留：fixed 覆盖层 CSS、rail 标记、`RAIL_MOTION_MS`、拖拽/延迟隐藏
+- 判据：`rail-drawer` 8/8（官方接口、frame 定位、只改两列、清理、mineRef、反证旧 CSS 已删），其余套件全过；**窄屏分支未实测**
+
+| 提交 | 说明 |
+|------|------|
+| `f925ce1` | feat(client): 全屏侧栏改用官方折叠 + 只压第一列 |
+
 ## 2026-10-21T08:03:33+09:00
 
 **摘要**：revert(client): 撤回 grid 列塌缩 —— 它把会话页布局弄坏了

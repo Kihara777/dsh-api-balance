@@ -4,6 +4,20 @@
 
 dsh-api-balance パッケージ更新履歴。
 
+## 2026-10-21T08:11:13+09:00
+
+**概要**：feat(client): フルスクリーン側のサイドバーを公式の折り畳みに変更し、1 列目だけを 0 にする
+
+- 公式機能を発見：`dsh-client-ui-layout` が `layout.toggleSidebar()` を提供し、frame に `data-sidebar-collapsed` が付き、折り畳み幅は `collapsedWidth = data-windows-titlebar ? 0 : 56`（これが「占位条」）
+- 折り畳みは公式 API 経由（inject に `layout` を追加）；折り畳み後、1 列目を `0px`、2 列目を `minmax(0,1fr)` にし、**他の列はそのまま**（全部 1fr にしたのが前回レイアウトを壊した原因）
+- 上書きは `!important` のインラインで書き、終了時に `removeProperty`；自分で折り畳んだ場合だけ戻す
+- 前 2 版の残骸を削除：fixed オーバーレイ CSS、rail のマーカー、`RAIL_MOTION_MS`、ドラッグ/遅延非表示
+- 判定：`rail-drawer` 8/8（公式 API、frame 定位、2 列だけ変更、後始末、mineRef、旧 CSS の不在）、他スイートも通過；**狭い画面の分岐は未実測**
+
+| コミット | 説明 |
+|------|------|
+| `f925ce1` | feat(client): 公式折り畳み + 1 列目のみ 0 |
+
 ## 2026-10-21T08:03:33+09:00
 
 **概要**：revert(client): grid 列の潰しを撤回 —— セッションページのレイアウトを壊した
