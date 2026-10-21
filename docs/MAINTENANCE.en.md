@@ -4,6 +4,20 @@
 
 dsh-api-balance package update changelog.
 
+## 2026-10-21T11:31:42+09:00
+
+**Summary**: fix(client): the handle now toggles the icon strip, not the session list
+
+- corrected target: what should be hidden and pulled out is the 56px icon strip on the left (the official collapsed state), not the 280px session panel — the previous `layout.toggleSidebar()` flung the whole list open on the first click
+- the handle now toggles only the 「squeeze the first column to 0px」 override: hidden ⟷ the official 56px strip; hiding only makes sense while collapsed, and nothing is squeezed when the list itself is expanded to 280px
+- if the list happens to be at 280px, the handle folds it back to the strip first, then hides it
+- measured (headless 770x834 phone viewport): fullscreen column 0px / centerLeft 0 → handle click 56px / centerLeft 56 (strip appears) → another click back to 0
+- criteria: `rail-drawer` 14/14, others 6/6, 5/5, 10/10, 6/6, 1/1
+
+| Commit | Description |
+|------|------|
+| `6ba8f5b` | fix(client): handle toggles the icon strip only |
+
 ## 2026-10-21T10:48:40+09:00
 
 **Summary**: fix(client): the drawer mounts on the resident overlay, and fullscreen follows the keyboard

@@ -4,6 +4,20 @@
 
 dsh-api-balance 軟件更新維護記録。
 
+## 2026-10-21T11:31:42+09:00
+
+**摘要**：fix(client): 把手 図標列 只管、session list 展開 不
+
+- 目標 修正：隠・引出 対象 左 56px 図標列（公式 折畳状態）、280px session panel 非。以前 `layout.toggleSidebar()` 一 click 一覧全体 展開
+- 把手「先頭列 0px 圧縮」覆蓋 只 切替：非表示 ⟷ 公式 56px 図標列。隠 可能 公式 折畳状態 時 限定、一覧 280px 展開 時 圧縮 不
+- 一覧 280px 時、先 図標列 折畳 後 隠
+- 実測（headless 770x834 手機視口）：全屏 列 0px / centerLeft 0 → 把手 押 56px / centerLeft 56（図標列 出現）→ 再押 0
+- 判据：`rail-drawer` 14/14、他 6/6、5/5、10/10、6/6、1/1
+
+| 提交 | 説明 |
+|------|------|
+| `6ba8f5b` | fix(client): 把手 図標列 只管 |
+
 ## 2026-10-21T10:48:40+09:00
 
 **摘要**：fix(client): drawer 常駐 overlay 搭載、全屏時 keyboard 追従
