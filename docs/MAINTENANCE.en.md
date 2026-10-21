@@ -4,6 +4,20 @@
 
 dsh-api-balance package update changelog.
 
+## 2026-10-21T12:12:30+09:00
+
+**Summary**: fix(client): content is centred again after the icon strip is hidden in fullscreen
+
+- symptom: with the strip squeezed away, content sat 10px from the left and 17px from the right
+- cause: the official collapsed layout is not prepared for a zero-width left column — the scrollbar gutter and container padding on the right remain while nothing is left on the left
+- fix: while squeezing, measure the content column's own left/right gaps and write the difference into `--dsh-ab-gutter`; a collapsed-state `centerCol{padding-left}` applies it, and hiding it removes the variable. No hard-coded scrollbar width — the difference already contains it
+- measured (headless 770x834): composer column 10/17 → **13/13**; row 29/33
+- criteria: `rail-drawer` 15/15, others 6/6, 5/5, 10/10, 6/6, 1/1
+
+| Commit | Description |
+|------|------|
+| `b65fcae` | fix(client): balance the content gaps after hiding the strip |
+
 ## 2026-10-21T11:31:42+09:00
 
 **Summary**: fix(client): the handle now toggles the icon strip, not the session list
