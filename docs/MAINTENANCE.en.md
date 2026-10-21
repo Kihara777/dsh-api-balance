@@ -4,6 +4,20 @@
 
 dsh-api-balance package update changelog.
 
+## 2026-10-21T12:26:40+09:00
+
+**Summary**: feat(client): non-linear easing for the icon strip
+
+- 280ms with `cubic-bezier(0.22, 1, 0.36, 1)` (fast out, slow in); the padding compensation transitions with it so content never jumps
+- the transition attribute is attached only for the 360ms the plugin rewrites the columns, and it must sit on the frame itself — a descendant selector (with a space) silently misses, which the measurement caught; the official `[data-animating]`/drag rules would otherwise make dragging sticky
+- disabled entirely under `prefers-reduced-motion: reduce`
+- frame-by-frame measurement (headless 770x834): reveal 0→14→26→35→42→46→50→52→53→56; hide 56→42→30→21→14→10→6→4→2→0
+- criteria: `rail-drawer` 16/16, others 6/6, 5/5, 10/10, 6/6, 1/1
+
+| Commit | Description |
+|------|------|
+| `980201d` | feat(client): non-linear easing for the icon strip |
+
 ## 2026-10-21T12:12:30+09:00
 
 **Summary**: fix(client): content is centred again after the icon strip is hidden in fullscreen

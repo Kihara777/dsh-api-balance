@@ -4,6 +4,20 @@
 
 dsh-api-balance 軟件更新維護記録。
 
+## 2026-10-21T12:26:40+09:00
+
+**摘要**：feat(client): 図標列 表示・非表示 非線形 easing
+
+- 280ms、`cubic-bezier(0.22, 1, 0.36, 1)`（速 出 徐 止）。padding 補償 同時 遷移、内容 飛 不
+- transition 属性 插件 列幅 書換 360ms 間 限定 付、且 **frame 自身** 付——子孫 selector（空白 有）一致 不、実測 踏。公式 `[data-animating]`／drag 時 別規則 有、付 放 時 drag 粘
+- `prefers-reduced-motion: reduce` 時 全体 無効
+- frame 単位 実測（headless 770x834）：表示 0→14→26→35→42→46→50→52→53→56、収納 56→42→30→21→14→10→6→4→2→0
+- 判据：`rail-drawer` 16/16、他 6/6、5/5、10/10、6/6、1/1
+
+| 提交 | 説明 |
+|------|------|
+| `980201d` | feat(client): 図標列 非線形 easing |
+
 ## 2026-10-21T12:12:30+09:00
 
 **摘要**：fix(client): 全屏 図標列 隠 後、左右 余白 揃
