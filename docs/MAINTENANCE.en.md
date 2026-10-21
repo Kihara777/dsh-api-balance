@@ -4,6 +4,21 @@
 
 dsh-api-balance package update changelog.
 
+## 2026-10-21T10:48:40+09:00
+
+**Summary**: fix(client): the drawer mounts on the resident overlay, and fullscreen follows the keyboard
+
+- reproduced with a phone viewport: the session header's utilities slot does not render at narrow widths, so the drawer never mounted — fullscreen had no handle at all (headless 770x834 showed `handle: null`)
+- the drawer now mounts on AppFrame's resident `shell.overlay`, so the handle no longer depends on the current page
+- after `requestFullscreen` the layout viewport does not shrink for the keyboard, so content was covered; while fullscreen the root height is pinned to `visualViewport.height` and removed on exit
+- in the same reproduction the official 「Collapse sidebar」 button worked (280→0), so that report does not reproduce; likely a stale bundle on the device
+- measured: handle appears, `centerLeft` 56→0, root height 834px; handle click 0→280; official collapse 280→0; simulated keyboard (834→534) moves the root height with it
+- criteria: `rail-drawer` 13/13, others 6/6, 5/5, 10/10, 6/6, 1/1
+
+| Commit | Description |
+|------|------|
+| `af105f7` | fix(client): resident overlay mount + visualViewport fitting |
+
 ## 2026-10-21T08:52:38+09:00
 
 **Summary**: fix(client): grid-column parsing and fullscreen restore (verified in a headless browser)

@@ -4,6 +4,21 @@
 
 dsh-api-balance 软件更新维护日志。
 
+## 2026-10-21T10:48:40+09:00
+
+**摘要**：fix(client): 抽屉改挂常驻 overlay，全屏时跟随键盘
+
+- 手机窄屏复现：会话头部的 utilities 槽位不渲染，抽屉组件没挂载——全屏后完全没有把手（headless 770x834 实测 `handle: null`）
+- 改挂 AppFrame 常驻的 `shell.overlay`，把手不再依赖当前页面
+- 全屏（`requestFullscreen`）后布局视口不随键盘缩小，内容被键盘盖住；全屏期间用 `visualViewport.height` 顶住 html 高度，退出即撤
+- 同轮复现里点官方「Collapse sidebar」是正常的（280→0），这条不成立，推测真机上旧版残留
+- 实测：全屏后把手出现、`centerLeft` 56→0、html 高度 834px；点把手 0→280；点官方折叠按钮 280→0；模拟键盘（834→534）html 高度跟随
+- 判据：`rail-drawer` 13/13，其余 6/6、5/5、10/10、6/6、1/1
+
+| 提交 | 说明 |
+|------|------|
+| `af105f7` | fix(client): 抽屉改挂常驻 overlay，全屏时用 visualViewport 适配键盘 |
+
 ## 2026-10-21T08:52:38+09:00
 
 **摘要**：fix(client): 抽屉列解析与退出还原修正（headless 实测通过）

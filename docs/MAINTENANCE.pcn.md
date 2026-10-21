@@ -4,6 +4,21 @@
 
 dsh-api-balance 軟件更新維護記録。
 
+## 2026-10-21T10:48:40+09:00
+
+**摘要**：fix(client): drawer 常駐 overlay 搭載、全屏時 keyboard 追従
+
+- 手機窄幅 viewport 再現：session header utilities slot 不描画、drawer 未 mount——全屏 把手 完全不現（headless 770x834 `handle: null`）
+- AppFrame 常駐 slot `shell.overlay` 搭載変更、把手 現 page 非依存
+- `requestFullscreen` 後 layout viewport keyboard 縮 不、内容 隠。全屏中 `visualViewport.height` 根高固定、解除時 撤去
+- 同再現 公式「Collapse sidebar」正常（280→0）、該報告 再現 不、端末側 旧 bundle 推測
+- 実測：全屏 後 把手 出現、`centerLeft` 56→0、根高 834px；把手 押 0→280；公式 折畳 280→0；keyboard 模擬（834→534）根高 追従
+- 判据：`rail-drawer` 13/13、他 6/6、5/5、10/10、6/6、1/1
+
+| 提交 | 説明 |
+|------|------|
+| `af105f7` | fix(client): 常駐 overlay 化 與 visualViewport 追従 |
+
 ## 2026-10-21T08:52:38+09:00
 
 **摘要**：fix(client): 格子列 解析 與 全屏解除時 復元 修正（headless 実測 通過）
