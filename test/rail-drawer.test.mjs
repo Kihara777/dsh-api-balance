@@ -130,6 +130,17 @@ test("全屏隐藏图标栏后左右留白对称（差额补到左侧）", () =>
 	);
 });
 
+test("图标栏显隐走非线性缓动（属性挂在 frame 自身，且尊重减少动效）", () => {
+	assert.ok(
+		source.includes("[data-dsh-ab-rail-animating].pI_x6G_frame{transition:grid-template-columns"),
+		"过渡没有挂在 frame 自身（带空格的派生选择器匹配不到）",
+	);
+	assert.ok(source.includes("cubic-bezier(0.22,1,0.36,1)"), "缺少非线性曲线");
+	assert.ok(source.includes("prefers-reduced-motion:reduce"), "没有尊重减少动效偏好");
+	assert.ok(source.includes("const animateColumns = (target) =>"), "缺少动画开关");
+	assert.ok(source.includes('target.removeAttribute("data-dsh-ab-rail-animating")'), "动画属性没有摘掉");
+});
+
 test("把手：button + aria-expanded + 可访问标签（管图标条显隐）", () => {
 	assert.ok(source.includes('"data-api-balance-handle": "rail"'));
 	assert.ok(source.includes('"aria-expanded": !hidden'));
