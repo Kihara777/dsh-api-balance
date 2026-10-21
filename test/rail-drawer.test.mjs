@@ -112,8 +112,14 @@ test("全屏时用 visualViewport 顶住根元素高度（移动端键盘不缩�
 	);
 });
 
-test("把手：button + aria-expanded + 可访问标签", () => {
+test("把手只切换图标条显隐，从不把会话列表铺开", () => {
+	assert.ok(source.includes("const wantHide = folded && hideRef.current === true"), "压列没有和「折叠态」绑定");
+	assert.ok(source.includes("hideRef.current = hideRef.current !== true"), "把手没有切换图标条显隐");
+	assert.ok(!source.includes("const drawer ="), "header 槽位仍在渲染抽屉");
+});
+
+test("把手：button + aria-expanded + 可访问标签（管图标条显隐）", () => {
 	assert.ok(source.includes('"data-api-balance-handle": "rail"'));
-	assert.ok(source.includes('"aria-expanded": !collapsed'));
-	assert.ok(source.includes('t(collapsed ? "rail.open" : "rail.close")'));
+	assert.ok(source.includes('"aria-expanded": !hidden'));
+	assert.ok(source.includes('t(hidden ? "rail.open" : "rail.close")'));
 });
