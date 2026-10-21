@@ -4,6 +4,18 @@
 
 dsh-api-balance package update changelog.
 
+## 2026-10-21T12:28:43+09:00
+
+**Summary**: docs: the fullscreen sidebar entry now covers easing, gaps and the keyboard
+
+- the entry used to stop at 「hidden / pulled out」 and was missing the three things settled over the last three rounds: the 280ms non-linear ease (fast out, slow in; no motion under reduced-motion), the automatic left-gap balancing, and the page height following the on-screen keyboard on phones
+- terminology fixed: the text now says explicitly that this is the 56px icon strip, not the 280px session list — a distinction that had been misread before
+- criteria: the four languages keep the same `###` section count (9 each), and pcn carries no kana residue
+
+| Commit | Description |
+|------|------|
+| `bd6adbd` | docs(README): fullscreen sidebar entry covers easing, gaps, keyboard |
+
 ## 2026-10-21T12:26:40+09:00
 
 **Summary**: feat(client): non-linear easing for the icon strip
