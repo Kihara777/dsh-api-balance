@@ -118,6 +118,18 @@ test("把手只切换图标条显隐，从不把会话列表铺开", () => {
 	assert.ok(!source.includes("const drawer ="), "header 槽位仍在渲染抽屉");
 });
 
+test("全屏隐藏图标栏后左右留白对称（差额补到左侧）", () => {
+	assert.ok(source.includes("--dsh-ab-gutter"), "缺少左侧补偿变量");
+	assert.ok(
+		source.includes("gutter = Math.max(0, Math.round(window.innerWidth - rect.right - rect.left))"),
+		"没有按内容列实测左右留白",
+	);
+	assert.ok(
+		source.includes("[data-sidebar-collapsed] .pI_x6G_centerCol{padding-left:var(--dsh-ab-gutter,0px)}"),
+		"缺少补偿样式",
+	);
+});
+
 test("把手：button + aria-expanded + 可访问标签（管图标条显隐）", () => {
 	assert.ok(source.includes('"data-api-balance-handle": "rail"'));
 	assert.ok(source.includes('"aria-expanded": !hidden'));
