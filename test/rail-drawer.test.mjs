@@ -96,6 +96,22 @@ test("反证：不得再给 rail 加 fixed 覆盖层（第一版的问题所在�
 	assert.ok(!source.includes('rail.setAttribute("data-dsh-ab-rail"'), "仍在给 rail 打标记");
 });
 
+test("抽屉挂在常驻 shell.overlay 上（手机窄屏的 header 槽位不渲染）", () => {
+	assert.ok(source.includes('ctx.slots.inject("shell.overlay"'), "抽屉没有挂在常驻槽位");
+	assert.ok(source.includes("function RailOverlay("), "缺少常驻挂载组件");
+	// headless 手机视口实测：会话头部的 utilities 槽位不渲染，把手整个消失。
+	assert.ok(!source.includes("const drawer ="), "header 槽位仍在渲染抽屉");
+});
+
+test("全屏时用 visualViewport 顶住根元素高度（移动端键盘不缩布局视口）", () => {
+	assert.ok(source.includes("window.visualViewport"), "缺少 visualViewport 适配");
+	assert.ok(source.includes('root.style.setProperty("height"'), "没设根元素高度");
+	assert.ok(
+		source.includes('document.fullscreenElement === null') && source.includes('root.style.removeProperty("height")'),
+		"退出全屏没有撤掉高度覆盖",
+	);
+});
+
 test("把手：button + aria-expanded + 可访问标签", () => {
 	assert.ok(source.includes('"data-api-balance-handle": "rail"'));
 	assert.ok(source.includes('"aria-expanded": !collapsed'));
