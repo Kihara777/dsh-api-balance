@@ -51,6 +51,19 @@ The 「…」 (more actions) dropdown at the top right of the Session header gai
 - The row is **injected** into the official 「…」 menu: that menu's rows and open state belong to `@deepseek-ai/dsh-session-log-export`, which exposes no menu-item contribution point; the injected row still joins the official Menu's DOM-based keyboard walk (see `findMoreActionsMenu` in `lib/client.js`).
 - Its switch lives in Interface settings (on by default): turning it off makes the row disappear.
 
+### Session jumps: previous / next message
+
+The official round button in the bottom-right corner does one thing only, and stays visible whenever the view is not following the tail. It is replaced by **two round buttons, one above the other**:
+
+- **↑**: scroll to the nearest user message above the viewport (the text you sent);
+- **↓**: scroll to the nearest one below; when there is no next message it scrolls smoothly to the bottom.
+
+They appear **only while you scroll** and fade out about 0.9s after you stop, giving the screen back to the content; the fade uses a non-linear ease and is skipped under reduced-motion.
+
+- Targets are aligned with the browser's own `scrollIntoView` rather than a hard `scrollTop` write — the DSH message list is virtualised, so a written `scrollTop` is folded back to the old offset on the next frame.
+- The official button is hidden by style (`[class*="toBottomSlot"]`); its handler takes no part and it no longer takes space.
+- The group lives on the resident overlay, follows the new scroller when sessions change, and stays out of the way outside a conversation.
+
 ### Peak pricing marker
 
 DeepSeek's current peak/off-peak rule (official pricing footnote): **peak = Mon–Fri 09:00–12:00 and 14:00–18:00 Beijing time; all other hours — including weekends — are off-peak**. During peak hours: the usage ring (the circular button left of the send key), the usage page's context progress bar and its detail color chips, the refresh/loading spinner, and the usage chart all turn into a unified red family — within the chart each model keeps a distinct red shade (red yet distinguishable, legend synced) — and a red 「Peak pricing」 badge appears next to the chart title (hover for the window details). The red effect engages and clears automatically on the official peak windows (re-checked every 30 s across the boundary), no manual refresh needed; both the start and end of a peak window speak a notification (pack `peak` / `peakEnd` segments first, TTS fallback otherwise). The greeting audio on each 「Balance」-tab click (manual refresh) is also followed by a peak hint (pack `peak` segment first, TTS fallback otherwise).

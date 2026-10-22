@@ -4,6 +4,20 @@
 
 dsh-api-balance package update changelog.
 
+## 2026-10-23T07:37:26+09:00
+
+**Summary**: feat(client): previous/next message buttons in the conversation
+
+- the official 「back to bottom」 round button becomes two: ↑ jumps to the nearest user message above the viewport, ↓ to the nearest one below, and smoothly to the bottom when there is no next message
+- they fade in while scrolling and out after 900ms of stillness, with a non-linear ease that respects reduced-motion
+- two traps hit: targets must use `scrollIntoView` (the virtual list folds a written `scrollTop` back to the old offset), and the official button must be matched as `button[class*="toBottom"]` (a bare `[class*="toBottom"]` hits the `toBottomSlot` wrapper first)
+- measured (headless 770x834 with real mouse clicks): hidden at rest, shown while scrolling, auto-hidden after 900ms; both arrows align the target row to the viewport top
+- criteria: `turn-jumper` 5/5, others 6/6, 5/5, 10/10, 16/16, 6/6, 1/1
+
+| Commit | Description |
+|------|------|
+| `f488031` | feat(client): previous/next message buttons |
+
 ## 2026-10-21T12:28:43+09:00
 
 **Summary**: docs: the fullscreen sidebar entry now covers easing, gaps and the keyboard

@@ -4,6 +4,20 @@
 
 dsh-api-balance 軟件更新維護記録。
 
+## 2026-10-23T07:37:26+09:00
+
+**摘要**：feat(client): 会話 前質問 / 次質問 丸 button 二 追加
+
+- 公式 右下「最下部 戻」丸 button 上下 二 置換：↑ viewport 上 最近 用戸 message、↓ 下 最近 者。次 無 時 滑 最下部
+- scroll 中 fade in、停止 900ms fade out。非線形 easing、減少動效 尊重
+- 二 落穴：目標行 `scrollIntoView` 必須（仮想 list 書込 `scrollTop` 旧 offset 戻）、公式 button `button[class*="toBottom"]` 精密 選択（`[class*="toBottom"]` `toBottomSlot` 先 拾）
+- 実測（headless 770x834、実 mouse 操作）：静止 非表示、scroll 表示、900ms 自動 非表示。↑↓ 共 目標行 viewport 上端 整
+- 判据：`turn-jumper` 5/5、他 6/6、5/5、10/10、16/16、6/6、1/1
+
+| 提交 | 説明 |
+|------|------|
+| `f488031` | feat(client): 前 / 次 質問 button |
+
 ## 2026-10-21T12:28:43+09:00
 
 **摘要**：docs: 全屏側欄 条項 緩動・余白・keyboard 補足

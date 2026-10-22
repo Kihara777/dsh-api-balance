@@ -51,6 +51,19 @@ switch 区域 **列数 自動**：広画面 3 列、中間 2 列、手機 1 列�
 - 該行 官方「…」menu **注入**：該 menu 行 與 開閉状態 `@deepseek-ai/dsh-session-log-export` 所有、menu-item contribution point 不存在。注入行 亦 官方 Menu DOM 走査 keyboard 移動 参加（`lib/client.js` `findMoreActionsMenu` 参照）。
 - switch 界面設定 内（預設有効）：off 時 行 全 出現 不。
 
+### session 跳転：前質問 / 次質問
+
+公式 右下 丸 button 一動作 限定、末尾 追従 不 間 常時 表示。之 上下 二 丸 button 置換：
+
+- **↑**：viewport 上 最近 用戸 message（自分 送 文）scroll；
+- **↓**：下 最近 者。次 無 時 滑 最下部 scroll。
+
+二 者 **scroll 中 限定** 出現、停止 約 0.9 秒 後 fade out、画面 内容 返。fade 非線形 easing、system「減少動效」有効 時 行 不。
+
+- 目標行 browser 標準 `scrollIntoView` 整。`scrollTop` 直接代入 使用 不——DSH message list 仮想 list、書込 `scrollTop` 次 frame 元 offset 戻。
+- 公式 丸 button style 隠（`[class*="toBottomSlot"]`）。該処理 関与 不、場所 取 不。
+- button 群 常駐 overlay 搭載、session 切替 新 scroll container 追従。会話 page 以外 表示 不。
+
 ### 峰谷課金標記
 
 DeepSeek 現行峰谷課金規則（官方価格頁脚注）：**峰 = 週一〜週五 北京時間 09:00–12:00、14:00–18:00、其余（週末終日含）低谷価格**。峰時間帯：用量環（送信 key 左円形按鈕）、用量頁 context 進捗 bar 與各明細色塊、更新/load 動画、使用量 chart 一括紅色系表示——chart 内各 model 異紅 tone（紅但区分可、図例同同期）維持、chart 標題横赤「峰時課金」badge 表示（hover 時間帯説明）。紅表示官方峰時間帯合致自動入/解除（30 秒毎境界再検査）、手動更新不要。峰開始與終了両方通知自働再生（pack `peak` / `peakEnd` segment 優先、無時 TTS 回退）。「余額」標籤 click（手動更新）挨拶音声後峰提示追加（pack `peak` segment 優先、無時 TTS 回退）。
