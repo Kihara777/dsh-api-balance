@@ -4,6 +4,19 @@
 
 dsh-api-balance package update changelog.
 
+## 2026-10-23T07:51:21+09:00
+
+**Summary**: feat(client): jump buttons linger 2.5s and reuse the icon strip's easing
+
+- idle time 0.9s → 2.5s: the buttons vanished the instant scrolling stopped, which made them hard to see
+- fade 200ms → 280ms, driven by `var(--dsh-ab-rail-duration)` / `var(--dsh-ab-rail-ease)` — the same non-linear curve as the fullscreen icon strip rather than a second set of numbers
+- measured (headless, frame sampling): `data-visible` holds until 2505ms; the fade runs 1→0.75→0.54→0.37→0.25→0.17→0.11→0.07→0.05→0.03→0.02→0.01→0 in about 230ms, fast then slow; computed transition is `opacity 0.28s cubic-bezier(0.22, 1, 0.36, 1)`
+- criteria: `turn-jumper` 5/5, others 6/6, 5/5, 10/10, 16/16, 6/6, 1/1
+
+| Commit | Description |
+|------|------|
+| `214c41d` | feat(client): linger 2.5s and reuse the icon strip easing |
+
 ## 2026-10-23T07:37:26+09:00
 
 **Summary**: feat(client): previous/next message buttons in the conversation

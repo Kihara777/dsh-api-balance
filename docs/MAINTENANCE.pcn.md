@@ -4,6 +4,19 @@
 
 dsh-api-balance 軟件更新維護記録。
 
+## 2026-10-23T07:51:21+09:00
+
+**摘要**：feat(client): 跳躍 button 滞留 2.5 秒、fade 図標列 同 easing 共用
+
+- 滞留 0.9 秒 → 2.5 秒：scroll 停止 瞬間 消、見 不
+- fade 200ms → 280ms、`var(--dsh-ab-rail-duration)` / `var(--dsh-ab-rail-ease)` 使用、全屏 図標列 同 非線形 curve 統一（別 数値 持 不）
+- 実測（headless、frame 単位 sampling）：`data-visible` 2505ms 迄 維持。fade 1→0.75→0.54→0.37→0.25→0.17→0.11→0.07→0.05→0.03→0.02→0.01→0 約 230ms、速 出 徐 止。computed transition `opacity 0.28s cubic-bezier(0.22, 1, 0.36, 1)`
+- 判据：`turn-jumper` 5/5、他 6/6、5/5、10/10、16/16、6/6、1/1
+
+| 提交 | 説明 |
+|------|------|
+| `214c41d` | feat(client): 滞留 2.5 秒 與 図標列 easing 共用 |
+
 ## 2026-10-23T07:37:26+09:00
 
 **摘要**：feat(client): 会話 前質問 / 次質問 丸 button 二 追加
