@@ -58,7 +58,7 @@ The official round button in the bottom-right corner does one thing only, and st
 - **↑**: scroll to the nearest user message above the viewport (the text you sent);
 - **↓**: scroll to the nearest one below; when there is no next message it scrolls smoothly to the bottom.
 
-They appear **only while you scroll** and fade out about 0.9s after you stop, giving the screen back to the content; the fade uses a non-linear ease and is skipped under reduced-motion.
+They appear **only while you scroll** and fade out about 2.5s after you stop (280ms fade, the same non-linear curve as the icon strip), giving the screen back to the content; the fade uses a non-linear ease and is skipped under reduced-motion.
 
 - Targets are aligned with the browser's own `scrollIntoView` rather than a hard `scrollTop` write — the DSH message list is virtualised, so a written `scrollTop` is folded back to the old offset on the next frame.
 - The official button is hidden by style (`[class*="toBottomSlot"]`); its handler takes no part and it no longer takes space.

@@ -22,7 +22,7 @@ test("官方「回到底部」让位：toBottomSlot 被隐藏", () => {
 });
 
 test("滚动时显示、静置后隐藏", () => {
-	assert.ok(source.includes("setTimeout(() => setVisible(false), 900)"), "缺少静置隐藏");
+	assert.ok(source.includes("setTimeout(() => setVisible(false), 2500)"), "缺少静置隐藏");
 	assert.ok(source.includes('addEventListener("scroll", onScroll, { passive: true })'), "没有监听滚动");
 	assert.ok(source.includes('"data-visible": visible ? "" : undefined'), "缺少可见性属性");
 });
@@ -40,4 +40,5 @@ test("两颗圆钮有可访问标签，且走非线性缓动", () => {
 	assert.ok(source.includes('t("jump.next")'), "下一条缺少 aria-label");
 	assert.ok(source.includes("cubic-bezier(0.22,1,0.36,1)"), "淡入淡出没有缓动");
 	assert.ok(source.includes("prefers-reduced-motion:reduce){.dshAbJumper{transition:none}}"), "没有尊重减少动效");
+	assert.ok(source.includes("transition:opacity var(--dsh-ab-rail-duration,280ms) var(--dsh-ab-rail-ease,cubic-bezier(0.22,1,0.36,1))"), "淡入淡出没有复用图标栏那套缓动变量");
 });

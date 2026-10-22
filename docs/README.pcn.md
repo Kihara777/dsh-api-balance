@@ -58,7 +58,7 @@ switch 区域 **列数 自動**：広画面 3 列、中間 2 列、手機 1 列�
 - **↑**：viewport 上 最近 用戸 message（自分 送 文）scroll；
 - **↓**：下 最近 者。次 無 時 滑 最下部 scroll。
 
-二 者 **scroll 中 限定** 出現、停止 約 0.9 秒 後 fade out、画面 内容 返。fade 非線形 easing、system「減少動效」有効 時 行 不。
+二 者 **scroll 中 限定** 出現、停止 約 2.5 秒 後 fade out（fade 280ms、図標列 同 非線形 curve）、画面 内容 返。fade 非線形 easing、system「減少動效」有効 時 行 不。
 
 - 目標行 browser 標準 `scrollIntoView` 整。`scrollTop` 直接代入 使用 不——DSH message list 仮想 list、書込 `scrollTop` 次 frame 元 offset 戻。
 - 公式 丸 button style 隠（`[class*="toBottomSlot"]`）。該処理 関与 不、場所 取 不。
