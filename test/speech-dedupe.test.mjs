@@ -33,3 +33,15 @@ test("一句里每个片段只播一次（pack 与 tts 互斥）", () => {
 	assert.ok(playBlock.includes("} else if (typeof part.fallbackText"), "pack 缺片段时的兜底不是 else-if");
 	assert.ok(!playBlock.includes("await ttsSpeak(part.fallbackText, lang, config);\n\t\t\t\t\tawait"), "pack 与 tts 被串行播了两遍");
 });
+
+test("片段之间有预取，不让「数字 → 个 token」空等加载", () => {
+	assert.ok(source.includes("const prepare = (index) => {"), "缺少预取函数");
+	assert.ok(source.includes("prepare(0);"), "没有预取第一段");
+	assert.ok(source.includes("prepare(i + 1);"), "播放当前段时没有预取下一段");
+	assert.ok(source.includes('audio.preload = "auto";'), "语音包片段没有预加载");
+	assert.ok(source.includes("function playAudioElement(audio, timeoutMs"), "没有复用已加载的 Audio 元素");
+	assert.ok(
+		source.includes("ready.objectUrl !== void 0"),
+		"自定义 TTS 没有复用预合成的音频",
+	);
+});
