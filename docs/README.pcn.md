@@ -59,7 +59,7 @@ switch 区域 **列数 自動**：広画面 3 列、中間 2 列、手機 1 列�
 - **↓**：下 最近 者。次 無 時 滑 最下部 scroll。
 
 - 会話 長、古 質問 未 load 時、↑ **二重山形**（「以前 message load」）変化：一度押 公式 batch load 後 移動。
-  - 既知 制限：load 後 DSH scroll 位置 元 anchor 戻（scrollTop = 2500 書込 2569 読返）。新内容 viewport 上 残、program 移動 届 不。**手動 上 scroll** 古 質問 見 可。矢印 代 移動 不。
+  - 既知 制限：load 後 DSH scroll 位置 元 anchor 戻（scrollTop = 2500 書込 2569 読返）。新内容 viewport 上 残、program 移動 届 不。**手動 上 scroll** 古 質問 見 可。load 中 連続 tap 無視、移動 不能 時 上 button 灰色 化「此画面 scroll 不能 — 先 手動 scroll」表示。一度 scroll 元 戻。
 
 二 者 **scroll 中 限定** 出現、停止 約 2.5 秒 後 fade out（fade 280ms、図標列 同 非線形 curve）、画面 内容 返。fade 非線形 easing、system「減少動效」有効 時 行 不。
 

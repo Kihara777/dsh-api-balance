@@ -4,6 +4,19 @@
 
 dsh-api-balance 軟件更新維護記録。
 
+## 2026-10-23T09:31:37+09:00
+
+**摘要**：fix(client): 連続 tap 與「scroll 不能」再 点滅 不
+
+- 報告「連続 上 押、何度押 一瞬 光 元 戻 只」二 原因：連続 tap 自動 load 再 触发（複数 batch 一度 引）、書込 scrollTop anchor 戻 場合 旧実装 三 frame 書続 毎回 弾
+- 対策：load 中 `busyRef` tap 無視。書込 一 frame 後 再確認、届 不 場合 `stuck` 化 button 無効（「此画面 scroll 不能 — 先 手動 scroll」）。一度 scroll 元 戻。更 跳転 token 最新 試行 有効
+- 実測（headless 770x834）：最上部 一度押 rows 2→6。次 tap 後 mode=stuck 該 label、行位置 揺 無
+- 判据：`turn-jumper` 7/7、他 6/6、5/5、10/10、16/16、6/6、1/1
+
+| 提交 | 説明 |
+|------|------|
+| `6e7b0b6` | fix(client): 連続 tap 與 stuck 移動 |
+
 ## 2026-10-23T09:19:48+09:00
 
 **摘要**：fix(client): 押下 highlight 円 沿、移動 複数 frame 書込

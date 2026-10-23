@@ -4,6 +4,19 @@
 
 dsh-api-balance package update changelog.
 
+## 2026-10-23T09:31:37+09:00
+
+**Summary**: fix(client): no more flashing back after repeated taps or an impossible jump
+
+- the reported 「tapping again and again only flashes and snaps back」 has two sources: repeated taps re-trigger the automatic load (pulling several batches at once), and when a written scrollTop is anchored back the old code kept writing three frames, each one bounced
+- fixes: `busyRef` swallows taps during the loading window; the write is re-checked one frame later and, if it did not land, the button goes `stuck` (disabled plus 「Cannot scroll here — scroll by hand first」) until the user scrolls once; a jump token makes only the newest attempt count
+- measured (headless 770x834): one tap at the top grows rows 2→6; the next tap leaves mode=stuck with that label and the rows stop jittering
+- criteria: `turn-jumper` 7/7, others 6/6, 5/5, 10/10, 16/16, 6/6, 1/1
+
+| Commit | Description |
+|------|------|
+| `6e7b0b6` | fix(client): repeated taps and stuck jumps |
+
 ## 2026-10-23T09:19:48+09:00
 
 **Summary**: fix(client): the pressed highlight follows the circle; previous-message jumps write across frames

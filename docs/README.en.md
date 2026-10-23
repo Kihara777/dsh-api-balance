@@ -59,7 +59,7 @@ The official round button in the bottom-right corner does one thing only, and st
 - **↓**: scroll to the nearest one below; when there is no next message it scrolls smoothly to the bottom.
 
 - when a conversation is long enough that older questions are not loaded yet, ↑ turns into **a double chevron** (「Load earlier messages」): one click pulls the official batch in and then jumps.
-  - known limit: after loading, DSH anchors the scroll position back (writing scrollTop = 2500 read back 2569), so the new content stays above the viewport and a programmatic jump cannot reach it. **Scroll up by hand** to see the older questions; the arrow will not carry you there.
+  - known limit: after loading, DSH anchors the scroll position back (writing scrollTop = 2500 read back 2569), so the new content stays above the viewport and a programmatic jump cannot reach it. **Scroll up by hand** to see the older questions. Repeated taps are ignored while a batch is loading, and when the jump cannot land the up button greys out with 「Cannot scroll here — scroll by hand first」 until you scroll once.
 
 They appear **only while you scroll** and fade out about 2.5s after you stop (280ms fade, the same non-linear curve as the icon strip), giving the screen back to the content; the fade uses a non-linear ease and is skipped under reduced-motion.
 
