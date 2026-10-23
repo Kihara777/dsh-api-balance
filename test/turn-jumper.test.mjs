@@ -32,8 +32,11 @@ test("上下各滚一条用户消息；没有下一条时退回底部", () => {
 	assert.ok(source.includes("row.getBoundingClientRect().top - scrollerTop > 8"), "向下的目标筛选不对");
 	assert.ok(source.includes("scroller.scrollTo({ top: scroller.scrollHeight, behavior: \"smooth\" })"), "没有兜底回到底部");
 	assert.ok(source.includes("row.scrollIntoView({ block: \"start\", inline: \"nearest\" })"), "没有用原生滚动对齐目标行");
-	assert.ok(source.includes("if (Math.abs(drift) > 24) scroller.scrollTop"), "缺少加载后的偏差补偿");
+	assert.ok(source.includes("if (Math.abs(drift) > 2) scroller.scrollTop"), "缺少加载后的偏差补偿（多帧写入）");
 	assert.ok(source.includes("function jumpToRow(scroller, row)"), "缺少对齐函数");
+	assert.ok(source.includes("window.requestAnimationFrame(apply)"), "跳转没有多帧写入");
+	assert.ok(source.includes("-webkit-tap-highlight-color:transparent"), "没有去掉系统的方形点击高亮");
+	assert.ok(source.includes(".dshAbJumper button:active{background:"), "缺少自己的按下态");
 });
 
 test("折叠的历史会被自动加载，且上箭头换成双箭头", () => {
