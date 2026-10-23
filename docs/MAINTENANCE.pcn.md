@@ -566,3 +566,20 @@ dsh-api-balance 軟件更新維護記録。
 | 軟件名 | 版本 |
 |--------|------|
 | dsh-api-balance | 新規 v0.1.1 |
+
+## 2026-10-23T23:14:29+09:00
+
+**摘要**：fix(client): 会話 入 時点 button 点灯（scroll 待 止）
+
+- 症状：再読込 毎 回 button 見 不、session 切替 出
+- 原因：点灯 契機 scroll event 限定、会話 入 瞬間 scroll 起 不（内容 描画済、位置 確定済）。visible false まま、button 存在 opacity 0。session 切替 scroll 一度 起 故「切替 直」見
+- 対策：mount 後 4 秒 点灯（booting、此間 scroll 見 不）。scroll container 出現 時 ready 化 reveal 一度 呼（shownRef）
+- 実測（headless 770x834、workspace source 差替）：入室 250ms data-visible=true（fade in 中）→ 1.35s opacity=1 → 4.5s fade out
+- **検証 script 落穴**：以前「修正 効 不」実測 deploy 版 読（Fetch 差替 無）。機能 効 不 非。本項 該結論 上書
+- 判据：turn-jumper 9/9、他 6/6、5/5、10/10、17/17、4/4、6/6、1/1
+
+| 提交 | 説明 |
+|------|------|
+| 86d7045 | fix(client): 入室時 点灯 |
+| e828738 | test: mount 期間 断言 4 秒 変更 |
+

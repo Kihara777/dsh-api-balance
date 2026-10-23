@@ -566,3 +566,20 @@ dsh-api-balance package update changelog.
 | Package | Version |
 |--------|------|
 | dsh-api-balance | new in v0.1.1 |
+
+## 2026-10-23T23:14:29+09:00
+
+**Summary**: fix(client): the buttons light up on entering a conversation instead of waiting for a scroll
+
+- symptom: after every refresh the buttons were missing until a session switch
+- cause: they were lit only by the scroll event, and entering a conversation usually produces none (content already rendered, position already settled), so visible stayed false and the buttons existed with opacity 0; switching sessions triggers one scroll, which is why a switch seemed to fix it
+- fix: light up for 4s after mount (booting, ignoring scrolling during that window); as soon as the scroller appears, set ready and reveal once (shownRef keeps it to once per conversation)
+- measured (headless 770x834, with the workspace source intercepted): 250ms after entering data-visible=true (fading in) → 1.35s opacity=1 → 4.5s faded out
+- **a harness trap**: earlier "fix has no effect" runs were loading the deployed build (the script had no Fetch interception), so the feature had not been tested at all; this entry supersedes those conclusions
+- criteria: turn-jumper 9/9, others 6/6, 5/5, 10/10, 17/17, 4/4, 6/6, 1/1
+
+| Commit | Description |
+|------|------|
+| 86d7045 | fix(client): light up on entering a conversation |
+| e828738 | test: mount-window assertion moved to 4s |
+
