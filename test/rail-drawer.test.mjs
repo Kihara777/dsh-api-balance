@@ -146,3 +146,10 @@ test("把手：button + aria-expanded + 可访问标签（管图标条显隐）"
 	assert.ok(source.includes('"aria-expanded": !hidden'));
 	assert.ok(source.includes('t(hidden ? "rail.open" : "rail.close")'));
 });
+
+test("收起图标条不再限定全屏；把手只在需要时出现", () => {
+	assert.ok(source.includes("fullscreen: active"), "没有把全屏状态传下去");
+	assert.ok(source.includes("if (!enabled || !fullscreenSupported() || !layout) return null;"), "抽屉仍然只在全屏时渲染");
+	assert.ok(source.includes("const hideRef = react.useRef(fullscreen !== false);"), "初始隐藏态没有跟着全屏走");
+	assert.ok(!source.includes("if (hidden === false && fullscreen !== true) return null;"), "把手不该因为「图标条露着」就消失");
+});

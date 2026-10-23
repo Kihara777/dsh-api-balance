@@ -67,3 +67,18 @@ test("两颗圆钮有可访问标签，且走非线性缓动", () => {
 	assert.ok(source.includes("prefers-reduced-motion:reduce){.dshAbJumper{transition:none}}"), "没有尊重减少动效");
 	assert.ok(source.includes("transition:opacity var(--dsh-ab-rail-duration,280ms) var(--dsh-ab-rail-ease,cubic-bezier(0.22,1,0.36,1))"), "淡入淡出没有复用图标栏那套缓动变量");
 });
+
+test("设置里有开关，关掉后整组按钮不出现", () => {
+	assert.ok(source.includes('const JUMP_STORE_KEY = "dsh-api-balance-jump";'), "缺少存储键");
+	assert.ok(source.includes("function jumpEnabled()"), "缺少读取");
+	assert.ok(source.includes("function setJumpEnabled(enabled)"), "缺少写入");
+	assert.ok(source.includes('settingRow("settings.jumpLabel", jumpOn, onToggleJump, "settings.jumpHint")'), "设置面板没有这一行");
+	assert.ok(source.includes("if (!ready || !enabled) return null;"), "关掉后仍然渲染");
+});
+
+test("首屏就拿得到滚动容器（不必切一次会话）", () => {
+	assert.ok(
+		source.includes("setReady(chatScroller() !== null);"),
+		"轮询里没有无条件刷新 ready —— bind 在仍为 null 时会直接 return",
+	);
+});
