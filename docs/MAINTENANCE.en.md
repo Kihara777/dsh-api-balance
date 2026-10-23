@@ -4,6 +4,20 @@
 
 dsh-api-balance package update changelog.
 
+## 2026-10-23T12:04:04+09:00
+
+**Summary**: fix(speech): prefetch between segments instead of waiting on each load
+
+- symptom: the gap between a number and a fixed segment such as 「tokens」 was too long
+- cause: everything loaded lazily per segment — a voice-pack segment only starts downloading after `new Audio` + `play()`, and each custom-TTS number costs one HTTP round trip; the next segment started only after the previous finished
+- fix: while playing segment i, prefetch segment i+1 (`prepare(i + 1)`) — pack segments are `load()`ed with `preload=auto`, custom-TTS audio is fetched concurrently into an objectURL and reused on playback; `playAudioElement` plays an already-loaded element with a 15s safety timeout
+- criteria: `speech-dedupe` 4/4 (prefetch assertions added), others 6/6, 5/5, 10/10, 16/16, 7/7, 6/6, 1/1
+- **no listening test**: a headless environment cannot judge the real sound; this stops at structural criteria
+
+| Commit | Description |
+|------|------|
+| `ba6bb07` | fix(speech): prefetch between segments |
+
 ## 2026-10-23T09:52:50+09:00
 
 **Summary**: fix(speech): broadcasts no longer stack twice

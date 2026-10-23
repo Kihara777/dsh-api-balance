@@ -4,6 +4,20 @@
 
 dsh-api-balance 軟件更新維護記録。
 
+## 2026-10-23T12:04:04+09:00
+
+**摘要**：fix(speech): segment 間 先読、読込待 無
+
+- 症状：数字 與「token」等 固定 segment 間隔 長 過
+- 原因：毎回 其場 読込——音声 pack segment `new Audio` 後 `play()` 初 download 開始、custom TTS 数字 毎回 HTTP 往復 必要。前 segment 終 後 次 開始、間 空白 発生
+- 対策：segment i 再生中 i+1 先読（`prepare(i + 1)`）。pack `preload=auto` `load()`、custom TTS 並行取得 objectURL 再利用。`playAudioElement` 追加、読込済 element 15 秒 保険 付 再生
+- 判据：`speech-dedupe` 4/4（先読 断言 追加）、他 6/6、5/5、10/10、16/16、7/7、6/6、1/1
+- **聴感 実測 無**：headless 環境 実際 聞 判定 不 可。此処 構造 判据 迄
+
+| 提交 | 説明 |
+|------|------|
+| `ba6bb07` | fix(speech): segment 間 先読 |
+
 ## 2026-10-23T09:52:50+09:00
 
 **摘要**：fix(speech): 音声 二重 重 不
