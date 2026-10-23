@@ -4,6 +4,19 @@
 
 dsh-api-balance package update changelog.
 
+## 2026-10-23T09:52:50+09:00
+
+**Summary**: fix(speech): broadcasts no longer stack twice
+
+- symptom: the daily / monthly broadcast repeated 「in」, 「tokens」 and 「CNY」 twice each
+- cause: `stopActiveSpeech` only halted the current audio plus one `speechSynthesis.cancel`, while the voice pack is an awaited queue — the next broadcast started before the previous finished, and the two interleaved, which sounds like every word spoken twice; tapping the two chart tabs quickly triggers it reliably
+- fix: a broadcast token `speechToken`; `playParts` checks it before each segment and returns when superseded; a 350ms debounce on the daily / monthly broadcast; `speakHungry` uses the same token
+- criteria: `speech-dedupe` 3/3 (token, debounce, pack-vs-tts exclusivity), others 6/6, 5/5, 10/10, 16/16, 7/7, 6/6, 1/1
+
+| Commit | Description |
+|------|------|
+| `f0ccb4e` | fix(speech): broadcasts no longer stack twice |
+
 ## 2026-10-23T09:31:37+09:00
 
 **Summary**: fix(client): no more flashing back after repeated taps or an impossible jump

@@ -4,6 +4,19 @@
 
 dsh-api-balance 軟件更新維護記録。
 
+## 2026-10-23T09:52:50+09:00
+
+**摘要**：fix(speech): 音声 二重 重 不
+
+- 症状：日別 / 月別 読上「入」「token」「人民元」各 二回 聞
+- 原因：`stopActiveSpeech` 現在 音声 與 `speechSynthesis.cancel` 一回 停止 限定。音声 pack 逐次 await queue、前列 終 前 次 開始 二列 交錯——chart tab 早押 必 発生
+- 対策：読上 token `speechToken` 導入、`playParts` 各 segment 前 確認 置換 済 場合 return。日別 / 月別 350ms debounce。`speakHungry` 同 token 使用
+- 判据：`speech-dedupe` 3/3（token、debounce、pack 與 tts 排他）、他 6/6、5/5、10/10、16/16、7/7、6/6、1/1
+
+| 提交 | 説明 |
+|------|------|
+| `f0ccb4e` | fix(speech): 音声 二重 再生 解消 |
+
 ## 2026-10-23T09:31:37+09:00
 
 **摘要**：fix(client): 連続 tap 與「scroll 不能」再 点滅 不
