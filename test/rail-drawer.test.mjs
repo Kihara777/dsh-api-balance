@@ -153,3 +153,9 @@ test("收起图标条不再限定全屏；把手只在需要时出现", () => {
 	assert.ok(source.includes("const hideRef = react.useRef(fullscreen !== false);"), "初始隐藏态没有跟着全屏走");
 	assert.ok(!source.includes("if (hidden === false && fullscreen !== true) return null;"), "把手不该因为「图标条露着」就消失");
 });
+
+test("把手贴在侧栏右边缘，而不是钉在屏幕左缘", () => {
+	assert.ok(source.includes("function inlineFirstPx(frame)"), "缺少第一列宽度读取");
+	assert.ok(source.includes("setEdge((prev) => (prev === firstPx ? prev : firstPx))"), "sync 里没有跟随列宽");
+	assert.ok(source.includes("left: `${edge}px`,"), "把手位置没有跟着列宽走");
+});
