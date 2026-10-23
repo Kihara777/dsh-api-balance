@@ -32,25 +32,36 @@ test("上下各滚一条用户消息；没有下一条时退回底部", () => {
 	assert.ok(source.includes("row.getBoundingClientRect().top - scrollerTop > 8"), "向下的目标筛选不对");
 	assert.ok(source.includes("scroller.scrollTo({ top: scroller.scrollHeight, behavior: \"smooth\" })"), "没有兜底回到底部");
 	assert.ok(source.includes("row.scrollIntoView({ block: \"start\", inline: \"nearest\" })"), "没有用原生滚动对齐目标行");
-	assert.ok(source.includes("if (Math.abs(drift) > 2) scroller.scrollTop"), "缺少加载后的偏差补偿（多帧写入）");
-	assert.ok(source.includes("function jumpToRow(scroller, row)"), "缺少对齐函数");
+	assert.ok(source.includes("const before = scroller.scrollTop;"), "缺少写入前后对比");
+	assert.ok(source.includes("function jumpToRow(scroller, row, isCurrent)"), "缺少对齐函数");
 	assert.ok(source.includes("window.requestAnimationFrame(apply)"), "跳转没有多帧写入");
 	assert.ok(source.includes("-webkit-tap-highlight-color:transparent"), "没有去掉系统的方形点击高亮");
 	assert.ok(source.includes(".dshAbJumper button:active{background:"), "缺少自己的按下态");
 });
 
+test("连点与滚不动都有明确处理（不再闪一下弹回）", () => {
+	assert.ok(source.includes("if (busyRef.current) return;"), "加载中没有挡住连点");
+	assert.ok(source.includes("busyRef.current = true;"), "没有置加载中标记");
+	assert.ok(source.includes("const jumpRef = react.useRef(0);"), "缺少跳转令牌");
+	assert.ok(source.includes("() => jumpRef.current === token"), "旧跳转链路没有作废");
+	assert.ok(source.includes("return Math.abs(scroller.scrollTop - before) > 1;"), "没有检测「写进去被改回」");
+	assert.ok(source.includes("if (moved === false) setStuck(true);"), "滚不动时没有停住");
+	assert.ok(source.includes("disabled: stuck,"), "滚不动时按钮没有禁用");
+	assert.ok(source.includes('"jump.stuck"'), "缺少滚不动的提示文案");
+});
+
 test("折叠的历史会被自动加载，且上箭头换成双箭头", () => {
 	assert.ok(source.includes("function olderButton()"), "缺少「加载更早」按钮的探测");
 	assert.ok(source.includes("loader.click();"), "没有自动点加载");
-	assert.ok(source.includes("window.setTimeout(() => step(-1, attempt + 1), 900)"), "加载后没有重试跳转");
+	assert.ok(source.includes("step(-1, attempt + 1);"), "加载后没有重试跳转");
 	assert.ok(source.includes("attempt < 1"), "没有限制只自动加载一层");
 	assert.ok(source.includes("const loadMode = loadable && !ascend"), "缺少「需要加载」的图标状态");
-	assert.ok(source.includes('"data-api-balance-mode": loadMode ? "load" : "jump"'), "缺少图标模式标记");
-	assert.ok(source.includes('t(loadMode ? "jump.loadEarlier" : "jump.prev")'), "文案没有跟着换");
+	assert.ok(source.includes('"data-api-balance-mode": stuck ? "stuck" : loadMode ? "load" : "jump"'), "缺少图标模式标记");
+	assert.ok(source.includes('t(stuck ? "jump.stuck" : loadMode ? "jump.loadEarlier" : "jump.prev")'), "文案没有跟着换");
 });
 
 test("两颗圆钮有可访问标签，且走非线性缓动", () => {
-	assert.ok(source.includes('t(loadMode ? "jump.loadEarlier" : "jump.prev")'), "上一条缺少 aria-label");
+	assert.ok(source.includes('t(stuck ? "jump.stuck" : loadMode ? "jump.loadEarlier" : "jump.prev")'), "上一条缺少 aria-label");
 	assert.ok(source.includes('t("jump.next")'), "下一条缺少 aria-label");
 	assert.ok(source.includes("cubic-bezier(0.22,1,0.36,1)"), "淡入淡出没有缓动");
 	assert.ok(source.includes("prefers-reduced-motion:reduce){.dshAbJumper{transition:none}}"), "没有尊重减少动效");
