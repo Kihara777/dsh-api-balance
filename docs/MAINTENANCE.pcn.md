@@ -598,3 +598,18 @@ dsh-api-balance 軟件更新維護記録。
 |------|------|
 | 58ca6ad | feat(client): 把手 側欄 端 貼 |
 
+
+## 2026-10-23T23:43:49+09:00
+
+**摘要**：fix(client): scroll 監視 document capture 段階 移行、一度 scroll 点灯
+
+- 症状：再読込 後 button 一瞬 表示、一度 隠 後 session 切替 迄 二度 出 不
+- 原因：scroll scrollBody 張、実際 scroll element 必 其 非（其 scrollTop 書込 戻 既観測＝別 layer scroll 握）。指 scroll 届 不 reveal 走 不。session 切替 再 mount 故 booting 4 秒 再 見
+- 対策：document capture 段階 scroll 監視（scroll bubble 不、capture 任意 子孫 拾 可）。container 差替 再 bind 不要。polling ready 與 初回点灯 限 担
+- 実測（headless 770x834、source 差替＋実 wheel）：入室 handle 有 left=280、4.5s 後 visible=false、wheel 一度 visible=true、一度押 収納 cols=0px・left=0
+- 判据：turn-jumper 9/9、他 6/6、5/5、10/10、18/18、4/4、6/6、1/1
+
+| 提交 | 説明 |
+|------|------|
+| 27480b6 | fix(client): scroll 監視 document capture 移行 |
+

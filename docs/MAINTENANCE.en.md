@@ -598,3 +598,18 @@ dsh-api-balance package update changelog.
 |------|------|
 | 58ca6ad | feat(client): handle hugs the sidebar edge |
 
+
+## 2026-10-23T23:43:49+09:00
+
+**Summary**: fix(client): the scroll listener moved to document capture, so one scroll lights the buttons
+
+- symptom: after a refresh the buttons showed briefly, then never again until a session switch
+- cause: scroll was bound to scrollBody, but the element that actually scrolls is not necessarily it (writing its scrollTop was already observed to be reverted, i.e. another layer owns scrolling). A finger scroll never reached the listener, so reveal never ran; a session switch remounts and shows the boot window again
+- fix: listen for scroll on document at the capture phase (scroll does not bubble, but capture reaches any descendant), which also survives scroller replacement; the poll now only maintains ready and the first reveal
+- measured (headless 770x834, source intercepted plus a real wheel event): handle present with left=280; after 4.5s visible=false; one wheel scroll visible=true; one click collapses to cols=0px and left=0
+- criteria: turn-jumper 9/9, others 6/6, 5/5, 10/10, 18/18, 4/4, 6/6, 1/1
+
+| Commit | Description |
+|------|------|
+| 27480b6 | fix(client): scroll listener on document capture |
+

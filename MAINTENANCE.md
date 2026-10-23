@@ -602,3 +602,18 @@ dsh-api-balance 软件更新维护日志。
 |------|------|
 | 58ca6ad | feat(client): 把手贴到侧栏右边缘 |
 
+
+## 2026-10-23T23:43:49+09:00
+
+**摘要**：fix(client): 滚动监听改到 document 捕获阶段，滚动一次就点亮
+
+- 症状：刷新后按钮短暂显示，一旦隐藏就再怎么滚都不出现，除非切会话
+- 根因：scroll 绑在 scrollBody 上，而真正滚动的元素未必是它（此前就发现写它的 scrollTop 会被改回，说明有另一层接管滚动）。手指滚动它收不到，reveal 从不触发；切会话重新挂载，于是又看见 booting 那 4 秒
+- 改法：在 document 上以捕获阶段监听 scroll（scroll 不冒泡，但捕获能拿到任意后代），换容器也不必重新绑定；轮询只负责 ready 与首次点亮
+- 实测（headless 770x834，拦截源码 + 真滚轮）：进会话 handle 在、left=280；4.5s 后 visible=false；滚轮滚一下 visible=true；点一次收起 cols=0px、left=0
+- 判据：turn-jumper 9/9，其余 6/6、5/5、10/10、18/18、4/4、6/6、1/1
+
+| 提交 | 说明 |
+|------|------|
+| 27480b6 | fix(client): 滚动监听改到 document 捕获阶段 |
+
