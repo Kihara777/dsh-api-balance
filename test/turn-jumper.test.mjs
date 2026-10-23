@@ -23,7 +23,7 @@ test("官方「回到底部」让位：toBottomSlot 被隐藏", () => {
 
 test("滚动时显示、静置后隐藏", () => {
 	assert.ok(source.includes("setTimeout(() => setVisible(false), 2500)"), "缺少静置隐藏");
-	assert.ok(source.includes('addEventListener("scroll", onScroll, { passive: true })'), "没有监听滚动");
+	assert.ok(source.includes('document.addEventListener("scroll", onScroll, { passive: true, capture: true })'), "没有在 document 捕获阶段监听滚动");
 	assert.ok(source.includes('"data-visible": visible || booting ? "" : undefined'), "缺少可见性属性（含挂载期）");
 	assert.ok(source.includes("setBooting(false), 4000"), "挂载期没有在 1.5s 后收尾");
 });
