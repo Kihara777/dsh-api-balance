@@ -583,3 +583,18 @@ dsh-api-balance 軟件更新維護記録。
 | 86d7045 | fix(client): 入室時 点灯 |
 | e828738 | test: mount 期間 断言 4 秒 変更 |
 
+
+## 2026-10-23T23:22:59+09:00
+
+**摘要**：feat(client): 把手 側欄 右縁 貼、列幅 追従
+
+- 把手 画面 端 固定 → 要素 端 配置 指摘
+- inlineFirstPx() 内联 第一列 読、sync 時 edge 更新（同値 再描画 無）。把手 left edge 使用
+- 実測（headless 770x834、workspace source 差替）：側欄 展開 cols=280px・把手 left=280、一度押 収納 cols=0px・left=0
+- **未実装**：押 続 引出 操作。該版（pointerdown/move/up）実測 component 破壊（把手 描画 無）、取消。低 危険 貼 付 限定 残
+- 判据：rail-drawer 18/18、他 6/6、5/5、10/10、4/4、9/9、6/6、1/1
+
+| 提交 | 説明 |
+|------|------|
+| 58ca6ad | feat(client): 把手 側欄 端 貼 |
+

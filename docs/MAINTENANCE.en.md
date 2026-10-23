@@ -583,3 +583,18 @@ dsh-api-balance package update changelog.
 | 86d7045 | fix(client): light up on entering a conversation |
 | e828738 | test: mount-window assertion moved to 4s |
 
+
+## 2026-10-23T23:22:59+09:00
+
+**Summary**: feat(client): the handle hugs the sidebar's right edge and follows its width
+
+- the handle was pinned to the screen edge; it now sits on the element's edge
+- inlineFirstPx() reads the first inline column; sync updates edge (no re-render when unchanged); the handle's left uses edge
+- measured (headless 770x834, workspace source intercepted): sidebar open cols=280px with handle left=280; one click collapses to cols=0px with handle left=0
+- **not done**: press-and-drag. That version (pointerdown/move/up) broke the component (the handle stopped rendering entirely) and was reverted; only the low-risk edge placement shipped
+- criteria: rail-drawer 18/18, others 6/6, 5/5, 10/10, 4/4, 9/9, 6/6, 1/1
+
+| Commit | Description |
+|------|------|
+| 58ca6ad | feat(client): handle hugs the sidebar edge |
+
