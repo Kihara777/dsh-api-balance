@@ -58,6 +58,9 @@ The official round button in the bottom-right corner does one thing only, and st
 - **↑**: scroll to the nearest user message above the viewport (the text you sent);
 - **↓**: scroll to the nearest one below; when there is no next message it scrolls smoothly to the bottom.
 
+- when a conversation is long enough that older questions are not loaded yet, ↑ turns into **a double chevron** (「Load earlier messages」): one click pulls the official batch in and then jumps.
+  - known limit: the freshly loaded batch sits at a negative offset inside the virtual list (above scrollTop = 0), so an immediate jump may not land — click ↑ once more or scroll up by hand.
+
 They appear **only while you scroll** and fade out about 2.5s after you stop (280ms fade, the same non-linear curve as the icon strip), giving the screen back to the content; the fade uses a non-linear ease and is skipped under reduced-motion.
 
 - Targets are aligned with the browser's own `scrollIntoView` rather than a hard `scrollTop` write — the DSH message list is virtualised, so a written `scrollTop` is folded back to the old offset on the next frame.

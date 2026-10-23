@@ -4,6 +4,21 @@
 
 dsh-api-balance 軟件更新維護記録。
 
+## 2026-10-23T07:58:36+09:00
+
+**摘要**：feat(client): 上矢印 折畳履歴 自動 展開、其間 icon 変化
+
+- 会話 長 時 履歴 page 単位 読込（公式「以前 message load」）、以前「前」移動 不
+- 上 移動可能 行 無 且 公式 button 使用可能 時、一度 押、900ms 待 再度 移動（自動 load 一層 限定、attempt 上限 1）
+- 上 button 二重山形 変化、label「以前 message load」、data-api-balance-mode="load" 付。load 後 単一山形 戻
+- 実測（headless 770x834）：最上部 rows=4、公式 button 有効、上 button load mode 二重山形。一度押 rows 4→6、mode jump 戻
+- **未達**：load 後 移動 届 不——新行 rowTops -2687 / -1331（scrollTop = 0 上）位置、仮想 list 負 offset 置 為 表示 移動 不 可。README 既知 制限 記載
+- 判据：turn-jumper 6/6、他 6/6、5/5、10/10、16/16、6/6、1/1
+
+| 提交 | 説明 |
+|------|------|
+| `225a791` | feat(client): 上矢印 折畳履歴 自動 展開 |
+
 ## 2026-10-23T07:51:21+09:00
 
 **摘要**：feat(client): 跳躍 button 滞留 2.5 秒、fade 図標列 同 easing 共用

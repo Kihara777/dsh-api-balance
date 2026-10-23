@@ -58,6 +58,9 @@ switch 区域 **列数 自動**：広画面 3 列、中間 2 列、手機 1 列�
 - **↑**：viewport 上 最近 用戸 message（自分 送 文）scroll；
 - **↓**：下 最近 者。次 無 時 滑 最下部 scroll。
 
+- 会話 長、古 質問 未 load 時、↑ **二重山形**（「以前 message load」）変化：一度押 公式 batch load 後 移動。
+  - 既知 制限：load 直後 batch 仮想 list 内 負 offset（scrollTop = 0 上）位置、直後 移動 届 不 場合 有。再一度 ↑ 押 或 手動 上 scroll 可。
+
 二 者 **scroll 中 限定** 出現、停止 約 2.5 秒 後 fade out（fade 280ms、図標列 同 非線形 curve）、画面 内容 返。fade 非線形 easing、system「減少動效」有効 時 行 不。
 
 - 目標行 browser 標準 `scrollIntoView` 整。`scrollTop` 直接代入 使用 不——DSH message list 仮想 list、書込 `scrollTop` 次 frame 元 offset 戻。

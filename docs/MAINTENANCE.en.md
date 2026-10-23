@@ -4,6 +4,21 @@
 
 dsh-api-balance package update changelog.
 
+## 2026-10-23T07:58:36+09:00
+
+**Summary**: feat(client): the up arrow expands collapsed history by itself, and looks different while doing it
+
+- long conversations page older questions in (the official 「Load earlier」), so 「previous」 previously could not move
+- when there is nothing to jump to above and the official button is available, one click presses it, waits 900ms, and jumps again (a single automatic load, attempt capped at 1)
+- the up button becomes a double chevron with the 「Load earlier messages」 label and data-api-balance-mode="load", returning to a single chevron once loaded
+- measured (headless 770x834): at the top rows=4 with the official button enabled and the up button in load mode; one click grows rows 4→6 and flips the mode back to jump
+- **not achieved**: the jump after loading does not land — the new rows sit at rowTops -2687 / -1331 (above scrollTop = 0), a negative offset the virtual list never shows or scrolls to. Recorded as a known limit in the README
+- criteria: turn-jumper 6/6, others 6/6, 5/5, 10/10, 16/16, 6/6, 1/1
+
+| Commit | Description |
+|------|------|
+| `225a791` | feat(client): auto-expand collapsed history from the up arrow |
+
 ## 2026-10-23T07:51:21+09:00
 
 **Summary**: feat(client): jump buttons linger 2.5s and reuse the icon strip's easing
