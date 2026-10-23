@@ -37,7 +37,7 @@ API 用量残高插件（DeepSeek Harness）——webui 用量圓環（送信按
 - **移動端 session 切替 keyboard 不弾出**：觸屏 device 上、入力欄**既定 編集不可**、故 session 切替 / 新規 session 時 DSH 程序性聚焦 軟 keyboard 喚出不能（実際 `focusin` cancel 不可、`focus` 後 blur 既遅）。guard 有効中、入力欄 対 程序性 `focus()` **直接 飲込**（keyboard 於 focus 瞬間 要求、其手前 停止 初 意味 有；「同一 frame 内 属性 書戻 後 聚焦」競合 閉）。tap / 按鍵 700ms 意図 window 開放、輸入中 更新継続、window 過 再 閉。tap 後 入力 従来通。預設有効、此処無効化可。
 - **疑問 window：長題干 選択肢 遮蔽不**：題干過長時 **自身高度 制限 + 自身内 scroll**（吸頂 廃止）、選択肢 常時 画面内 残留；操作按鈕與底部按鈕 追従表示 維持。題干 **上下両端** 與 追従按鈕**上方** 漸隠 mask 敷、且 **scroll 連動**（該側 実際 内容 残時 之 見 漸隠：最上部 頂端 模糊不）；按鈕下方 同色 埋 塞、内容 一刀切 不。漸変色 札実際底色 取得、light / dark 両主題 追従。預設有効。
 - **右上 menu 全屏切替**：会話 header 右上「…」menu 内「全屏切替」（次節）預設表示；off 時 行 全 消失、無反応項目 残 不。
-- **全屏時 側欄 隠**：全屏入時 左 図標列（公式 折畳時 56px toolbar）也 隠、本文 全幅 占。画面左縁 把手 残、tap・keyboard（Enter/Space）該列 引出・再押 収納 可能。開閉 280ms 非線形 easing（速 出 徐 止。system「減少動效」有効時 animation 不）、左側余白 自動 揃、内容 偏 不。手機 keyboard 表示 伴 本文 高 縮。把手 該列 表示・非表示 只管、session list 全 展開 不。預設有効、此処 無効化 可能；全屏終了時 元 戻。
+- **側欄 収納（全屏 與 通常 両方）**：画面左縁 把手 常駐、tap・keyboard（Enter/Space）左列 0 化 本文 全幅、再押 戻 可能。**全屏入時 自動 収納**、収納自体 全屏専用 非——通常時 也 任意 収納 可。開閉 280ms 非線形 easing（速 出 徐 止。system「減少動效」有効時 animation 不）、左側余白 自動 揃、内容 偏 不。手機 keyboard 表示 伴 本文 高 縮。把手 該列 表示・非表示 只管、session list 全 展開 不。預設有効、此処 無効化 可能；全屏終了時 元 戻。
 上記設定（已停用 底部統計条 除）預設有効、瀏覽器 localStorage 永続化。
 
 switch 区域 **列数 自動**：広画面 3 列、中間 2 列、手機 1 列——各 cell 最低 150px、容器 入 分 丈 並。画面回転・分割 追従、手動 layout 切替 不要。

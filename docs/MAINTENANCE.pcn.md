@@ -4,6 +4,20 @@
 
 dsh-api-balance 軟件更新維護記録。
 
+## 2026-10-23T22:38:27+09:00
+
+**摘要**：feat(client): 跳躍 button switch、非全屏 収納、初期画面 button
+
+- 界面設定「会話『前 / 次 質問』button」行 追加（既定 on）。off 時 群 全体 非表示
+- 側欄 収納 全屏 と 対等 機能 化：handle 常時 存在、一度押 展開中 280px 與 図標列 56px 0 化。全屏「入時 自動 収納」半分 担
+- 「button 出 不 場合 有、session 切替 直」修正：polling ready 無条件 更新——scroll container null 間 `bind` 即 return、初期画面 永久 ready 不
+- 実測（headless 770x834、実 click）：会話 開 直後 jumper=true。非全屏 handle=true、cols 280px → 一度押 → 0px、centerLeft 0
+- 判据：`turn-jumper` 9/9、`rail-drawer` 17/17、他 6/6、5/5、10/10、4/4、6/6、1/1
+
+| 提交 | 説明 |
+|------|------|
+| `cae96e9` | feat(client): switch、全屏外 収納、初期画面 button |
+
 ## 2026-10-23T12:04:04+09:00
 
 **摘要**：fix(speech): segment 間 先読、読込待 無

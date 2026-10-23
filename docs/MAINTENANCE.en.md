@@ -4,6 +4,20 @@
 
 dsh-api-balance package update changelog.
 
+## 2026-10-23T22:38:27+09:00
+
+**Summary**: feat(client): a switch for the jump buttons, a collapse that is not fullscreen-only, and buttons that appear on the first screen
+
+- Interface settings gained a 「Conversation previous / next message buttons」 row (on by default); turning it off removes the whole group
+- collapsing the sidebar is now a peer of fullscreen: the handle is always there, one click collapses the expanded 280px or the 56px strip to 0; fullscreen keeps only 「collapse on entry」
+- fixed 「sometimes the buttons do not appear until a session switch」: the poll now refreshes ready unconditionally — `bind` returns early while the scroller is still null, so the first screen never became ready
+- measured (headless 770x834 with real clicks): jumper=true immediately after opening a session; outside fullscreen handle=true with cols 280px → one click → 0px, centerLeft 0
+- criteria: `turn-jumper` 9/9, `rail-drawer` 17/17, others 6/6, 5/5, 10/10, 4/4, 6/6, 1/1
+
+| Commit | Description |
+|------|------|
+| `cae96e9` | feat(client): switch, non-fullscreen collapse, first-screen buttons |
+
 ## 2026-10-23T12:04:04+09:00
 
 **Summary**: fix(speech): prefetch between segments instead of waiting on each load
