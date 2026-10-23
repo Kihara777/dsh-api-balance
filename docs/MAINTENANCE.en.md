@@ -4,6 +4,19 @@
 
 dsh-api-balance package update changelog.
 
+## 2026-10-23T09:19:48+09:00
+
+**Summary**: fix(client): the pressed highlight follows the circle; previous-message jumps write across frames
+
+- visuals: the mobile tap highlight is a square that pokes out of a round button. The system layer is removed (`-webkit-tap-highlight-color:transparent`), the pressed state is drawn in-house, and `overflow:hidden` clips it to the circle
+- jumps now write across three frames, recomputing the drift each time; ordinary conversations land correctly
+- **still not achieved**: after loading older history the jump cannot land — writing `scrollTop = 2500` reads back 2569, because DSH anchors programmatic scrolling back. The README limit now says 「scroll up by hand」 instead of 「click again」
+- criteria: `turn-jumper` 6/6, others 6/6, 5/5, 10/10, 16/16, 6/6, 1/1
+
+| Commit | Description |
+|------|------|
+| `3d4e128` | fix(client): pressed highlight and multi-frame jumps |
+
 ## 2026-10-23T07:58:36+09:00
 
 **Summary**: feat(client): the up arrow expands collapsed history by itself, and looks different while doing it

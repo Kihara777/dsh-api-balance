@@ -4,6 +4,19 @@
 
 dsh-api-balance 軟件更新維護記録。
 
+## 2026-10-23T09:19:48+09:00
+
+**摘要**：fix(client): 押下 highlight 円 沿、移動 複数 frame 書込
+
+- 見：mobile 既定 tap highlight 四角、丸 button 角 出。system 層 外（`-webkit-tap-highlight-color:transparent`）、押下状態 自前 描、`overflow:hidden` 円 沿 切取
+- 移動 三 frame 書込、毎回 其時点 位置 差分 再計算。通常 会話 届
+- **未達 継続**：古 履歴 load 後 届 不——`scrollTop = 2500` 書 2569 返、DSH anchor 処理 program scroll 戻。README 既知 制限「再押」→「手動 上 scroll」修正
+- 判据：`turn-jumper` 6/6、他 6/6、5/5、10/10、16/16、6/6、1/1
+
+| 提交 | 説明 |
+|------|------|
+| `3d4e128` | fix(client): 押下 highlight 與 複数 frame 移動 |
+
 ## 2026-10-23T07:58:36+09:00
 
 **摘要**：feat(client): 上矢印 折畳履歴 自動 展開、其間 icon 変化

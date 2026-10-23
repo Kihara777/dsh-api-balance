@@ -59,7 +59,7 @@ The official round button in the bottom-right corner does one thing only, and st
 - **↓**: scroll to the nearest one below; when there is no next message it scrolls smoothly to the bottom.
 
 - when a conversation is long enough that older questions are not loaded yet, ↑ turns into **a double chevron** (「Load earlier messages」): one click pulls the official batch in and then jumps.
-  - known limit: the freshly loaded batch sits at a negative offset inside the virtual list (above scrollTop = 0), so an immediate jump may not land — click ↑ once more or scroll up by hand.
+  - known limit: after loading, DSH anchors the scroll position back (writing scrollTop = 2500 read back 2569), so the new content stays above the viewport and a programmatic jump cannot reach it. **Scroll up by hand** to see the older questions; the arrow will not carry you there.
 
 They appear **only while you scroll** and fade out about 2.5s after you stop (280ms fade, the same non-linear curve as the icon strip), giving the screen back to the content; the fade uses a non-linear ease and is skipped under reduced-motion.
 
