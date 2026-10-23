@@ -25,7 +25,7 @@ test("滚动时显示、静置后隐藏", () => {
 	assert.ok(source.includes("setTimeout(() => setVisible(false), 2500)"), "缺少静置隐藏");
 	assert.ok(source.includes('addEventListener("scroll", onScroll, { passive: true })'), "没有监听滚动");
 	assert.ok(source.includes('"data-visible": visible || booting ? "" : undefined'), "缺少可见性属性（含挂载期）");
-	assert.ok(source.includes("setBooting(false), 1500"), "挂载期没有在 1.5s 后收尾");
+	assert.ok(source.includes("setBooting(false), 4000"), "挂载期没有在 1.5s 后收尾");
 });
 
 test("上下各滚一条用户消息；没有下一条时退回底部", () => {
