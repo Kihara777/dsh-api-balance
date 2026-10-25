@@ -154,7 +154,7 @@ A 20-second screen recording of the real UI on a 390×844 phone viewport, no edi
 
 (If the video does not render: [download it](media/demo-16x9.mp4).)
 
-<video src="media/demo.mp4" controls muted playsinline width="240"></video> (portrait phone cut)
+<video src="media/demo-dark-portrait.mp4" controls muted playsinline width="240"></video> (portrait phone cut)
 
 ## Install
 

@@ -152,7 +152,7 @@ voice-pack.zip
 
 <video src="media/demo-16x9.mp4" controls playsinline width="720"></video>
 
-（表示 不 場合：[download](media/demo.mp4)）
+（表示 不 場合：[download](media/demo-dark-portrait.mp4)）
 
 ## 導入
 

@@ -152,7 +152,7 @@ voice-pack.zip
 
 <video src="media/demo-16x9.mp4" controls playsinline width="720"></video>
 
-（表示されない場合：[ダウンロード](media/demo.mp4)）
+（表示されない場合：[ダウンロード](media/demo-dark-portrait.mp4)）
 
 ## インストール
 
