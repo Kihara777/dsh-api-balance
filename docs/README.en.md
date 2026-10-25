@@ -145,6 +145,15 @@ All segments are optional: missing ones fall back to TTS during playback. Panel 
 
 **Limits**: segment keys `[A-Za-z0-9_-]{1,32}`; segments ≤ 32, greetings ≤ 32 (≤ 64 zip entries total), ≤ 2 MB per audio file; mp3 / wav / ogg / webm recommended, ≤ 2 s per segment, 22.05/44.1 kHz mono. Dynamic parts (balance numbers, token counts) are not in the pack — they are synthesized live by the current TTS backend (browser built-in or custom TTS API proxied through the host), then concatenated with the pack segments into the complete broadcast.
 
+
+## Demo
+
+A 20-second screen recording of the real UI on a 390×844 phone viewport, no editing tricks: usage panel → chart paging → voice broadcast → fullscreen sidebar and handle → conversation jumps.
+
+<video src="media/demo.mp4" controls muted playsinline width="320"></video>
+
+(If the video does not render: [download it](media/demo.mp4).)
+
 ## Install
 
 Two install routes are supported. **NixOS users should prefer the declarative one** (the version is locked by Nix, updates with system generations, and is reproducible); DSH users elsewhere can use `dsh plugin add`. **Pick one** — both register the same `api-balance` entry id.

@@ -145,6 +145,15 @@ voice-pack.zip
 
 **制約**：segment key `[A-Za-z0-9_-]{1,32}`；segments ≤ 32 個、greetings ≤ 32 個（zip entry 合計 ≤ 64）、音声 1 file ≤ 2 MB。音声 mp3 / wav / ogg / webm 推奨、1 segment 2 秒以内、22.05/44.1 kHz mono。動的部分（残高數字、token 数等）pack 不含——當前 TTS backend（瀏覽器内蔵或 host 経由 proxy 自訂 TTS API）実時合成、「pack segment + TTS 數字」順連結完全放送。
 
+
+## 演示
+
+390×844 手機縦画面 実 UI 録画 約 20 秒（編集演出 無）：使用量 panel → chart 切替 → 音声読上 → 全屏 側欄 與 把手 → 会話 跳転。
+
+<video src="media/demo.mp4" controls muted playsinline width="320"></video>
+
+（表示 不 場合：[download](media/demo.mp4)）
+
 ## 導入
 
 本 plugin 二 導入方式 対応。**NixOS 利用者 宣言的方式 推奨**（版本 Nix 固定、system 世代 共 更新、再現可能）。他 DSH 利用者 `dsh plugin add` 利用可能。**何方 一 選択**——両者 同一 `api-balance` entry id 登録。

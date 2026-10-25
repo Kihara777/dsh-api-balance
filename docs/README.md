@@ -147,6 +147,15 @@ voice-pack.zip
 
 **约束**：片段键 `[A-Za-z0-9_-]{1,32}`；segments ≤ 32 个、greetings ≤ 32 个（zip 条目总数 ≤ 64）、单音频 ≤ 2 MB；音频建议 mp3 / wav / ogg / webm，单段 2 秒以内、22.05/44.1 kHz 单声道。动态部分（余额数字、token 数量等）不在包内——由当前 TTS 后端（浏览器内置或自定义 TTS API，后者经 host 代理规避跨域）实时合成，按「包片段 + TTS 数字」顺序拼接为完整播报。
 
+
+## 演示片
+
+一段 20 秒的实机录屏（手机竖屏 390×844，真实 UI，无剪辑特效）：用量面板 → 图表翻页 → 语音播报 → 全屏收起侧栏与把手 → 会话跳转。
+
+<video src="media/demo.mp4" controls muted playsinline width="320"></video>
+
+（若视频不显示：[直接下载](media/demo.mp4)）
+
 ## 安装
 
 本插件是一个独立的 DSH 插件包（源码仓库：<https://github.com/Kihara777/dsh-api-balance>）。三种安装方式，**择一即可**——它们都会注册同一个 `api-balance` entry id。
