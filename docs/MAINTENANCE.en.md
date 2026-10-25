@@ -613,3 +613,16 @@ dsh-api-balance package update changelog.
 |------|------|
 | 27480b6 | fix(client): scroll listener on document capture |
 
+
+## 2026-10-26T04:19:09+09:00
+
+**Summary**: docs: the demo video is withdrawn and the repository is back to its earlier shape
+
+- the video direction was dropped; per her choice, the three files under `docs/media/` (5.4MB total) and the 「Demo」 section in all four READMEs are removed together
+- the clips remain recoverable from git history (before `bf3f301` / `07b8102`)
+- criteria: the four READMEs keep the same `###` section count (10 each) and no longer reference `media/demo*`
+
+| Commit | Description |
+|------|------|
+| (this one) | docs: withdraw the demo video |
+

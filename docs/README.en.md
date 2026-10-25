@@ -145,17 +145,6 @@ All segments are optional: missing ones fall back to TTS during playback. Panel 
 
 **Limits**: segment keys `[A-Za-z0-9_-]{1,32}`; segments ≤ 32, greetings ≤ 32 (≤ 64 zip entries total), ≤ 2 MB per audio file; mp3 / wav / ogg / webm recommended, ≤ 2 s per segment, 22.05/44.1 kHz mono. Dynamic parts (balance numbers, token counts) are not in the pack — they are synthesized live by the current TTS backend (browser built-in or custom TTS API proxied through the host), then concatenated with the pack segments into the complete broadcast.
 
-
-## Demo
-
-A 20-second screen recording of the real UI on a 390×844 phone viewport, no editing tricks: usage panel → chart paging → voice broadcast → fullscreen sidebar and handle → conversation jumps.
-
-<video src="media/demo-16x9.mp4" controls playsinline width="720"></video>
-
-(If the video does not render: [download it](media/demo-16x9.mp4).)
-
-<video src="media/demo-dark-portrait.mp4" controls muted playsinline width="240"></video> (portrait phone cut)
-
 ## Install
 
 Two install routes are supported. **NixOS users should prefer the declarative one** (the version is locked by Nix, updates with system generations, and is reproducible); DSH users elsewhere can use `dsh plugin add`. **Pick one** — both register the same `api-balance` entry id.
@@ -196,7 +185,6 @@ The package's `dsh.bundle` points at `cordis.patch.yml`, so it activates as a pr
 - The panel is a page-level overlay (a document-level fixed portal, never clipped by the conversation area and never off-screen in landscape or narrow widths); its height clamps automatically to the space above the anchor (avoiding the top bar in phone landscape); when the horizontal space is too narrow, content keeps its adapted width and scrolls horizontally via the panel, and vertically via the panel's own scrollbar.
 - The panel height eases over 220 ms with a non-linear curve whenever its content changes (both the 「Usage ↔ Balance」 switch and incoming balance data; a transition in flight continues from its current value when the next change arrives): the height is measured and then interpolated by CSS instead of jumping; with 「reduced motion」 on it snaps. Content taller than the maximum still scrolls inside the panel — the transition affects the height only. **Showing and hiding** the panel uses the same timeline (opacity plus a slight scale from the bottom-right): it mounts hidden first and then switches to visible (otherwise there is no start value to interpolate from), and on close the DOM stays until the transition ends; a quick toggle continues from the current state.
 - Every transition (pager height, panel height, page slide) **deliberately respects** the system's 「reduced motion」 setting: when it is on, they snap instead of animating — that is a trade-off for motion-sensitive users, **not a failure**. On Android, check 「Settings → Accessibility → Remove animations」 (or animation scale 0 in Developer options); when someone reports 「no animation」, look there first, then suspect the code.
-
 
 ### Settings storage layer
 

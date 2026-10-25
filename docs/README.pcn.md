@@ -145,15 +145,6 @@ voice-pack.zip
 
 **制約**：segment key `[A-Za-z0-9_-]{1,32}`；segments ≤ 32 個、greetings ≤ 32 個（zip entry 合計 ≤ 64）、音声 1 file ≤ 2 MB。音声 mp3 / wav / ogg / webm 推奨、1 segment 2 秒以内、22.05/44.1 kHz mono。動的部分（残高數字、token 数等）pack 不含——當前 TTS backend（瀏覽器内蔵或 host 経由 proxy 自訂 TTS API）実時合成、「pack segment + TTS 數字」順連結完全放送。
 
-
-## 演示
-
-390×844 手機縦画面 実 UI 録画 約 20 秒（編集演出 無）：使用量 panel → chart 切替 → 音声読上 → 全屏 側欄 與 把手 → 会話 跳転。
-
-<video src="media/demo-16x9.mp4" controls playsinline width="720"></video>
-
-（表示 不 場合：[download](media/demo-dark-portrait.mp4)）
-
 ## 導入
 
 本 plugin 二 導入方式 対応。**NixOS 利用者 宣言的方式 推奨**（版本 Nix 固定、system 世代 共 更新、再現可能）。他 DSH 利用者 `dsh plugin add` 利用可能。**何方 一 選択**——両者 同一 `api-balance` entry id 登録。
@@ -194,7 +185,6 @@ package 的 `dsh.bundle` `cordis.patch.yml` 指、導入後 profile layer 有効
 - 面板頁面級 overlay（document 級 fixed portal、会話区域 clip 不、横屏/窄幅均画面外出不）；高度「錨点上方可用空間」自動 clamp（手機横屏 top bar 遮蔽回避）；横向可用幅不足時内容適応幅維持、面板横 scroll 表示、縦向同面板自身 scrollbar 表示。
 - 面板高度 内容変化時 220ms 非線形 transition（「用量 ↔ 余額」切替、余額數據到着 追従；進行中 transition 次変化時 現在値 引継）：高度 実測 後 CSS 補間、瞬間 jump 不；系統「減少動態効果」有効時 即時 jump。最大高度 超 内容 従来通 面板内部 scroll、transition 高度 限定 作用。面板 **表示 / 非表示** 同一時間軸（不透明度 + 右下 微拡大）使用：開時 非表示状態 mount 後 表示 切替（否則 補間起点 無）、閉時 遷移終了迄 DOM 残置。急速 開閉 現在値 続。
 - 全 transition（翻頁区域高度、面板高度、頁移動）系統「減少動態効果」**意図的尊重**：有効時 animation 不 即時 jump——前庭敏感 利用者 為 取捨、**故障 非**。Android「設定 → 無障礙 → 動画削除」（或 開発者 option 動画倍率 0）確認可。「animation 見 不」報告時、先 此処 見、後 code 疑。
-
 
 ### 設定存儲層
 
