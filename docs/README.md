@@ -152,7 +152,7 @@ voice-pack.zip
 
 一段 20 秒的实机录屏（手机竖屏 390×844，真实 UI，无剪辑特效）：用量面板 → 图表翻页 → 语音播报 → 全屏收起侧栏与把手 → 会话跳转。
 
-<video src="media/demo.mp4" controls muted playsinline width="320"></video>
+<video src="media/demo-16x9.mp4" controls playsinline width="720"></video>
 
 （若视频不显示：[直接下载](media/demo.mp4)）
 

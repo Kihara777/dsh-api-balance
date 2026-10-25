@@ -150,7 +150,7 @@ voice-pack.zip
 
 390×844 のスマートフォン表示で実 UI を録画した約 20 秒（編集的な演出なし）：使用量パネル → チャート切替 → 音声読み上げ → 全画面のサイドバーとハンドル → 会話ジャンプ。
 
-<video src="media/demo.mp4" controls muted playsinline width="320"></video>
+<video src="media/demo-16x9.mp4" controls playsinline width="720"></video>
 
 （表示されない場合：[ダウンロード](media/demo.mp4)）
 

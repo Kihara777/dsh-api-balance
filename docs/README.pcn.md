@@ -150,7 +150,7 @@ voice-pack.zip
 
 390×844 手機縦画面 実 UI 録画 約 20 秒（編集演出 無）：使用量 panel → chart 切替 → 音声読上 → 全屏 側欄 與 把手 → 会話 跳転。
 
-<video src="media/demo.mp4" controls muted playsinline width="320"></video>
+<video src="media/demo-16x9.mp4" controls playsinline width="720"></video>
 
 （表示 不 場合：[download](media/demo.mp4)）
 

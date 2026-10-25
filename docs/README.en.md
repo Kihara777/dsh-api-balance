@@ -150,9 +150,11 @@ All segments are optional: missing ones fall back to TTS during playback. Panel 
 
 A 20-second screen recording of the real UI on a 390×844 phone viewport, no editing tricks: usage panel → chart paging → voice broadcast → fullscreen sidebar and handle → conversation jumps.
 
-<video src="media/demo.mp4" controls muted playsinline width="320"></video>
+<video src="media/demo-16x9.mp4" controls playsinline width="720"></video>
 
-(If the video does not render: [download it](media/demo.mp4).)
+(If the video does not render: [download it](media/demo-16x9.mp4).)
+
+<video src="media/demo.mp4" controls muted playsinline width="240"></video> (portrait phone cut)
 
 ## Install
 
