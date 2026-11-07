@@ -4,6 +4,37 @@
 
 dsh-api-balance package update changelog.
 
+## 2026-11-07T19:51:09+09:00
+
+**Summary**: feat: third status page + ring readout + Japanese; fix: mobile handle and TTS language
+
+- **Ring readout**: the percentage is followed by the account balance (`58% - ¥213.60`). An earlier revision showed today's spend; she pointed out it should be the balance, so it reads `balanceInfos[].totalBalance` again. When the balance cannot be fetched only the percentage is shown
+- **Third page "Status"**: proxies `status.deepseek.com`, a FlashCat Status Page — no public JSON API (`api/v2/*` all 404) and no CORS header, so it goes through two host bridges
+  - `/status`: RSS → recent incidents (60s cache, failures cached too, so a broken upstream is not hammered)
+  - `/status/components`: `summary/active` + `summary/structure` merged into a **tree** (5 top-level services, Chat Service holds 3 children)
+  - `/status/events`: the 69 items from `change/list`, paged by offset/limit
+  - The main view shows uptime + a 30-day strip; the second page holds incidents. A failed balance request lands here automatically
+- **Mobile handle**: on narrow screens `pI_x6G_frame` is a single column `56px` (no `minmax`), which `layoutFrame()` skipped → handle at left=0, folded state unreadable, column override written to the wrong element. AppFrame is now found by the `_frame` class suffix; when the host makes the sidebar a drawer (first column always 0) **no handle is rendered**
+- **Restore keeps column structure**: restoring the collapsed state swaps only the first column and keeps the other two — writing a bare `56px` collapsed three columns into one (centerCol 714 → 585)
+- **Japanese**: a full ja table of 190 entries, key-aligned with zh/en. Two old debts fixed on the way: `balance.accountInfo` was defined twice in zh, and entirely missing from en
+- **TTS language**: `speechLang` only mapped `zh` to `zh-CN` and passed `en`/`ja` through, so engines matching a full BCP-47 tag could not find a voice and fell back to Chinese. Added `en-US`/`ja-JP`/`ko-KR`; the greeting pool now resolves by full tag → primary language → zh-CN
+- Criteria: key parity 190/190/190 (0 missing, 0 extra); `/status/components` yields 5 top-level and 3 children; at 390px three taps give 56/0/56; at 770px 56/714 → 0/770 → 56/714 stays three columns
+
+| Commit | Description |
+|--------|-------------|
+| `89495e9` | feat(server): status RSS bridge |
+| `b99fe16` | fix(server): unescape before stripping tags |
+| `16bd095` | feat(client): third page |
+| `ae51ff6` | feat(server): component uptime endpoint |
+| `c455585` | feat(client): two-page status view |
+| `85283bb` | feat(server): component endpoint returns a tree |
+| `59e21c2` | feat(client): collapsible Chat Service |
+| `da738a2` | fix(client): name truncation + event paging |
+| `53ea136` | feat(client): scroll-triggered loading |
+| `81f18ff` | feat(client): end-of-list note |
+| `a74062c` | feat(i18n): Japanese localization |
+| `6dc39c8` | fix(tts): language follows the interface |
+
 ## 2026-10-23T22:38:27+09:00
 
 **Summary**: feat(client): a switch for the jump buttons, a collapse that is not fullscreen-only, and buttons that appear on the first screen

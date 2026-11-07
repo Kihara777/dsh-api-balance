@@ -4,6 +4,37 @@
 
 dsh-api-balance 软件更新维护日志。
 
+## 2026-11-07T19:51:09+09:00
+
+**摘要**：feat: 第三页服务状态 + 圆环读数 + 日语；fix: 移动端把手与 TTS 语言
+
+- **圆环读数**：百分比后面接账户余额（`58% - ¥213.60`）。先接过「当日消耗」，她指出该是余额，改回 `balanceInfos[].totalBalance`；余额拿不到时只显示百分比
+- **第三页「状态」**：代理 `status.deepseek.com`。该站是 FlashCat Status Page——无公开 JSON API（`api/v2/*` 全 404）、无 CORS 头，故走服务端两个桥
+  - `/status`：RSS → 最近事件（60 秒缓存，失败也缓存，避免拖垮上游）
+  - `/status/components`：`summary/active` + `summary/structure` 合成**树**（5 个主服务 + 对话服务下挂 3 子项）
+  - `/status/events`：`change/list` 的 69 条按 offset/limit 分页
+  - 主视图是可用性 + 30 天条带，副屏是事件；balance 失败时自动落到这一页
+- **移动端把手**：窄屏下 `pI_x6G_frame` 是单列 `56px`（不含 `minmax`），`layoutFrame()` 跳过它 → 把手 left=0、折叠态读不到、压列写在错元素上。改为按 class 后缀 `_frame` 认 AppFrame；官方把侧栏做成抽屉（第一列恒 0）时**不渲染把手**
+- **写回保留列结构**：折叠态恢复只换第一列，后两列原样带走——固定写 `56px` 会把三列写成单列（centerCol 714 → 585）
+- **日语**：整张 ja 表 190 条，与 zh/en 逐键对齐。顺手修两处旧债：zh 里 `balance.accountInfo` 重复定义、en 表整条缺失
+- **TTS 语言**：`speechLang` 只把 `zh` 补成 `zh-CN`，`en`/`ja` 原样透传 → 引擎按完整 BCP-47 匹配不到音色，落回中文声。补 `en-US`/`ja-JP`/`ko-KR`；问候语池按完整标签→主语言前缀→zh-CN 三级查
+- 判据：三语键 190/190/190（缺 0 多 0）；`/status/components` 顶层 5 个、子项 3 个；390 宽 tap 三次 56/0/56；770 宽 56/714 → 0/770 → 56/714 全程三列
+
+| 提交 | 说明 |
+|------|------|
+| `89495e9` | feat(server): 状态 RSS 桥 |
+| `b99fe16` | fix(server): 先反转义再剥标签 |
+| `16bd095` | feat(client): 第三页 |
+| `ae51ff6` | feat(server): 组件可用性端点 |
+| `c455585` | feat(client): 状态页两屏 |
+| `85283bb` | feat(server): 组件端点改树 |
+| `59e21c2` | feat(client): 对话服务可折叠 |
+| `da738a2` | fix(client): 名字截断 + 事件分页 |
+| `53ea136` | feat(client): 触底自动加载 |
+| `81f18ff` | feat(client): 到底提示 |
+| `a74062c` | feat(i18n): 日语本地化 |
+| `6dc39c8` | fix(tts): 语言跟随界面 |
+
 ## 2026-10-23T22:38:27+09:00
 
 **摘要**：feat(client): 跳跃按钮有开关；收起侧栏不再限定全屏；首屏就有按钮

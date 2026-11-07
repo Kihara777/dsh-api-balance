@@ -4,6 +4,37 @@
 
 dsh-api-balance 軟件更新維護記録。
 
+## 2026-11-07T19:51:09+09:00
+
+**摘要**：feat: 第三頁 服務状態 + 円環表示 + 日本語; fix: 移動端 把手 與 TTS 語言
+
+- **円環表示**：百分率 後 帳戸残高 併記（`58% - ¥213.60`）。一度「当日消耗」表示、彼女 指摘 残高 可 修正（`balanceInfos[].totalBalance`）。残高 取得 不可 時 百分率 只
+- **第三頁「状態」**：`status.deepseek.com` 代理。FlashCat Status Page 故、公開 JSON API 無（`api/v2/*` 全部 404）、CORS header 無、宿主側 二 橋 経由
+  - `/status`：RSS → 最近 事件（60 秒 緩存、失敗 也 緩存、壊 上流 連打 避）
+  - `/status/components`：`summary/active` 與 `summary/structure` 合成 **樹**（上層 5 服務、会話服務 下 3 子組件）
+  - `/status/events`：`change/list` 69 件 offset/limit 頁送
+  - 主視図 稼働率 + 30 日帯、第二頁 事件。残高 失敗 時 自動的 此頁
+- **移動端 把手**：狭幅 `pI_x6G_frame` 単列 `56px`（`minmax` 含 不）故 `layoutFrame()` 飛越 → 把手 left=0、折畳 状態 読 不、圧列 誤要素 書込。class 接尾辞 `_frame` 依 AppFrame 認識 変更。宿主 側欄 引出入（第一列 常 0）時 **把手 描画 不**
+- **書戻 列構造 保持**：折畳 復帰 時 第一列 只 交換、後二列 原様。`56px` 只 書 三列 → 単列（centerCol 714 → 585）
+- **日本語**：ja 表 190 件、zh/en 與 鍵一致。同時 旧 負債 二件 修正：zh `balance.accountInfo` 二重定義、en 全欠落
+- **TTS 語言**：`speechLang` `zh` 只 `zh-CN` 変換、`en`/`ja` 素通 → 完全 BCP-47 一致 引擎 音声 見 不、中国語 声 落。`en-US`/`ja-JP`/`ko-KR` 追加。挨拶 pool 完全 tag → 主言語 → zh-CN 順 解決
+- 判定：鍵一致 190/190/190（欠 0 過 0）、`/status/components` 上層 5 + 子 3、390px 三回 tap 56/0/56、770px 56/714 → 0/770 → 56/714 三列 維持
+
+| 提交 | 説明 |
+|------|------|
+| `89495e9` | feat(server): 状態 RSS 橋 |
+| `b99fe16` | fix(server): 先 逆転義 後 標籤 剥 |
+| `16bd095` | feat(client): 第三頁 |
+| `ae51ff6` | feat(server): 組件 稼働率 端点 |
+| `c455585` | feat(client): 状態 二画面 |
+| `85283bb` | feat(server): 組件 端点 樹化 |
+| `59e21c2` | feat(client): 会話服務 折畳 可能 |
+| `da738a2` | fix(client): 名前 切詰 + 事件 頁送 |
+| `53ea136` | feat(client): 末尾 到達 自動読込 |
+| `81f18ff` | feat(client): 到底 案内 |
+| `a74062c` | feat(i18n): 日本語 本地化 |
+| `6dc39c8` | fix(tts): 語言 界面 追従 |
+
 ## 2026-10-23T22:38:27+09:00
 
 **摘要**：feat(client): 跳躍 button switch、非全屏 収納、初期画面 button
@@ -572,7 +603,7 @@ dsh-api-balance 軟件更新維護記録。
 **摘要**：fix(client): 会話 入 時点 button 点灯（scroll 待 止）
 
 - 症状：再読込 毎 回 button 見 不、session 切替 出
-- 原因：点灯 契機 scroll event 限定、会話 入 瞬間 scroll 起 不（内容 描画済、位置 確定済）。visible false まま、button 存在 opacity 0。session 切替 scroll 一度 起 故「切替 直」見
+- 原因：点灯 契機 scroll event 限定、会話 入 瞬間 scroll 起 不（内容 描画済、位置 確定済）。visible false 状態 継続、button 存在 opacity 0。session 切替 scroll 一度 起 故「切替 直」見
 - 対策：mount 後 4 秒 点灯（booting、此間 scroll 見 不）。scroll container 出現 時 ready 化 reveal 一度 呼（shownRef）
 - 実測（headless 770x834、workspace source 差替）：入室 250ms data-visible=true（fade in 中）→ 1.35s opacity=1 → 4.5s fade out
 - **検証 script 落穴**：以前「修正 効 不」実測 deploy 版 読（Fetch 差替 無）。機能 効 不 非。本項 該結論 上書
